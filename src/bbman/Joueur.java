@@ -165,7 +165,7 @@ public class Joueur
 				this.inv=0;
 		}
 		
-		if (terrain.gettab(sx, sy)<=-10)
+		if (terrain.gettab(sx, sy)>=666)
 		{
 			setdeg();
 		}
@@ -173,12 +173,12 @@ public class Joueur
 		if ((terrain.gettab(sx, sy)>=10)&&(terrain.gettab(sx, sy)<=50))
 		{
 			this.setbon(terrain.gettab(sx, sy));
-			terrain.set(sx, sy, 1);
+			terrain.set(sx, sy, 0);
 		}
 		/*--------------------------------------------------------------------------------------------------------------------------*/
 		if (this.x+this.hitx>(sx+1)*2*terrain.getwidth())
 		{
-			if (terrain.gettab(sx+1, sy)<=-10)
+			if (terrain.gettab(sx+1, sy)>=666)
 			{
 				setdeg();
 			}
@@ -186,12 +186,12 @@ public class Joueur
 			if ((terrain.gettab(sx+1, sy)>=10)&&(terrain.gettab(sx+1, sy)<=50))
 			{
 				this.setbon(terrain.gettab(sx+1, sy));
-				terrain.set(sx+1, sy, 1);
+				terrain.set(sx+1, sy, 0);
 			}
 		}
 		if (this.x-this.hitx<(sx)*2*terrain.getwidth())
 		{
-			if (terrain.gettab(sx-1, sy)<=-10)
+			if (terrain.gettab(sx-1, sy)>=666)
 			{
 			setdeg();
 			}
@@ -199,12 +199,12 @@ public class Joueur
 			if ((terrain.gettab(sx-1, sy)>=10)&&(terrain.gettab(sx-1, sy)<=50))
 			{
 				this.setbon(terrain.gettab(sx-1, sy));
-				terrain.set(sx-1, sy, 1);
+				terrain.set(sx-1, sy, 0);
 			}
 		}
 		if (this.y+this.hity>(sy+1)*2*terrain.getheigth())
 		{
-			if (terrain.gettab(sx, sy+1)<=-10)
+			if (terrain.gettab(sx, sy+1)>=666)
 			{
 				setdeg();
 			}
@@ -212,12 +212,12 @@ public class Joueur
 			if ((terrain.gettab(sx, sy+1)>=10)&&(terrain.gettab(sx, sy+1)<=50))
 			{
 				this.setbon(terrain.gettab(sx, sy+1));
-				terrain.set(sx, sy+1, 1);
+				terrain.set(sx, sy+1, 0);
 			}
 		}
 		if (this.y-this.hity<(sy)*2*terrain.getheigth())
 		{	
-			if (terrain.gettab(sx, sy-1)<=-10)
+			if (terrain.gettab(sx, sy-1)>=666)
 			{
 				setdeg();
 			}
@@ -225,7 +225,7 @@ public class Joueur
 			if ((terrain.gettab(sx, sy-1)>=10)&&(terrain.gettab(sx, sy-1)<=50))
 			{
 				this.setbon(terrain.gettab(sx, sy-1));
-				terrain.set(sx, sy-1, 1);
+				terrain.set(sx, sy-1, 0);
 			}
 		}
 		

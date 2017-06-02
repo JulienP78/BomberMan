@@ -34,28 +34,27 @@ public class Terrain
 			for (j=0;j<y;j++)
 			{	
 				if ((i==0)||(j==0)||(i==x-1)||(j==y-1)||((i%2==0)&&(j%2==0)))
-					this.tab [i][j]=-1;
+					this.tab [i][j]=1;
 				else
-					this.tab [i][j]=0;
+					this.tab [i][j]=2;
 			}
 		}
-		// espace libre joueur 1 :
-		this.tab [1][1]=1;
-		this.tab [2][1]=1;
-		this.tab [3][1]=1;
-		this.tab [3][2]=1;
-		this.tab [1][2]=1;
-		this.tab [1][3]=1;
-		this.tab [2][3]=1;
 		
-		// espace libre joueur 2 :
-		this.tab [x-2][y-2]=1;
-		this.tab [x-3][y-2]=1;
-		this.tab [x-4][y-2]=1;
-		this.tab [x-4][y-3]=1;
-		this.tab [x-2][y-3]=1;
-		this.tab [x-2][y-4]=1;
-		this.tab [x-3][y-4]=1;
+		this.tab [1][1]=0;
+		this.tab [2][1]=0;
+		this.tab [3][1]=0;
+		this.tab [3][2]=0;
+		this.tab [1][2]=0;
+		this.tab [1][3]=0;
+		this.tab [2][3]=0;
+		
+		this.tab [x-2][y-2]=0;
+		this.tab [x-3][y-2]=0;
+		this.tab [x-4][y-2]=0;
+		this.tab [x-4][y-3]=0;
+		this.tab [x-2][y-3]=0;
+		this.tab [x-2][y-4]=0;
+		this.tab [x-3][y-4]=0;
 	}
 
 	
@@ -113,19 +112,18 @@ public class Terrain
 
 		for (i=0;i<this.x;i++)
 		{	for (j=0;j<this.y;j++)
-			{	if (this.tab[i][j]==-1)
+			{	if (this.tab[i][j]==0)
 				{
-				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Pelouse.png", 50, 50);
-
+				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
 				}
-				if (this.tab[i][j]==0)
+				if (this.tab[i][j]==2)
 				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Caisse.png", 50, 50);
 				}
 				else if (this.tab[i][j]==1)
-				{
-					StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
+				{	
+					StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Pelouse.png", 50, 50);
 				}
-				else if (this.tab[i][j]==-10)
+				else if (this.tab[i][j]>=666)
 				{	
 					StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Explosion.png", 50, 50);
 				}
@@ -133,10 +131,7 @@ public class Terrain
 				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
 				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "BonusBombePlus.png", 35, 33);
 				}
-				else if (this.tab[i][j]==10)
-				{
-					
-				}
+				
 			}
 		}
 		StdDraw.setPenColor(255, 0, 0);
