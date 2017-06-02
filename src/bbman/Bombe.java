@@ -69,7 +69,7 @@ public class Bombe
 	}
 	
 	public Terrain put_bombe (int bef, int exp, int puissance, int x, int y, Terrain terrain)
-	{	if (terrain.gettab(x, y)!=665)
+	{	if (terrain.gettab(x, y)!=-10)
 		{	this.time_bef=bef;
 			this.time_exp=exp;
 			this.puissance=puissance;
@@ -84,7 +84,7 @@ public class Bombe
 			
 			this.timer=java.lang.System.currentTimeMillis() ;
 			
-			terrain.set(x,y,665);
+			terrain.set(x,y,-10);
 			Audio sound = new Audio("Beep2");
 		}
 		
@@ -115,26 +115,65 @@ public class Bombe
 	}
 	
 	public int test_bonus ()
-	{	int test=(int)(Math.random()*100);
-	
-		if (test<50)
-			return 10;
-		
-		return 0;
+	{	
+		int test=(int)(Math.random()*100);
+		int newTest = 0;
+		int newValue=1;
+		if (test<20)
+		{
+			newTest = (int)(Math.random()*10);
+			if(newTest==0)
+			{
+				newValue=10;
+			}
+			else if(newTest==1)
+			{
+				
+			}
+			else if(newTest==2)
+			{
+				
+			}
+			else if(newTest==3)
+			{
+				
+			}
+			else if(newTest==4)
+			{
+				
+			}
+			else if(newTest==5)
+			{
+				
+			}
+			else if(newTest==6)
+			{
+				
+			}
+			else if(newTest==7)
+			{
+				
+			}
+			else if(newTest==8)
+			{
+				
+			}
+		}		
+		return newValue;
 	}
 	
 	public Terrain end_boum (Terrain terrain)
 	{	int test=0;
 		int i=1;
 		
-		terrain.set(this.x,this.y,0);
+		terrain.set(this.x,this.y,1);
 
 		while (i<=this.mxp)
-		{	if (terrain.gettab(this.x+i,this.y)==667)
+		{	if (terrain.gettab(this.x+i,this.y)==-11)
 				terrain.set(this.x+i,this.y,test_bonus());
 			
-			else if (terrain.gettab(this.x+i,this.y)==666)
-				terrain.set(this.x+i,this.y,0);
+			else if (terrain.gettab(this.x+i,this.y)==-10)
+				terrain.set(this.x+i,this.y,-1);
 			
 			else
 				test=1;
@@ -145,11 +184,11 @@ public class Bombe
 		test=0;
 		
 		while (i<=this.mym)
-		{	if (terrain.gettab(this.x,this.y-i)==667)
+		{	if (terrain.gettab(this.x,this.y-i)==-11)
 				terrain.set(this.x,this.y-i,test_bonus());
 			
-			else if (terrain.gettab(this.x,this.y-i)==666)
-				terrain.set(this.x,this.y-i,0);
+			else if (terrain.gettab(this.x,this.y-i)==-10)
+				terrain.set(this.x,this.y-i,1);
 			
 			else
 				test=1;
@@ -160,11 +199,11 @@ public class Bombe
 		test=0;
 		
 		while (i<=this.mxm)
-		{	if (terrain.gettab(this.x-i,this.y)==667)
+		{	if (terrain.gettab(this.x-i,this.y)==-11)
 				terrain.set(this.x-i,this.y,test_bonus());
 			
-			else if (terrain.gettab(this.x-i,this.y)==666)
-				terrain.set(this.x-i,this.y,0);
+			else if (terrain.gettab(this.x-i,this.y)==-10)
+				terrain.set(this.x-i,this.y,1);
 			
 			else
 				test=1;
@@ -175,11 +214,11 @@ public class Bombe
 		test=0;
 		
 		while (i<=this.myp)
-		{	if (terrain.gettab(this.x,this.y+i)==667)
+		{	if (terrain.gettab(this.x,this.y+i)==-11)
 				terrain.set(this.x,this.y+i,test_bonus());
 			
-			else if (terrain.gettab(this.x,this.y+i)==666)
-				terrain.set(this.x,this.y+i,0);
+			else if (terrain.gettab(this.x,this.y+i)==-10)
+				terrain.set(this.x,this.y+i,1);
 			
 			else
 				test=1;
@@ -199,17 +238,17 @@ public class Bombe
 
 		Audio sound = new Audio("boum");
 		
-		terrain.set(this.x, this.y, 666);
+		terrain.set(this.x, this.y, -10);
 		
 		while (test==0)
 		{	if (terrain.gettab(this.x+i,this.y)==1)
 				test=1;
 			else if (terrain.gettab(this.x+i,this.y)==2)
-			{	terrain.set(this.x+i,this.y,667);
+			{	terrain.set(this.x+i,this.y,-11);
 				test=1;
 			}
 			else
-				terrain.set(this.x+i,this.y,666);
+				terrain.set(this.x+i,this.y,-11);
 			
 			if (i==this.puissance)
 				test=1;
@@ -225,11 +264,11 @@ public class Bombe
 		{	if (terrain.gettab(this.x,this.y-i)==1)
 				test=1;
 			else if (terrain.gettab(this.x,this.y-i)==2)
-			{	terrain.set(this.x,this.y-i,667);
+			{	terrain.set(this.x,this.y-i,-11);
 				test=1;
 			}
 			else 
-				terrain.set(this.x,this.y-i,666);
+				terrain.set(this.x,this.y-i,-10);
 		
 			if (i==this.puissance)
 				test=1;
@@ -245,11 +284,11 @@ public class Bombe
 		{	if (terrain.gettab(this.x-i,this.y)==1)
 				test=1;
 			else if (terrain.gettab(this.x-i,this.y)==2)
-			{	terrain.set(this.x-i,this.y,667);
+			{	terrain.set(this.x-i,this.y,-11);
 				test=1;
 			}
 			else
-				terrain.set(this.x-i,this.y,666);
+				terrain.set(this.x-i,this.y,-10);
 			
 			if (i==this.puissance)
 				test=1;
@@ -265,11 +304,11 @@ public class Bombe
 		{	if (terrain.gettab(this.x,this.y+i)==1)
 				test=1;
 			else if (terrain.gettab(this.x,this.y+i)==2)
-			{	terrain.set(this.x,this.y+i,667);
+			{	terrain.set(this.x,this.y+i,-11);
 				test=1;
 			}
 			else
-				terrain.set(this.x,this.y+i,666);
+				terrain.set(this.x,this.y+i,-10);
 			
 			if (i==this.puissance)
 				test=1;
