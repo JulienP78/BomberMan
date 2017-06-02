@@ -129,9 +129,40 @@ public class Terrain
 				}
 				else if (this.tab[i][j]==10)
 				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
-				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "BonusBombePlus.png", 35, 33);
+				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_flamme_bleue.png", 35, 33);
 				}
-				
+				else if (this.tab[i][j]==20)
+				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
+				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_flamme_jaune.png", 35, 33);
+				}
+				else if (this.tab[i][j]==30)
+				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
+				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_flamme_rouge.png", 35, 33);
+				}
+				else if (this.tab[i][j]==40)
+				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
+				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_bombe_rouge.png", 35, 33);
+				}
+				else if (this.tab[i][j]==50)
+				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
+				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_vie.png", 35, 33);
+				}
+				else if (this.tab[i][j]==60)
+				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
+				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_speed_up.png", 35, 33);
+				}
+				else if (this.tab[i][j]==70)
+				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
+				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_speed_down.png", 35, 33);
+				}
+				else if (this.tab[i][j]==80)
+				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
+				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_bombe_plus.png", 35, 33);
+				}
+				else if (this.tab[i][j]==80)
+				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
+				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_bombe_moins.png", 35, 33);
+				}
 			}
 		}
 		StdDraw.setPenColor(255, 0, 0);

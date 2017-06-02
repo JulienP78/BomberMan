@@ -47,7 +47,16 @@ public class Bombe
 	public int getactivate ()
 	{	return this.activate;
 	}
-		
+	
+	public int getPuissance()
+	{
+		return this.puissance;
+	}
+	
+	public void setPuissance(int puissance)
+	{
+		this.puissance = puissance;
+	}
 	public void draw (Terrain terrain)
 	{	if ((this.activate==1)&&(this.explose==0)) 
 		{	int sx=this.x/(terrain.getwidth()*2);
@@ -116,11 +125,53 @@ public class Bombe
 	
 	public int test_bonus ()
 	{	int test=(int)(Math.random()*100);
-	
-		if (test<50)
-			return 10;
+		int newTest=(int)(Math.random()*9);
+		int value = 0;
 		
-		return 0;
+		if (test<20)
+		{
+			switch(newTest)
+			{
+				case 0:
+					value=10;
+					break;
+				
+				case 1:
+					value=20;
+					break;
+				
+				case 2:
+					value=30;
+					break;
+					
+				case 3:
+					value=40;
+					break;
+					
+				case 4:
+					value=50;
+					break;
+					
+				case 5:
+					value=60;
+					break;
+					
+				case 6:
+					value=70;
+					break;
+					
+				case 7:
+					value=80;
+					break;
+					
+				case 8:
+					value=90;
+					break;
+			}
+		}
+		
+		
+		return value;
 	}
 	
 	public Terrain end_boum (Terrain terrain)
