@@ -23,22 +23,11 @@ public class Joueur
 	private int nb_bomb;
 	Bombe [] bombe=new Bombe [10] ;
 	
-	private int bb_bef;
-	private int bb_exp;
-	
-	private long timer;
-	private int ttm;
-	private int inv;
-	
-	
 
 	public Joueur (Terrain terrain, int id, int positionX, int positionY)
 	{	this.life=3;
 		this.speed=3;
 		this.nb_bomb=3;
-		this.timer=0;
-		this.inv=0;
-		this.ttm=2000;
 		this.sens="front_profile";
 		
 		this.id=id;
@@ -53,9 +42,6 @@ public class Joueur
 		for (i=0; i<10; i++)
 		{	bombe [i]=new Bombe();
 		}
-		
-		this.bb_bef=5000;
-		this.bb_exp=1000;
 	}
 	
 	public int getPositionX()
@@ -105,7 +91,7 @@ public class Joueur
 			else
 			{	if (this.bombe[i].getactivate()==0)
 				{	
-					terrain=this.bombe[i].put_bombe(this.bb_bef, this.bb_exp, bombe[i].getPuissance(), sx, sy, terrain);
+					terrain=this.bombe[i].put_bombe(5000, 1000, bombe[i].getPuissance(), sx, sy, terrain);
 					test=1;
 				}
 				else

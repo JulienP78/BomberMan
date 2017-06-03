@@ -101,7 +101,7 @@ public class Bombe
 	}
 	
 	public Terrain gestion (Terrain terrain, Joueur[] joueur)
-	{	long test=0;
+	{	
 		if ((this.activate==1)&&(this.explose==0))
 		{	if (java.lang.System.currentTimeMillis()-this.timer>this.time_bef)
 			{ 
@@ -176,65 +176,43 @@ public class Bombe
 	}
 	
 	public Terrain end_boum (Terrain terrain)
-	{	int test=0;
+	{	
 		int i=1;
 		
 		terrain.set(this.x,this.y,0);
 
 		while (i<=this.mxp)
-		{	if (terrain.gettab(this.x+i,this.y)==667)
-				terrain.set(this.x+i,this.y,test_bonus());
-			
-			else if (terrain.gettab(this.x+i,this.y)==666)
+		{	
+			if (terrain.gettab(this.x+i,this.y)>=666)
 				terrain.set(this.x+i,this.y,0);
-			
-			else
-				test=1;
 		
 			i=i+1;
 		}
 		i=0;
-		test=0;
 		
 		while (i<=this.mym)
-		{	if (terrain.gettab(this.x,this.y-i)==667)
-				terrain.set(this.x,this.y-i,test_bonus());
-			
-			else if (terrain.gettab(this.x,this.y-i)==666)
+		{	
+			if (terrain.gettab(this.x,this.y-i)>=666)
 				terrain.set(this.x,this.y-i,0);
-			
-			else
-				test=1;
 		
 			i=i+1;
 		}
 		i=0;
-		test=0;
 		
 		while (i<=this.mxm)
-		{	if (terrain.gettab(this.x-i,this.y)==667)
-				terrain.set(this.x-i,this.y,test_bonus());
-			
-			else if (terrain.gettab(this.x-i,this.y)==666)
+		{	
+			if (terrain.gettab(this.x-i,this.y)>=666)
 				terrain.set(this.x-i,this.y,0);
-			
-			else
-				test=1;
 		
 			i=i+1;
 		}
 		i=0;
-		test=0;
 		
 		while (i<=this.myp)
-		{	if (terrain.gettab(this.x,this.y+i)==667)
-				terrain.set(this.x,this.y+i,test_bonus());
+		{	
 			
-			else if (terrain.gettab(this.x,this.y+i)==666)
+			if (terrain.gettab(this.x,this.y+i)>=666)
 				terrain.set(this.x,this.y+i,0);
-			
-			else
-				test=1;
 		
 			i=i+1;
 		}
