@@ -10,18 +10,18 @@ import java.applet.AudioClip;
 public class Terrain 
 {	private int [][] tab;
 	
-	private int x;
-	private int y;
+	private int nbColonne;
+	private int nbLine;
 	
 	private int width;
 	private int heigth;
 	
 
-	public Terrain (int x, int y, int width, int heigth)
+	public Terrain (int nbColonne, int nbLine, int width, int heigth)
 	{	
-		this.tab=new int [x][y];
-		this.x=x;
-		this.y=y;
+		this.tab=new int [nbColonne][nbLine];
+		this.nbColonne=nbColonne;
+		this.nbLine=nbLine;
 		
 		this.width=width;
 		this.heigth=heigth;
@@ -29,11 +29,11 @@ public class Terrain
 		int i=0;
 		int j=0;
 		
-		for (i=0;i<x;i++)
+		for (i=0;i<nbColonne;i++)
 		{	
-			for (j=0;j<y;j++)
+			for (j=0;j<nbLine;j++)
 			{	
-				if ((i==0)||(j==0)||(i==x-1)||(j==y-1)||((i%2==0)&&(j%2==0)))
+				if ((i==0)||(j==0)||(i==nbColonne-1)||(j==nbLine-1)||((i%2==0)&&(j%2==0)))
 					this.tab [i][j]=1;
 				else
 					this.tab [i][j]=2;
@@ -48,16 +48,15 @@ public class Terrain
 		this.tab [1][3]=0;
 		this.tab [2][3]=0;
 		
-		this.tab [x-2][y-2]=0;
-		this.tab [x-3][y-2]=0;
-		this.tab [x-4][y-2]=0;
-		this.tab [x-4][y-3]=0;
-		this.tab [x-2][y-3]=0;
-		this.tab [x-2][y-4]=0;
-		this.tab [x-3][y-4]=0;
+		this.tab [nbColonne-2][nbLine-2]=0;
+		this.tab [nbColonne-3][nbLine-2]=0;
+		this.tab [nbColonne-4][nbLine-2]=0;
+		this.tab [nbColonne-4][nbLine-3]=0;
+		this.tab [nbColonne-2][nbLine-3]=0;
+		this.tab [nbColonne-2][nbLine-4]=0;
+		this.tab [nbColonne-3][nbLine-4]=0;
 	}
 
-	
 	public int getwidth()
 	{
 		return this.width;
@@ -95,7 +94,7 @@ public class Terrain
 		return 0;
 	}
 
-	public void draw_all (Joueur [] joueur, int nb)
+	public void draw_all (Joueur [] joueur)
 	{
 		int i=0;
 		int j=0;
@@ -110,8 +109,8 @@ public class Terrain
 		int orgx=this.width;
 		int orgy=this.heigth;
 
-		for (i=0;i<this.x;i++)
-		{	for (j=0;j<this.y;j++)
+		for (i=0;i<this.nbColonne;i++)
+		{	for (j=0;j<this.nbLine;j++)
 			{	if (this.tab[i][j]==0)
 				{
 				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
@@ -181,12 +180,12 @@ public class Terrain
 		
 		
 		
-		for (i=0;i<nb;i++)
+		for (i=0;i<joueur.length;i++)
 		{
 			for (j=0; j<joueur[i].getnbbombe ();j++)
 				joueur[i].bombe[j].draw(this);
 		}
-		for (i=0;i<nb;i++)
+		for (i=0;i<joueur.length;i++)
 			joueur[i].draw();
 	}
 

@@ -15,8 +15,8 @@ public class Bombe
 
 	private int explose;
 
-	private int x;	//co terrain
-	private int y;	//co terrain
+	private int x;
+	private int y;
 	
 	private int time_bef;
 	private int time_exp;

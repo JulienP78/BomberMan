@@ -6,10 +6,12 @@ import java.awt.Color;
 
 public class Joueur 
 {	
-	private int x;
-	private int y;
+	private int id;
+
+	private int positionX;
+	private int positionY;
 	
-	private int sens;
+	private String sens;
 	
 	private int hitx;
 	private int hity;
@@ -17,9 +19,7 @@ public class Joueur
 	private int life;
 	
 	private int speed;
-	
-	private int who;
-	
+		
 	private int nb_bomb;
 	Bombe [] bombe=new Bombe [10] ;
 	
@@ -30,19 +30,20 @@ public class Joueur
 	private int ttm;
 	private int inv;
 	
-	private Color color;
 	
 
-	public Joueur (Terrain terrain, Color color)
+	public Joueur (Terrain terrain, int id, int positionX, int positionY)
 	{	this.life=3;
 		this.speed=3;
 		this.nb_bomb=3;
 		this.timer=0;
 		this.inv=0;
 		this.ttm=2000;
-		this .sens=1;
+		this.sens="front_profile";
 		
-		this.color=color;
+		this.id=id;
+		this.positionX=positionX;
+		this.positionY=positionY;
 		
 		this.hitx=3*terrain.getwidth()/4;
 		this.hity=3*terrain.getwidth()/4;
@@ -57,16 +58,6 @@ public class Joueur
 		this.bb_exp=1000;
 	}
 	
-	
-	public int get_x ()
-	{	
-		return this.x;
-	}
-	
-	public int get_y ()
-	{	
-		return this.y;
-	}
 	
 	public int getnbbombe ()
 	{	
@@ -86,27 +77,14 @@ public class Joueur
 		return this.bombe[num];
 	}
 	
-	public void init (int who, int x, int y, int width, int heigth)
-	{	
-		this.who=who;
-
-		if (who==1)
-		{	this.x=3*width;
-			this.y=3*heigth;
-		}
-		if (who==2)
-		{	this.x=(x*2*width)-(3*width);
-			this.y=(y*2*heigth)-(3*heigth);
-		}
-	}
 		
 	public Terrain put_bombe(Terrain terrain)
 	{
 		int i=0;
 		int test=0;
 		
-		int sx=this.x/(terrain.getwidth()*2);
-		int sy=this.y/(terrain.getheigth()*2);
+		int sx=this.positionX/(terrain.getwidth()*2);
+		int sy=this.positionY/(terrain.getheigth()*2);
 		
 		while (test==0)
 		{	if (i==this.nb_bomb)
@@ -114,8 +92,8 @@ public class Joueur
 			}
 			else
 			{	if (this.bombe[i].getactivate()==0)
-				{	terrain=this.bombe[i].put_bombe(this.bb_bef, this.bb_exp, bombe[i].getPuissance(), sx, sy, terrain);
-					//terrain.set(sx,sy,665);
+				{	
+					terrain=this.bombe[i].put_bombe(this.bb_bef, this.bb_exp, bombe[i].getPuissance(), sx, sy, terrain);
 					test=1;
 				}
 				else
@@ -212,10 +190,10 @@ public class Joueur
 		}
 	}
 	
-	public Terrain bon_deg (Terrain terrain)
+	public Terrain bon_deg(Terrain terrain)
 	{
-		int sx=this.x/(terrain.getwidth()*2);
-		int sy=this.y/(terrain.getheigth()*2);
+		int sx=this.positionX/(terrain.getwidth()*2);
+		int sy=this.positionY/(terrain.getheigth()*2);
 		
 		if (this.inv!=0)
 		{
@@ -234,7 +212,7 @@ public class Joueur
 			terrain.set(sx, sy, 0);
 		}
 		/*--------------------------------------------------------------------------------------------------------------------------*/
-		if (this.x+this.hitx>(sx+1)*2*terrain.getwidth())
+		if (this.positionX+this.hitx>(sx+1)*2*terrain.getwidth())
 		{
 			if (terrain.gettab(sx+1, sy)>=666)
 			{
@@ -247,7 +225,7 @@ public class Joueur
 				terrain.set(sx+1, sy, 0);
 			}
 		}
-		if (this.x-this.hitx<(sx)*2*terrain.getwidth())
+		if (this.positionX-this.hitx<(sx)*2*terrain.getwidth())
 		{
 			if (terrain.gettab(sx-1, sy)>=666)
 			{
@@ -260,7 +238,7 @@ public class Joueur
 				terrain.set(sx-1, sy, 0);
 			}
 		}
-		if (this.y+this.hity>(sy+1)*2*terrain.getheigth())
+		if (this.positionY+this.hity>(sy+1)*2*terrain.getheigth())
 		{
 			if (terrain.gettab(sx, sy+1)>=666)
 			{
@@ -273,7 +251,7 @@ public class Joueur
 				terrain.set(sx, sy+1, 0);
 			}
 		}
-		if (this.y-this.hity<(sy)*2*terrain.getheigth())
+		if (this.positionY-this.hity<(sy)*2*terrain.getheigth())
 		{	
 			if (terrain.gettab(sx, sy-1)>=666)
 			{
@@ -289,150 +267,94 @@ public class Joueur
 		
 		return terrain;
 	}
+	
+	public void  move(String move, Terrain terrain)
+	{	
+		int mem_x=this.positionX;
+		int mem_y=this.positionY;
+		
+		if (move=="up" && noObstacle("up", terrain))
+		{	
+			this.positionY=this.positionY+this.speed;
+			this.sens="back_profile";
+			
+		}
+		else if (move=="left" && noObstacle("left", terrain))
+		{	
+			this.positionX=this.positionX-this.speed;
+			this.sens="left_profile";
+		}
+		else if (move=="down" && noObstacle("down", terrain))
+		{	
+			this.positionY=this.positionY-this.speed;
+			this.sens="front_profile";
+		}
+		else if (move=="right" && noObstacle("right", terrain))
+		{	
+			this.positionX=this.positionX+this.speed;
+			this.sens="right_profile";
+		}
+	
+	}
+	
+	public void draw()
+	{	
+		String playerImage = "player_" + (this.id+1) + "_" + this.sens + ".png";
+		StdDraw.picture(positionX, positionY, playerImage, 33, 50);
+	}
 
-	public void test (int mem_x, int mem_y, Terrain terrain)
+	public boolean noObstacle(String move, Terrain terrain)
 	{
-		int sx=this.x/(terrain.getwidth()*2);
-		int sy=this.y/(terrain.getheigth()*2);
-		
-		if (this.x+this.hitx>(sx+1)*2*terrain.getwidth())
+		int spaceAllow = 0;
+		int casePositionToCheck=0;
+		int playerPositionXInTab = this.positionX/(terrain.getwidth()*2);
+		int playerPositionYInTab = this.positionY/(terrain.getheigth()*2);
+
+		if (move == "up")
 		{
-			if (terrain.test(sx+1,sy)==1)
-				this.x=mem_x;
-		
-			if ((this.y+this.hity>(sy+1)*2*terrain.getheigth())&&(terrain.test(sx+1,sy+1)==1))
+			spaceAllow=2*terrain.getheigth()/3;
+			casePositionToCheck = (this.positionY+spaceAllow)/(terrain.getheigth()*2);
+
+			if(terrain.gettab(playerPositionXInTab, casePositionToCheck)==1
+			 ||terrain.gettab(playerPositionXInTab, casePositionToCheck)==2)
 			{
-				this.y=mem_y;
-			}
-			if ((this.y-this.hity<(sy)*2*terrain.getheigth())&&(terrain.test(sx+1,sy-1)==1))
-			{	
-				this.y=mem_y;
-			}		
-		}
-		if (this.x-this.hitx<(sx)*2*terrain.getwidth())
-		{	
-			if (terrain.test(sx-1,sy)==1)
-				this.x=mem_x;
-
-			if ((this.y+this.hity>(sy+1)*2*terrain.getheigth())&&(terrain.test(sx-1,sy+1)==1))
-			{	
-				this.y=mem_y;
-			}
-			if ((this.y-this.hity<(sy)*2*terrain.getheigth())&&(terrain.test(sx-1,sy-1)==1))
-			{	
-				this.y=mem_y;
+				return false;
 			}
 		}
-		
-		if (this.y+this.hity>(sy+1)*2*terrain.getheigth())
-		{	
-			if (terrain.test(sx,sy+1)==1)
-				this.y=mem_y;
-		
-			if ((this.x+this.hitx>(sx+1)*2*terrain.getwidth())&&(terrain.test(sx+1,sy+1)==1))
-			{	
-				this.x=mem_x;
-			}
-			if ((this.x-this.hity<(sx)*2*terrain.getwidth())&&(terrain.test(sx-1,sy+1)==1))
-			{	
-				this.x=mem_x;
-			}
-		}
-		if (this.y-this.hity<(sy)*2*terrain.getheigth())
-		{	
-			if (terrain.test(sx,sy-1)==1)
-				this.y=mem_y;
-		
-			if ((this.x+this.hitx>(sx+1)*2*terrain.getwidth())&&(terrain.test(sx+1,sy-1)==1))
-			{	
-				this.x=mem_x;
-			}
-			if ((this.x-this.hity<(sx)*2*terrain.getwidth())&&(terrain.test(sx-1,sy-1)==1))
-			{	
-				this.x=mem_x;
-			}
-		}
-	}
-	
-	public void  move (int dep, Terrain terrain)
-	{	
-		int mem_x=this.x;
-		int mem_y=this.y;
-		
-		if (dep==1)
-		{	
-			this.y=this.y+this.speed;
-			this.sens=4;
-		}
-		else if (dep==2)
-		{	
-			this.x=this.x-this.speed;
-			this.sens=3;
-		}
-		else if (dep==3)
-		{	
-			this.y=this.y-this.speed;
-			this.sens=1;
-		}
-		else if (dep==4)
-		{	
-			this.x=this.x+this.speed;
-			this.sens=2;
-		}
-	
-		test (mem_x, mem_y,terrain);
-	}
-	
-	public void draw2 (Terrain terrain)
-	{	
-		StdDraw.setPenColor(this.color);
-
-		StdDraw.filledRectangle (this.x,this.y,terrain.getwidth()/2, terrain.getheigth()/2);
-	}
-	
-	public void draw ()
-	{	
-		Color color2 = new Color(255,50,50);
-		if (this.color.getBlue()==color2.getBlue())
+		else if(move == "left")
 		{
-			if (this.sens==1)
-			{	
-				StdDraw.picture(x, y, "Front.png", 33, 50);
-			}
-			else if (this.sens==2)
-			{	
-				StdDraw.picture(x, y, "Right.png", 33, 50);
-			}
-			else if (this.sens==3)
-			{	
-				StdDraw.picture(x, y, "Left.png", 33, 50);
-			}
-			else if (this.sens==4)
-			{	
-				StdDraw.picture(x, y, "Back.png", 33, 50);
-			}
-		}
-		else 
-		{
-			if (this.sens==1)
-			{	
-				StdDraw.picture(x, y, "Front2.png", 40, 50);
-			}
-			else if (this.sens==2)
-			{	
-				StdDraw.picture(x, y, "Right2.png", 33, 50);
-			}
-			else if (this.sens==3)
-			{	
-				StdDraw.picture(x, y, "Left2.png", 33, 50);
-			}
-			else if (this.sens==4)
-			{	
-				StdDraw.picture(x, y, "Back2.png", 40, 50);
-			}	
-		}
-		
-	}
+			spaceAllow=2*terrain.getwidth()/3;
+			casePositionToCheck = (this.positionX-spaceAllow)/(terrain.getwidth()*2);
 
-	
+			if(terrain.gettab(casePositionToCheck, playerPositionYInTab)==1
+			 ||terrain.gettab(casePositionToCheck, playerPositionYInTab)==2)
+			{
+				return false;
+			}
+
+		}
+		else if(move == "right")
+		{
+			spaceAllow=2*terrain.getwidth()/3;
+			casePositionToCheck = (this.positionX+spaceAllow)/(terrain.getwidth()*2);
+
+			if(terrain.gettab(casePositionToCheck, playerPositionYInTab)==1
+			 ||terrain.gettab(casePositionToCheck, playerPositionYInTab)==2)
+			{
+				return false;
+			}
+		}
+		else if(move == "down")
+		{
+			spaceAllow=2*terrain.getheigth()/3;
+			casePositionToCheck = (this.positionY-spaceAllow)/(terrain.getheigth()*2);
+
+			if(terrain.gettab(playerPositionXInTab, casePositionToCheck)==1
+			 ||terrain.gettab(playerPositionXInTab, casePositionToCheck)==2)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 }
