@@ -34,7 +34,7 @@ public class Joueur
 	
 
 	public Joueur (Terrain terrain, Color color)
-	{	this.life=1;
+	{	this.life=3;
 		this.speed=3;
 		this.nb_bomb=3;
 		this.timer=0;
@@ -130,6 +130,7 @@ public class Joueur
 	{
 		if(val==10 && this.bombe[0].getPuissance()>1)
 		{
+			System.out.println("Bonus 1");
 			for(int i = 0 ; i < this.bombe.length ; i++)
 			{
 				this.bombe[i].setPuissance(bombe[i].getPuissance()-1);
@@ -137,6 +138,8 @@ public class Joueur
 		}
 		else if(val==20 && this.bombe[0].getPuissance()<10)
 		{
+			System.out.println("Bonus 2");
+
 			for(int i = 0 ; i < this.bombe.length ; i++)
 			{
 				this.bombe[i].setPuissance(bombe[i].getPuissance()+1);
@@ -144,6 +147,8 @@ public class Joueur
 		}
 		else if(val == 30)
 		{
+			System.out.println("Bonus 3");
+
 			for(int i = 0 ; i < this.bombe.length ; i++)
 			{
 				this.bombe[i].setPuissance(10);
@@ -151,22 +156,32 @@ public class Joueur
 		}
 		else if(val == 40)
 		{
-			
+			System.out.println("Bonus 4");
+
 		}
 		else if(val == 50)
 		{
+			System.out.println("Bonus 5");
+
 			this.life++;
 		}
 		else if(val == 60)
 		{
+			System.out.println("Bonus 6");
+
 			this.speed++;
+			
 		}
 		else if(val==70 && this.speed>1)
 		{
+			System.out.println("Bonus 7");
+
 			this.speed--;
 		}
 		else if (val==80)
 		{
+			System.out.println("Bonus 8");
+
 			Audio sound3 = new Audio("Bonus");
 			this.nb_bomb=this.nb_bomb+2;
 			if (this.nb_bomb>7)
@@ -174,6 +189,8 @@ public class Joueur
 		}
 		else if(val == 90)
 		{
+			System.out.println("Bonus 9");
+
 			this.nb_bomb=this.nb_bomb-2;
 			if (this.nb_bomb<2)
 				this.nb_bomb=2;
@@ -211,7 +228,7 @@ public class Joueur
 			setdeg();
 		}
 		
-		if ((terrain.gettab(sx, sy)>=10)&&(terrain.gettab(sx, sy)<=50))
+		if ((terrain.gettab(sx, sy)>=10)&&(terrain.gettab(sx, sy)<=90))
 		{
 			this.setbon(terrain.gettab(sx, sy));
 			terrain.set(sx, sy, 0);
@@ -224,7 +241,7 @@ public class Joueur
 				setdeg();
 			}
 			
-			if ((terrain.gettab(sx+1, sy)>=10)&&(terrain.gettab(sx+1, sy)<=50))
+			if ((terrain.gettab(sx+1, sy)>=10)&&(terrain.gettab(sx+1, sy)<=90))
 			{
 				this.setbon(terrain.gettab(sx+1, sy));
 				terrain.set(sx+1, sy, 0);
@@ -237,7 +254,7 @@ public class Joueur
 			setdeg();
 			}
 			
-			if ((terrain.gettab(sx-1, sy)>=10)&&(terrain.gettab(sx-1, sy)<=50))
+			if ((terrain.gettab(sx-1, sy)>=10)&&(terrain.gettab(sx-1, sy)<=90))
 			{
 				this.setbon(terrain.gettab(sx-1, sy));
 				terrain.set(sx-1, sy, 0);
@@ -250,7 +267,7 @@ public class Joueur
 				setdeg();
 			}
 			
-			if ((terrain.gettab(sx, sy+1)>=10)&&(terrain.gettab(sx, sy+1)<=50))
+			if ((terrain.gettab(sx, sy+1)>=10)&&(terrain.gettab(sx, sy+1)<=90))
 			{
 				this.setbon(terrain.gettab(sx, sy+1));
 				terrain.set(sx, sy+1, 0);
@@ -263,7 +280,7 @@ public class Joueur
 				setdeg();
 			}
 			
-			if ((terrain.gettab(sx, sy-1)>=10)&&(terrain.gettab(sx, sy-1)<=50))
+			if ((terrain.gettab(sx, sy-1)>=10)&&(terrain.gettab(sx, sy-1)<=90))
 			{
 				this.setbon(terrain.gettab(sx, sy-1));
 				terrain.set(sx, sy-1, 0);

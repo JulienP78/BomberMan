@@ -259,7 +259,7 @@ public class Bombe
 			{	terrain.set(this.x+i,this.y,667);
 				test=1;
 			}
-			else
+			else if(terrain.gettab(this.x+i,this.y)==0)
 				terrain.set(this.x+i,this.y,666);
 			
 			if (i==this.puissance)
@@ -279,7 +279,7 @@ public class Bombe
 			{	terrain.set(this.x,this.y-i,667);
 				test=1;
 			}
-			else 
+			else if(terrain.gettab(this.x,this.y-i)==0)
 				terrain.set(this.x,this.y-i,666);
 		
 			if (i==this.puissance)
@@ -299,7 +299,7 @@ public class Bombe
 			{	terrain.set(this.x-i,this.y,667);
 				test=1;
 			}
-			else
+			else if(terrain.gettab(this.x-i,this.y)==0)
 				terrain.set(this.x-i,this.y,666);
 			
 			if (i==this.puissance)
@@ -319,7 +319,7 @@ public class Bombe
 			{	terrain.set(this.x,this.y+i,667);
 				test=1;
 			}
-			else
+			else if(terrain.gettab(this.x,this.y+i)==0)
 				terrain.set(this.x,this.y+i,666);
 			
 			if (i==this.puissance)

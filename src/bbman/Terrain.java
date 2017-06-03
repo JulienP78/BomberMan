@@ -159,13 +159,13 @@ public class Terrain
 				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
 				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_bombe_plus.png", 35, 33);
 				}
-				else if (this.tab[i][j]==80)
+				else if (this.tab[i][j]==90)
 				{	StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "Herbe.png", 50, 50);
 				StdDraw.picture((i*2*this.width)+orgx, (j*2*this.heigth)+orgy, "bonus_bombe_moins.png", 35, 33);
 				}
 			}
 		}
-		StdDraw.setPenColor(255, 0, 0);
+		StdDraw.setPenColor(255, 255, 255);
 		StdDraw.setPenRadius(200);
 		StdDraw.picture(this.getwidth()*2*18.9, this.getheigth()*2*16.5, "J2.png", 200, 90);
 		StdDraw.picture(this.getwidth()*2*20.6, this.getheigth()*2*15.5, "NombreVies.png", 30, 30);
