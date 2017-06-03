@@ -13,34 +13,27 @@ public class Joueur
 	
 	private String sens;
 	
-	private int hitx;
-	private int hity;
-	
-	private int life;
+	private int numberOfLife;
 	
 	private int speed;
 		
-	private int nb_bomb;
+	private int numberOfBomb;
 	Bombe [] bombe=new Bombe [10] ;
 	
 
 	public Joueur (Terrain terrain, int id, int positionX, int positionY)
-	{	this.life=3;
-		this.speed=3;
-		this.nb_bomb=3;
-		this.sens="front_profile";
-		
+	{	
 		this.id=id;
 		this.positionX=positionX;
 		this.positionY=positionY;
+		this.sens="front_profile";
+		this.numberOfLife=3;
+		this.speed=3;
+		this.numberOfBomb=3;
 		
-		this.hitx=3*terrain.getwidth()/4;
-		this.hity=3*terrain.getwidth()/4;
-		
-		int i=0;
-		
-		for (i=0; i<10; i++)
-		{	bombe [i]=new Bombe();
+		for (int i=0; i<this.bombe.length; i++)
+		{	
+			bombe[i]=new Bombe();
 		}
 	}
 	
@@ -53,193 +46,109 @@ public class Joueur
 	{
 		return this.positionY;
 	}
-	public int getnbbombe ()
+	public int getNumberOfBomb()
 	{	
-		return this.nb_bomb;
+		return this.numberOfBomb;
 	}
 	
-	public int getlife ()
+	public int getNumberOfLife()
 	{	
-		return this.life;
+		return this.numberOfLife;
 	}
-	public int getnbbomb ()
-	{	
-		return this.nb_bomb;
-	}
-	public Bombe getbomb (int num)
-	{	
-		return this.bombe[num];
-	}
-	
-	public void setLife(int life)
+	public void setNumberOfLife(int newNumberOfLife)
 	{
-		this.life = life;
+		this.numberOfLife = newNumberOfLife;
 	}
 		
-	public Terrain put_bombe(Terrain terrain)
+	public Terrain dropBomb(Terrain terrain)
 	{
-		int i=0;
-		int test=0;
+		boolean keepOn = true;
 		
-		int sx=this.positionX/(terrain.getwidth()*2);
-		int sy=this.positionY/(terrain.getheigth()*2);
+		int positionX=this.positionX/(terrain.getHalfWidthOfRow()*2);
+		int positionY=this.positionY/(terrain.getHalfHeigthOfLine()*2);
 		
-		while (test==0)
-		{	if (i==this.nb_bomb)
-			{	test=1;
+		for (int i = 0 ; i < this.numberOfBomb && keepOn ; i++)
+		{
+			if (this.bombe[i].isActivated()==false)
+			{	
+				terrain=this.bombe[i].activateBomb(positionX, positionY, terrain);
+				keepOn=false;
 			}
-			else
-			{	if (this.bombe[i].getactivate()==0)
-				{	
-					terrain=this.bombe[i].put_bombe(5000, 1000, bombe[i].getPuissance(), sx, sy, terrain);
-					test=1;
+		}
+		return terrain;
+	}
+		
+	public Terrain getBonus(Terrain terrain)
+	{
+		int playerPositionXInTab=this.positionX/(terrain.getHalfWidthOfRow()*2);
+		int playerPositionYInTab=this.positionY/(terrain.getHalfHeigthOfLine()*2);
+		
+		if ((terrain.getTab(playerPositionXInTab, playerPositionYInTab)>=10)&&(terrain.getTab(playerPositionXInTab, playerPositionYInTab)<=90))
+		{
+			int bonusValue = terrain.getTab(playerPositionXInTab, playerPositionYInTab);
+			
+			if(bonusValue==10 && this.bombe[0].getPuissance()>1)
+			{
+				for(int i = 0 ; i < this.bombe.length ; i++)
+				{
+					this.bombe[i].setPuissance(bombe[i].getPuissance()-1);
 				}
-				else
-					i=i+1;
 			}
+			else if(bonusValue==20 && this.bombe[0].getPuissance()<10)
+			{
+				for(int i = 0 ; i < this.bombe.length ; i++)
+				{
+					this.bombe[i].setPuissance(bombe[i].getPuissance()+1);
+				}
+			}
+			else if(bonusValue == 30)
+			{
+				for(int i = 0 ; i < this.bombe.length ; i++)
+				{
+					this.bombe[i].setPuissance(10);
+				}
+			}
+			else if(bonusValue == 40)
+			{
+			}
+			else if(bonusValue == 50)
+			{
+				this.numberOfLife++;
+			}
+			else if(bonusValue == 60)
+			{
+				this.speed++;
+				
+			}
+			else if(bonusValue==70 && this.speed>1)
+			{
+				this.speed--;
+			}
+			else if (bonusValue==80)
+			{
+				Audio sound3 = new Audio("Bonus");
+				this.numberOfBomb=this.numberOfBomb+2;
+				if (this.numberOfBomb>7)
+					this.numberOfBomb=7;
+			}
+			else if(bonusValue == 90)
+			{
+				this.numberOfBomb=this.numberOfBomb-2;
+				if (this.numberOfBomb<2)
+					this.numberOfBomb=2;
+			}
+			terrain.setTab(playerPositionXInTab, playerPositionYInTab, 0);
 		}
 		
 		return terrain;
 	}
 	
-	public void setbon (int val)
-	{
-		if(val==10 && this.bombe[0].getPuissance()>1)
-		{
-			System.out.println("Bonus 1");
-			for(int i = 0 ; i < this.bombe.length ; i++)
-			{
-				this.bombe[i].setPuissance(bombe[i].getPuissance()-1);
-			}
-		}
-		else if(val==20 && this.bombe[0].getPuissance()<10)
-		{
-			System.out.println("Bonus 2");
-
-			for(int i = 0 ; i < this.bombe.length ; i++)
-			{
-				this.bombe[i].setPuissance(bombe[i].getPuissance()+1);
-			}
-		}
-		else if(val == 30)
-		{
-			System.out.println("Bonus 3");
-
-			for(int i = 0 ; i < this.bombe.length ; i++)
-			{
-				this.bombe[i].setPuissance(10);
-			}
-		}
-		else if(val == 40)
-		{
-			System.out.println("Bonus 4");
-
-		}
-		else if(val == 50)
-		{
-			System.out.println("Bonus 5");
-
-			this.life++;
-		}
-		else if(val == 60)
-		{
-			System.out.println("Bonus 6");
-
-			this.speed++;
-			
-		}
-		else if(val==70 && this.speed>1)
-		{
-			System.out.println("Bonus 7");
-
-			this.speed--;
-		}
-		else if (val==80)
-		{
-			System.out.println("Bonus 8");
-
-			Audio sound3 = new Audio("Bonus");
-			this.nb_bomb=this.nb_bomb+2;
-			if (this.nb_bomb>7)
-				this.nb_bomb=7;
-		}
-		else if(val == 90)
-		{
-			System.out.println("Bonus 9");
-
-			this.nb_bomb=this.nb_bomb-2;
-			if (this.nb_bomb<2)
-				this.nb_bomb=2;
-		}
-	
-	}
-	
-	
-	public Terrain bon_deg(Terrain terrain)
-	{
-		int sx=this.positionX/(terrain.getwidth()*2);
-		int sy=this.positionY/(terrain.getheigth()*2);
-		
-		if ((terrain.gettab(sx, sy)>=10)&&(terrain.gettab(sx, sy)<=90))
-		{
-			this.setbon(terrain.gettab(sx, sy));
-			terrain.set(sx, sy, 0);
-		}
-		/*--------------------------------------------------------------------------------------------------------------------------*/
-		if (this.positionX+this.hitx>(sx+1)*2*terrain.getwidth())
-		{
-
-			
-			if ((terrain.gettab(sx+1, sy)>=10)&&(terrain.gettab(sx+1, sy)<=90))
-			{
-				this.setbon(terrain.gettab(sx+1, sy));
-				terrain.set(sx+1, sy, 0);
-			}
-		}
-		if (this.positionX-this.hitx<(sx)*2*terrain.getwidth())
-		{
-
-			
-			if ((terrain.gettab(sx-1, sy)>=10)&&(terrain.gettab(sx-1, sy)<=90))
-			{
-				this.setbon(terrain.gettab(sx-1, sy));
-				terrain.set(sx-1, sy, 0);
-			}
-		}
-		if (this.positionY+this.hity>(sy+1)*2*terrain.getheigth())
-		{
-
-			
-			if ((terrain.gettab(sx, sy+1)>=10)&&(terrain.gettab(sx, sy+1)<=90))
-			{
-				this.setbon(terrain.gettab(sx, sy+1));
-				terrain.set(sx, sy+1, 0);
-			}
-		}
-		if (this.positionY-this.hity<(sy)*2*terrain.getheigth())
-		{	
-
-			
-			if ((terrain.gettab(sx, sy-1)>=10)&&(terrain.gettab(sx, sy-1)<=90))
-			{
-				this.setbon(terrain.gettab(sx, sy-1));
-				terrain.set(sx, sy-1, 0);
-			}
-		}
-		
-		return terrain;
-	}
-	
-	public void  move(String move, Terrain terrain)
+	public void moveTo(String move, Terrain terrain)
 	{	
-		int mem_x=this.positionX;
-		int mem_y=this.positionY;
-		
 		if (move=="up" && noObstacle("up", terrain))
 		{	
 			this.positionY=this.positionY+this.speed;
 			this.sens="back_profile";
-			
 		}
 		else if (move=="left" && noObstacle("left", terrain))
 		{	
@@ -258,38 +167,32 @@ public class Joueur
 		}
 	
 	}
-	
-	public void draw()
-	{	
-		String playerImage = "player_" + (this.id+1) + "_" + this.sens + ".png";
-		StdDraw.picture(positionX, positionY, playerImage, 33, 50);
-	}
 
 	public boolean noObstacle(String move, Terrain terrain)
 	{
 		int spaceAllow = 0;
 		int casePositionToCheck=0;
-		int playerPositionXInTab = this.positionX/(terrain.getwidth()*2);
-		int playerPositionYInTab = this.positionY/(terrain.getheigth()*2);
+		int playerPositionXInTab = this.positionX/(terrain.getHalfWidthOfRow()*2);
+		int playerPositionYInTab = this.positionY/(terrain.getHalfHeigthOfLine()*2);
 
 		if (move == "up")
 		{
-			spaceAllow=2*terrain.getheigth()/3;
-			casePositionToCheck = (this.positionY+spaceAllow)/(terrain.getheigth()*2);
+			spaceAllow=2*terrain.getHalfHeigthOfLine()/3;
+			casePositionToCheck = (this.positionY+spaceAllow)/(terrain.getHalfHeigthOfLine()*2);
 
-			if(terrain.gettab(playerPositionXInTab, casePositionToCheck)==1
-			 ||terrain.gettab(playerPositionXInTab, casePositionToCheck)==2)
+			if(terrain.getTab(playerPositionXInTab, casePositionToCheck)==1
+			 ||terrain.getTab(playerPositionXInTab, casePositionToCheck)==2)
 			{
 				return false;
 			}
 		}
 		else if(move == "left")
 		{
-			spaceAllow=2*terrain.getwidth()/3;
-			casePositionToCheck = (this.positionX-spaceAllow)/(terrain.getwidth()*2);
+			spaceAllow=2*terrain.getHalfWidthOfRow()/3;
+			casePositionToCheck = (this.positionX-spaceAllow)/(terrain.getHalfWidthOfRow()*2);
 
-			if(terrain.gettab(casePositionToCheck, playerPositionYInTab)==1
-			 ||terrain.gettab(casePositionToCheck, playerPositionYInTab)==2)
+			if(terrain.getTab(casePositionToCheck, playerPositionYInTab)==1
+			 ||terrain.getTab(casePositionToCheck, playerPositionYInTab)==2)
 			{
 				return false;
 			}
@@ -297,26 +200,32 @@ public class Joueur
 		}
 		else if(move == "right")
 		{
-			spaceAllow=2*terrain.getwidth()/3;
-			casePositionToCheck = (this.positionX+spaceAllow)/(terrain.getwidth()*2);
+			spaceAllow=2*terrain.getHalfWidthOfRow()/3;
+			casePositionToCheck = (this.positionX+spaceAllow)/(terrain.getHalfWidthOfRow()*2);
 
-			if(terrain.gettab(casePositionToCheck, playerPositionYInTab)==1
-			 ||terrain.gettab(casePositionToCheck, playerPositionYInTab)==2)
+			if(terrain.getTab(casePositionToCheck, playerPositionYInTab)==1
+			 ||terrain.getTab(casePositionToCheck, playerPositionYInTab)==2)
 			{
 				return false;
 			}
 		}
 		else if(move == "down")
 		{
-			spaceAllow=2*terrain.getheigth()/3;
-			casePositionToCheck = (this.positionY-spaceAllow)/(terrain.getheigth()*2);
+			spaceAllow=2*terrain.getHalfHeigthOfLine()/3;
+			casePositionToCheck = (this.positionY-spaceAllow)/(terrain.getHalfHeigthOfLine()*2);
 
-			if(terrain.gettab(playerPositionXInTab, casePositionToCheck)==1
-			 ||terrain.gettab(playerPositionXInTab, casePositionToCheck)==2)
+			if(terrain.getTab(playerPositionXInTab, casePositionToCheck)==1
+			 ||terrain.getTab(playerPositionXInTab, casePositionToCheck)==2)
 			{
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	public void draw()
+	{	
+		String playerImage = "player_" + (this.id+1) + "_" + this.sens + ".png";
+		StdDraw.picture(positionX, positionY, playerImage, 33, 50);
 	}
 }
