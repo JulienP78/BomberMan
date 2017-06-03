@@ -100,11 +100,12 @@ public class Bombe
 		return terrain;
 	}
 	
-	public Terrain gestion (Terrain terrain)
+	public Terrain gestion (Terrain terrain, Joueur[] joueur)
 	{	long test=0;
 		if ((this.activate==1)&&(this.explose==0))
 		{	if (java.lang.System.currentTimeMillis()-this.timer>this.time_bef)
-			{ terrain=this.boum(terrain);
+			{ 
+			terrain=this.boum(terrain, joueur);
 			}
 		}
 		if ((this.activate==1)&&(this.explose==1))
@@ -244,12 +245,12 @@ public class Bombe
 		return terrain;
 	}
 	
-	public Terrain boum (Terrain terrain)
+	public Terrain boum (Terrain terrain, Joueur[] joueur)
 	{	int test=0;
 		int i=1;
 
 		Audio sound = new Audio("boum");
-		
+		checkIfPlayerIsHere(terrain, joueur, this.x,this.y);
 		terrain.set(this.x, this.y, 666);
 		
 		while (test==0)
@@ -259,9 +260,11 @@ public class Bombe
 			{	terrain.set(this.x+i,this.y,667);
 				test=1;
 			}
-			else if(terrain.gettab(this.x+i,this.y)==0)
+			else if(terrain.gettab(this.x+i,this.y)==0 )
+			{
 				terrain.set(this.x+i,this.y,666);
-			
+			}
+			checkIfPlayerIsHere(terrain, joueur, this.x+i, this.y);
 			if (i==this.puissance)
 				test=1;
 		
@@ -269,7 +272,7 @@ public class Bombe
 				i=i+1;
 		}
 		this.mxp=i;
-		i=0;
+		i=1;
 		test=0;
 		
 		while (test==0)
@@ -280,8 +283,10 @@ public class Bombe
 				test=1;
 			}
 			else if(terrain.gettab(this.x,this.y-i)==0)
+			{				
 				terrain.set(this.x,this.y-i,666);
-		
+			}
+			checkIfPlayerIsHere(terrain, joueur, this.x,this.y-i);
 			if (i==this.puissance)
 				test=1;
 		
@@ -289,7 +294,7 @@ public class Bombe
 				i=i+1;
 		}
 		this.mym=i;
-		i=0;
+		i=1;
 		test=0;
 		
 		while (test==0)
@@ -300,7 +305,10 @@ public class Bombe
 				test=1;
 			}
 			else if(terrain.gettab(this.x-i,this.y)==0)
+			{
 				terrain.set(this.x-i,this.y,666);
+			}
+			checkIfPlayerIsHere(terrain, joueur, this.x-i,this.y);
 			
 			if (i==this.puissance)
 				test=1;
@@ -309,7 +317,7 @@ public class Bombe
 				i=i+1;
 		}
 		this.mxm=i;
-		i=0;
+		i=1;
 		test=0;
 		
 		while (test==0)
@@ -320,8 +328,10 @@ public class Bombe
 				test=1;
 			}
 			else if(terrain.gettab(this.x,this.y+i)==0)
+			{
 				terrain.set(this.x,this.y+i,666);
-			
+			}
+			checkIfPlayerIsHere(terrain, joueur, this.x,this.y+i);
 			if (i==this.puissance)
 				test=1;
 		
@@ -329,7 +339,7 @@ public class Bombe
 				i=i+1;
 		}
 		this.myp=i;
-		i=0;
+		i=1;
 		test=0;
 		
 		this.timer=java.lang.System.currentTimeMillis() ;
@@ -337,6 +347,29 @@ public class Bombe
 		
 		return terrain;
 	}
-	
+
+
+	private boolean checkIfPlayerIsHere(Terrain terrain, Joueur[] joueur, int postionExplosionX, int positionExplosionY) 
+	{
+		boolean playerIsHere = false;
+		int positionPlayerX = 0;
+		int positionPlayerY = 0;
+		
+		for (int i = 0 ; i < joueur.length ; i++)
+		{
+			positionPlayerX = joueur[i].getPositionX()/(terrain.getwidth()*2);
+			positionPlayerY = joueur[i].getPositionY()/(terrain.getheigth()*2);
+			
+			if(positionPlayerX == postionExplosionX && positionPlayerY == positionExplosionY)
+			{
+				playerIsHere=true;
+				joueur[i].setLife(joueur[i].getlife()-1);
+			}
+		}
+		return playerIsHere;
 	}
+	
+	
+}
+
 

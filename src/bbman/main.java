@@ -59,11 +59,10 @@ public class main
 		
 			move2 (joueur, terrain);
 			
-			
 			for (i=0; i<nb_joueur; i++)
 			{	terrain=joueur[i].bon_deg(terrain);
 				for (j=0; j<joueur[i].getnbbombe();j++)
-					terrain=joueur[i].bombe[j].gestion(terrain);
+					terrain=joueur[i].bombe[j].gestion(terrain, joueur);
 			}
 		
 			terrain.draw_all (joueur);

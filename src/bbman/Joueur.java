@@ -58,7 +58,15 @@ public class Joueur
 		this.bb_exp=1000;
 	}
 	
+	public int getPositionX()
+	{
+		return this.positionX;
+	}
 	
+	public int getPositionY()
+	{
+		return this.positionY;
+	}
 	public int getnbbombe ()
 	{	
 		return this.nb_bomb;
@@ -77,6 +85,10 @@ public class Joueur
 		return this.bombe[num];
 	}
 	
+	public void setLife(int life)
+	{
+		this.life = life;
+	}
 		
 	public Terrain put_bombe(Terrain terrain)
 	{
@@ -176,35 +188,11 @@ public class Joueur
 	
 	}
 	
-	public void setdeg()
-	{
-		if (this.inv==0)
-		{
-			this.life=this.life-1;
-	
-			if (this.life<0)
-				this.life=0;
-			
-			this.inv=1;
-			this.timer=java.lang.System.currentTimeMillis();
-		}
-	}
 	
 	public Terrain bon_deg(Terrain terrain)
 	{
 		int sx=this.positionX/(terrain.getwidth()*2);
 		int sy=this.positionY/(terrain.getheigth()*2);
-		
-		if (this.inv!=0)
-		{
-			if (java.lang.System.currentTimeMillis()-this.timer>this.ttm)
-				this.inv=0;
-		}
-		
-		if (terrain.gettab(sx, sy)>=666)
-		{
-			setdeg();
-		}
 		
 		if ((terrain.gettab(sx, sy)>=10)&&(terrain.gettab(sx, sy)<=90))
 		{
@@ -214,10 +202,7 @@ public class Joueur
 		/*--------------------------------------------------------------------------------------------------------------------------*/
 		if (this.positionX+this.hitx>(sx+1)*2*terrain.getwidth())
 		{
-			if (terrain.gettab(sx+1, sy)>=666)
-			{
-				setdeg();
-			}
+
 			
 			if ((terrain.gettab(sx+1, sy)>=10)&&(terrain.gettab(sx+1, sy)<=90))
 			{
@@ -227,10 +212,7 @@ public class Joueur
 		}
 		if (this.positionX-this.hitx<(sx)*2*terrain.getwidth())
 		{
-			if (terrain.gettab(sx-1, sy)>=666)
-			{
-			setdeg();
-			}
+
 			
 			if ((terrain.gettab(sx-1, sy)>=10)&&(terrain.gettab(sx-1, sy)<=90))
 			{
@@ -240,10 +222,7 @@ public class Joueur
 		}
 		if (this.positionY+this.hity>(sy+1)*2*terrain.getheigth())
 		{
-			if (terrain.gettab(sx, sy+1)>=666)
-			{
-				setdeg();
-			}
+
 			
 			if ((terrain.gettab(sx, sy+1)>=10)&&(terrain.gettab(sx, sy+1)<=90))
 			{
@@ -253,10 +232,7 @@ public class Joueur
 		}
 		if (this.positionY-this.hity<(sy)*2*terrain.getheigth())
 		{	
-			if (terrain.gettab(sx, sy-1)>=666)
-			{
-				setdeg();
-			}
+
 			
 			if ((terrain.gettab(sx, sy-1)>=10)&&(terrain.gettab(sx, sy-1)<=90))
 			{
