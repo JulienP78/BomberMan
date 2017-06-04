@@ -83,8 +83,7 @@ public class Bombe
 		{	if (java.lang.System.currentTimeMillis()-this.timer>this.timeOfExplosion)
 			{
 				terrain=this.endOfEplosion(terrain);
-			}
-			
+			}	
 		}
 		return terrain;
 	}
@@ -93,7 +92,7 @@ public class Bombe
 	{	int test=0;
 		int i=1;
 
-		Audio sound = new Audio("explose");
+		Audio sound = new Audio("boum");
 		checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY);
 		terrain.setTab(this.positionX, this.positionY, 666);
 		
