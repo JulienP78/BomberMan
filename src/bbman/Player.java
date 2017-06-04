@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import edu.princeton.cs.introcs.StdDraw;
 import java.awt.Color;
 
-public class Joueur 
+public class Player 
 {	
 	private int id;
 
@@ -18,10 +18,10 @@ public class Joueur
 	private int speed;
 		
 	private int numberOfBomb;
-	Bombe [] bombe=new Bombe [10] ;
+	Bomb [] bombe=new Bomb [10] ;
 	
 
-	public Joueur (Terrain terrain, int id, int positionX, int positionY)
+	public Player (Ground terrain, int id, int positionX, int positionY)
 	{	
 		this.id=id;
 		this.positionX=positionX;
@@ -33,7 +33,7 @@ public class Joueur
 		
 		for (int i=0; i<this.bombe.length; i++)
 		{	
-			bombe[i]=new Bombe();
+			bombe[i]=new Bomb();
 		}
 	}
 	
@@ -60,7 +60,7 @@ public class Joueur
 		this.numberOfLife = newNumberOfLife;
 	}
 		
-	public Terrain dropBomb(Terrain terrain)
+	public Ground dropBomb(Ground terrain)
 	{
 		boolean keepOn = true;
 		
@@ -78,7 +78,7 @@ public class Joueur
 		return terrain;
 	}
 		
-	public Terrain getBonus(Terrain terrain)
+	public Ground getBonus(Ground terrain)
 	{
 		int playerPositionXInTab=this.positionX/(terrain.getHalfWidthOfRow()*2);
 		int playerPositionYInTab=this.positionY/(terrain.getHalfHeigthOfLine()*2);
@@ -126,7 +126,7 @@ public class Joueur
 			}
 			else if (bonusValue==80)
 			{
-				Audio sound3 = new Audio("Bonus");
+				Sound sound3 = new Sound("Bonus");
 				this.numberOfBomb=this.numberOfBomb+2;
 				if (this.numberOfBomb>7)
 					this.numberOfBomb=7;
@@ -143,7 +143,7 @@ public class Joueur
 		return terrain;
 	}
 	
-	public void moveTo(String move, Terrain terrain)
+	public void moveTo(String move, Ground terrain)
 	{	
 		if (move=="up" && noObstacle("up", terrain))
 		{	
@@ -168,7 +168,7 @@ public class Joueur
 	
 	}
 
-	public boolean noObstacle(String move, Terrain terrain)
+	public boolean noObstacle(String move, Ground terrain)
 	{
 		int spaceAllow = 0;
 		int casePositionToCheck=0;

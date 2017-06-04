@@ -7,7 +7,7 @@ import javax.sound.sampled.*;
 import java.applet.Applet;
 import java.applet.AudioClip;
 
-public class Terrain 
+public class Ground 
 {	private int [][] tab;
 	
 	private int numberOfRow;
@@ -17,7 +17,7 @@ public class Terrain
 	private int halfHeigthOfLine;
 	
 
-	public Terrain(int numberOfRow, int numberOfLine, int halfWidthOfRow, int halfHeigthOfLine)
+	public Ground(int numberOfRow, int numberOfLine, int halfWidthOfRow, int halfHeigthOfLine)
 	{	
 		this.tab=new int [numberOfRow][numberOfLine];
 		this.numberOfRow=numberOfRow;
@@ -77,7 +77,7 @@ public class Terrain
 		this.tab[x][y]=value;
 	}
 
-	public void draw(Joueur [] joueur)
+	public void draw(Player [] joueur)
 	{
 		int i=0;
 		int j=0;

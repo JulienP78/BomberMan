@@ -10,7 +10,7 @@ import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.Color;
 
-public class Bombe 
+public class Bomb 
 {	
 	private boolean isActivated;
 	private boolean hasExplosed;
@@ -27,7 +27,7 @@ public class Bombe
 	private int[] arreaExplosedd = {0,0,0,0}; // left, top, right, bot
 	
 	
-	public Bombe ()
+	public Bomb ()
 	{	
 		this.isActivated=false;
 		this.hasExplosed=false;
@@ -54,7 +54,7 @@ public class Bombe
 		this.puissance = puissance;
 	}
 	
-	public Terrain activateBomb(int x, int y, Terrain terrain)
+	public Ground activateBomb(int x, int y, Ground terrain)
 	{	
 		if (terrain.getTab(x, y)!=665)
 		{	
@@ -65,13 +65,13 @@ public class Bombe
 			this.timer=java.lang.System.currentTimeMillis() ;
 			
 			terrain.setTab(x,y,665);
-			Audio sound = new Audio("Beep2");
+			Sound sound = new Sound("Beep2");
 		}
 		
 		return terrain;
 	}
 	
-	public Terrain manage(Terrain terrain, Joueur[] joueur)
+	public Ground manage(Ground terrain, Player[] joueur)
 	{	
 		if ((this.isActivated==true)&&(this.hasExplosed==false))
 		{	if (java.lang.System.currentTimeMillis()-this.timer>this.timeBeforeExplosion)
@@ -88,11 +88,11 @@ public class Bombe
 		return terrain;
 	}
 
-	public Terrain explose(Terrain terrain, Joueur[] joueur)
+	public Ground explose(Ground terrain, Player[] joueur)
 	{	int test=0;
 		int i=1;
 
-		Audio sound = new Audio("boum");
+		Sound sound = new Sound("boum");
 		checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY);
 		terrain.setTab(this.positionX, this.positionY, 666);
 		
@@ -191,7 +191,7 @@ public class Bombe
 		return terrain;
 	}
 
-	private boolean checkIfPlayerIsHere(Terrain terrain, Joueur[] joueur, int postionExplosionX, int positionExplosionY) 
+	private boolean checkIfPlayerIsHere(Ground terrain, Player[] joueur, int postionExplosionX, int positionExplosionY) 
 	{
 		boolean playerIsHere = false;
 		int positionPlayerX = 0;
@@ -211,7 +211,7 @@ public class Bombe
 		return playerIsHere;
 	}
 	
-	public Terrain endOfEplosion(Terrain terrain)
+	public Ground endOfEplosion(Ground terrain)
 	{	
 		int i=1;
 		
@@ -324,7 +324,7 @@ public class Bombe
 		return value;
 	}
 	
-	public void draw(Terrain terrain)
+	public void draw(Ground terrain)
 	{	
 		if ((this.isActivated==true)&&(this.hasExplosed==false)) 
 		{			

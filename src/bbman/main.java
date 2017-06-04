@@ -23,8 +23,8 @@ public class main
 		
 		StdDraw.show(0);
 
-		Terrain terrain=new Terrain(numberOfRow,numberOfLine,halfWidthOfRow,halfHeigthOfLine);
-		Joueur [] joueur=new Joueur [numberOfPlayers] ;
+		Ground terrain=new Ground(numberOfRow,numberOfLine,halfWidthOfRow,halfHeigthOfLine);
+		Player [] joueur=new Player [numberOfPlayers] ;
 		
 		int idJoueur;
 		int positionX;
@@ -44,7 +44,7 @@ public class main
 				positionX=(numberOfRow*(halfWidthOfRow*2))-(3*halfWidthOfRow);
 				positionY=(numberOfLine*(halfHeigthOfLine*2))-(3*halfHeigthOfLine);
 			}
-			joueur [i]=new Joueur(terrain,idJoueur, positionX, positionY);
+			joueur [i]=new Player(terrain,idJoueur, positionX, positionY);
 		}
 		
 		terrain.draw(joueur);
@@ -72,7 +72,7 @@ public class main
 		displayGameOver(joueur, terrain);
 	}
 
-	public static void listenToPlayersAction(Joueur [] joueur, Terrain terrain)
+	public static void listenToPlayersAction(Player [] joueur, Ground terrain)
 	{	
 		if (StdDraw.isKeyPressed(KeyEvent.VK_Z))
 		{	
@@ -122,7 +122,7 @@ public class main
 		while (java.lang.System.currentTimeMillis()-time<mili);
 	}
 
-	public static boolean noPlayerIsDead(Joueur[] joueur)
+	public static boolean noPlayerIsDead(Player[] joueur)
 	{
 		for (int i = 0 ; i < joueur.length ; i++)
 		{
@@ -134,7 +134,7 @@ public class main
 		return true;
 	}
 	
-	public static void displayGameOver(Joueur[] joueur, Terrain terrain)
+	public static void displayGameOver(Player[] joueur, Ground terrain)
 	{
 		String joueurGagnant;
 		if(joueur[0].getNumberOfLife()<=0)
@@ -151,13 +151,13 @@ public class main
 		{
 			StdDraw.picture(terrain.getHalfWidthOfRow()*2*11, terrain.getHalfHeigthOfLine()*2*8, "FinJ1.png", 500, 300);
 			StdDraw.picture(terrain.getHalfWidthOfRow()*2*10, terrain.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
-			Audio sound = new Audio("Violin");
+			Sound sound = new Sound("Violin");
 		}
 		else if (joueurGagnant=="Joueur2")
 		{
 			StdDraw.picture(terrain.getHalfWidthOfRow()*2*11, terrain.getHalfHeigthOfLine()*2*8, "FinJ2.png", 500, 300);
 			StdDraw.picture(terrain.getHalfWidthOfRow()*2*10, terrain.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
-			Audio sound = new Audio("Hello");
+			Sound sound = new Sound("Hello");
 		}
 		
 		
