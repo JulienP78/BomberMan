@@ -34,27 +34,27 @@ public class Ground
 			for (j=0;j<numberOfLine;j++)
 			{	
 				if ((i==0)||(j==0)||(i==numberOfRow-1)||(j==numberOfLine-1)||((i%2==0)&&(j%2==0)))
-					this.tab [i][j]=-1;
+					this.tab [i][j]=1;
 				else
-					this.tab [i][j]=0;
+					this.tab [i][j]=2;
 			}
 		}
 		
-		this.tab [1][1]=1;
-		this.tab [2][1]=1;
-		this.tab [3][1]=1;
-		this.tab [3][2]=1;
-		this.tab [1][2]=1;
-		this.tab [1][3]=1;
-		this.tab [2][3]=1;
+		this.tab [1][1]=0;
+		this.tab [2][1]=0;
+		this.tab [3][1]=0;
+		this.tab [3][2]=0;
+		this.tab [1][2]=0;
+		this.tab [1][3]=0;
+		this.tab [2][3]=0;
 		
-		this.tab [numberOfRow-2][numberOfLine-2]=1;
-		this.tab [numberOfRow-3][numberOfLine-2]=1;
-		this.tab [numberOfRow-4][numberOfLine-2]=1;
-		this.tab [numberOfRow-4][numberOfLine-3]=1;
-		this.tab [numberOfRow-2][numberOfLine-3]=1;
-		this.tab [numberOfRow-2][numberOfLine-4]=1;
-		this.tab [numberOfRow-3][numberOfLine-4]=1;
+		this.tab [numberOfRow-2][numberOfLine-2]=0;
+		this.tab [numberOfRow-3][numberOfLine-2]=0;
+		this.tab [numberOfRow-4][numberOfLine-2]=0;
+		this.tab [numberOfRow-4][numberOfLine-3]=0;
+		this.tab [numberOfRow-2][numberOfLine-3]=0;
+		this.tab [numberOfRow-2][numberOfLine-4]=0;
+		this.tab [numberOfRow-3][numberOfLine-4]=0;
 	}
 
 	public int getHalfWidthOfRow()
@@ -93,17 +93,15 @@ public class Ground
 		int orgy=this.halfHeigthOfLine;
 
 		for (i=0;i<this.numberOfRow;i++)
-		{	
-			for (j=0;j<this.numberOfLine;j++)
-			{	
-				if (this.tab[i][j]==1)
+		{	for (j=0;j<this.numberOfLine;j++)
+			{	if (this.tab[i][j]==0)
 				{
-					StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
+				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
 				}
-				if (this.tab[i][j]==0)
+				if (this.tab[i][j]==2)
 				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Caisse.png", 50, 50);
 				}
-				else if (this.tab[i][j]==-1)
+				else if (this.tab[i][j]==1)
 				{	
 					StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Pelouse.png", 50, 50);
 				}
