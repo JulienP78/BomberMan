@@ -57,7 +57,7 @@ public class Bomb
 	
 	public Ground activateBomb(int x, int y, Ground terrain)
 	{	
-		if (terrain.getTab(x, y)!=665)
+		if (terrain.getTab(x, y)!=-99)
 		{	
 			this.isActivated=true;
 			this.positionX=x; 
@@ -65,7 +65,7 @@ public class Bomb
 			
 			this.timer=java.lang.System.currentTimeMillis() ;
 			
-			terrain.setTab(x,y,665);
+			terrain.setTab(x,y,-99);
 			Sound sound = new Sound("Beep2");
 		}
 		return terrain;
@@ -337,17 +337,6 @@ public class Bomb
 			}
 		}
 		return value;
-	}
-	
-	public void draw(Ground terrain)
-	{	
-		if ((this.isActivated==true)&&(this.hasExplosed==false)) 
-		{			
-			int x=this.positionX*terrain.getHalfWidthOfRow()*2+terrain.getHalfWidthOfRow();
-			int y=this.positionY*terrain.getHalfHeigthOfLine()*2+terrain.getHalfHeigthOfLine();
-			StdDraw.picture(x, y, "Herbe.png", 50, 50);
-			StdDraw.picture(x, y, "Bombe.png", 40, 50);
-		}
 	}
 }
 

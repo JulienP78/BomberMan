@@ -132,6 +132,10 @@ public class Ground
 				{	
 					filesToDraw[1] = "bonus_bombe_moins.png";
 				}
+				else if (this.tab[i][j] == -99)
+				{
+					filesToDraw[1] = "Bombe.png";
+				}
 				else if (this.tab[i][j]<=-100)
 				{	
 					filesToDraw[0] = "Explosion.png";
@@ -146,6 +150,7 @@ public class Ground
 			}
 			}
 		}
+		
 		StdDraw.setPenColor(255, 255, 255);
 		StdDraw.setPenRadius(200);
 		StdDraw.picture(this.getHalfWidthOfRow()*2*18.9, this.getHalfHeigthOfLine()*2*16.5, "J2.png", 200, 90);
@@ -159,12 +164,6 @@ public class Ground
 		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*1.5, "X " + joueur[0].getNumberOfLife());
 		StdDraw.picture(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*4.5, "NombreBombes.png", 30, 30);
 		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*3.5, "X " + joueur[0].getNumberOfBomb());
-		
-		for (int i=0;i<joueur.length;i++)
-		{
-			for (int j=0; j<joueur[i].getNumberOfBomb();j++) // On dessine les bombes
-				joueur[i].bombe[j].draw(this);
-		}
 		
 		for (int i=0;i<joueur.length;i++)
 			joueur[i].draw();	// on dessine les joueurs
