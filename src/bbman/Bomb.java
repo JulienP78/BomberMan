@@ -24,7 +24,7 @@ public class Bomb
 		
 	private int puissance;
 
-	private int[] arreaExplosedd = {0,0,0,0}; // left, top, right, bot
+	private int[] arreaExplosed = {0,0,0,0}; // left, top, right, bot
 	
 	
 	public Bomb()
@@ -74,13 +74,15 @@ public class Bomb
 	public Ground manage(Ground terrain, Player[] joueur)
 	{	
 		if ((this.isActivated==true)&&(this.hasExplosed==false))
-		{	if (java.lang.System.currentTimeMillis()-this.timer>this.timeBeforeExplosion)
+		{	
+			if (java.lang.System.currentTimeMillis()-this.timer>this.timeBeforeExplosion)
 			{ 
 				terrain=this.explose(terrain, joueur);
 			}
 		}
 		if ((this.isActivated==true)&&(this.hasExplosed==true))
-		{	if (java.lang.System.currentTimeMillis()-this.timer>this.timeOfExplosion)
+		{	
+			if (java.lang.System.currentTimeMillis()-this.timer>this.timeOfExplosion)
 			{
 				terrain=this.endOfEplosion(terrain);
 			}	
@@ -89,19 +91,26 @@ public class Bomb
 	}
 
 	public Ground explose(Ground terrain, Player[] joueur)
-	{	int test=0;
-		int i=1;
+	{	
+		
 
 		Sound sound = new Sound("boum");
 		checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY);
 		terrain.setTab(this.positionX, this.positionY, -100);
 		
-		while (test==0)
-		{	if (terrain.getTab(this.positionX+i,this.positionY)==-1)
-				test=1;
+		// -------------------------------------- On fait exploser à droite -----------------------------------------------
+
+		boolean wallOrBoxFound = false;
+		int i=1;
+		
+		while (!wallOrBoxFound)
+		{	
+			if (terrain.getTab(this.positionX+i,this.positionY)==-1)
+				wallOrBoxFound=true;
 			else if (terrain.getTab(this.positionX+i,this.positionY)==0)
-			{	terrain.setTab(this.positionX+i,this.positionY,-101);
-				test=1;
+			{	
+				terrain.setTab(this.positionX+i,this.positionY,-101);
+				wallOrBoxFound=true;
 			}
 			else if(terrain.getTab(this.positionX+i,this.positionY)==1)
 			{
@@ -109,21 +118,24 @@ public class Bomb
 			}
 			checkIfPlayerIsHere(terrain, joueur, this.positionX+i, this.positionY);
 			if (i==this.puissance)
-				test=1;
+				wallOrBoxFound=true;
 		
-			if (test==0)
+			if (!wallOrBoxFound)
 				i=i+1;
 		}
-		this.arreaExplosedd[2]=i;
-		i=1;
-		test=0;
+		this.arreaExplosed[2]=i;
 		
-		while (test==0)
+		// -------------------------------------- On fait exploser en bas -----------------------------------------------
+
+		i=1;
+		wallOrBoxFound=false;
+		
+		while (!wallOrBoxFound)
 		{	if (terrain.getTab(this.positionX,this.positionY-i)==-1)
-				test=1;
+				wallOrBoxFound=true;
 			else if (terrain.getTab(this.positionX,this.positionY-i)==0)
 			{	terrain.setTab(this.positionX,this.positionY-i,-101);
-				test=1;
+				wallOrBoxFound=true;
 			}
 			else if(terrain.getTab(this.positionX,this.positionY-i)==1)
 			{				
@@ -131,21 +143,24 @@ public class Bomb
 			}
 			checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY-i);
 			if (i==this.puissance)
-				test=1;
+				wallOrBoxFound=true;
 		
-			if (test==0)
+			if (!wallOrBoxFound)
 				i=i+1;
 		}
-		this.arreaExplosedd[3]=i;
-		i=1;
-		test=0;
+		this.arreaExplosed[3]=i;
 		
-		while (test==0)
+		// -------------------------------------- On fait exploser à gauche -----------------------------------------------
+
+		i=1;
+		wallOrBoxFound=false;
+		
+		while (!wallOrBoxFound)
 		{	if (terrain.getTab(this.positionX-i,this.positionY)==-1)
-				test=1;
+				wallOrBoxFound=true;
 			else if (terrain.getTab(this.positionX-i,this.positionY)==0)
 			{	terrain.setTab(this.positionX-i,this.positionY,-101);
-				test=1;
+				wallOrBoxFound=true;
 			}
 			else if(terrain.getTab(this.positionX-i,this.positionY)==1)
 			{
@@ -154,21 +169,24 @@ public class Bomb
 			checkIfPlayerIsHere(terrain, joueur, this.positionX-i,this.positionY);
 			
 			if (i==this.puissance)
-				test=1;
+				wallOrBoxFound=true;
 		
-			if (test==0)
+			if (!wallOrBoxFound)
 				i=i+1;
 		}
-		this.arreaExplosedd[0]=i;
+		this.arreaExplosed[0]=i;
 		i=1;
-		test=0;
 		
-		while (test==0)
+		// -------------------------------------- On fait exploser en haut -----------------------------------------------
+
+		wallOrBoxFound=false;
+		
+		while (!wallOrBoxFound)
 		{	if (terrain.getTab(this.positionX,this.positionY+i)==-1)
-				test=1;
+				wallOrBoxFound=true;
 			else if (terrain.getTab(this.positionX,this.positionY+i)==0)
 			{	terrain.setTab(this.positionX,this.positionY+i,-101);
-				test=1;
+				wallOrBoxFound=true;
 			}
 			else if(terrain.getTab(this.positionX,this.positionY+i)==1)
 			{
@@ -176,18 +194,15 @@ public class Bomb
 			}
 			checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY+i);
 			if (i==this.puissance)
-				test=1;
+				wallOrBoxFound=true;
 		
-			if (test==0)
+			if (!wallOrBoxFound)
 				i=i+1;
 		}
-		this.arreaExplosedd[1]=i;
-		i=1;
-		test=0;
 		
+		this.arreaExplosed[1]=i;
 		this.timer=java.lang.System.currentTimeMillis() ;
 		this.hasExplosed=true;
-		
 		return terrain;
 	}
 
@@ -217,20 +232,20 @@ public class Bomb
 		
 		terrain.setTab(this.positionX,this.positionY,1);
 
-		while (i<=this.arreaExplosedd[2])
+		while (i<=this.arreaExplosed[2])
 		{	
-			if(terrain.getTab(this.positionX+i,this.positionY)==-101)
+			if(terrain.getTab(this.positionX+i,this.positionY)==-101) // Si la case en explosion est une caisse
 			{
-				terrain.setTab(this.positionX+i,this.positionY,randomBonus());
+				terrain.setTab(this.positionX+i,this.positionY,randomBonus()); // On ajoute un bonus aléatoire
 			}
-			else if (terrain.getTab(this.positionX+i,this.positionY)==-100)
-				terrain.setTab(this.positionX+i,this.positionY,1);
-		
+			else if (terrain.getTab(this.positionX+i,this.positionY)==-100) // Si la case était une case libre
+				terrain.setTab(this.positionX+i,this.positionY,1);	// On la fait redevenir libre
+			
 			i=i+1;
 		}
 		i=0;
 		
-		while (i<=this.arreaExplosedd[3])
+		while (i<=this.arreaExplosed[3])
 		{	
 			if(terrain.getTab(this.positionX,this.positionY-i)==-101)
 			{
@@ -243,7 +258,7 @@ public class Bomb
 		}
 		i=0;
 		
-		while (i<=this.arreaExplosedd[0])
+		while (i<=this.arreaExplosed[0])
 		{	
 			if(terrain.getTab(this.positionX-i,this.positionY)==-101)
 			{
@@ -256,7 +271,7 @@ public class Bomb
 		}
 		i=0;
 		
-		while (i<=this.arreaExplosedd[1])
+		while (i<=this.arreaExplosed[1])
 		{	
 			if(terrain.getTab(this.positionX,this.positionY+i)==-101)
 			{

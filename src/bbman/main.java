@@ -13,8 +13,6 @@ public class main
 		int halfWidthOfRow=25;
 		int halfHeigthOfLine=25;
 		int numberOfPlayers=2;
-		int i=0;
-		int j=0;
 
 		StdDraw.setCanvasSize(halfWidthOfRow*numberOfRow*2,halfHeigthOfLine*numberOfLine*2);
 	
@@ -29,7 +27,7 @@ public class main
 		int idJoueur;
 		int positionX;
 		int positionY;
-		for (i=0;i<numberOfPlayers;i++)
+		for (int i=0;i<numberOfPlayers;i++)
 		{	
 			idJoueur = i;
 			positionX=0;
@@ -47,19 +45,16 @@ public class main
 			joueur [i]=new Player(terrain,idJoueur, positionX, positionY);
 		}
 		
-		terrain.draw(joueur);
+		terrain.draw(joueur); // On dessine le début de partie
 
-		while (noPlayerIsDead(joueur))
+		while (noPlayerIsDead(joueur)) // Si aucun joueur n'est mort
 		{	
-			i=0;
-			j=0;
-		
-			listenToPlayersAction(joueur, terrain);
+			listenToPlayersAction(joueur, terrain); // On écoute les saisis des deux joueurs
 			
-			for (i=0; i<numberOfPlayers; i++)
+			for (int i=0; i<numberOfPlayers; i++)
 			{	
-				terrain=joueur[i].getBonus(terrain);
-				for (j=0; j<joueur[i].getNumberOfBomb();j++)
+				terrain=joueur[i].getBonus(terrain); // On regarde si le joueur est sur une case avec un bonus
+				for (int j=0; j<joueur[i].getNumberOfBomb();j++)
 				{
 					terrain=joueur[i].bombe[j].manage(terrain, joueur);
 				}

@@ -181,7 +181,7 @@ public class Player
 			casePositionToCheck = (this.positionY+spaceAllow)/(terrain.getHalfHeigthOfLine()*2); // La case à regarder
 
 			if(terrain.getTab(playerPositionXInTab, casePositionToCheck)==0	// Si la case est une caisse
-			 ||terrain.getTab(playerPositionXInTab, casePositionToCheck)==-1) // Si la case est un mur
+			 ||terrain.getTab(playerPositionXInTab, casePositionToCheck)==-1) // ou si la case est un mur
 			{
 				return false;	// alors on renvoit faux et le joueur ne se déplace pas
 			}
