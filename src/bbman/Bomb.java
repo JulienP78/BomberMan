@@ -27,7 +27,7 @@ public class Bomb
 	private int[] arreaExplosedd = {0,0,0,0}; // left, top, right, bot
 	
 	
-	public Bomb ()
+	public Bomb()
 	{	
 		this.isActivated=false;
 		this.hasExplosed=false;
@@ -41,7 +41,8 @@ public class Bomb
 		
 	
 	public boolean isActivated()
-	{	return this.isActivated;
+	{
+		return this.isActivated;
 	}
 	
 	public int getPuissance()
@@ -67,7 +68,6 @@ public class Bomb
 			terrain.setTab(x,y,665);
 			Sound sound = new Sound("Beep2");
 		}
-		
 		return terrain;
 	}
 	

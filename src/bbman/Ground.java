@@ -163,11 +163,12 @@ public class Ground
 		
 		for (i=0;i<joueur.length;i++)
 		{
-			for (j=0; j<joueur[i].getNumberOfBomb ();j++)
+			for (j=0; j<joueur[i].getNumberOfBomb();j++) // On dessine les bombes
 				joueur[i].bombe[j].draw(this);
 		}
+		
 		for (i=0;i<joueur.length;i++)
-			joueur[i].draw();
+			joueur[i].draw();	// on dessine les joueurs
 	}
 
 	

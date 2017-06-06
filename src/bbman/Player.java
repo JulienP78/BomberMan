@@ -69,9 +69,9 @@ public class Player
 		
 		for (int i = 0 ; i < this.numberOfBomb && keepOn ; i++)
 		{
-			if (this.bombe[i].isActivated()==false)
+			if (this.bombe[i].isActivated()==false) // on parcourt les bombes tant qu'elles sont déjà activiées
 			{	
-				terrain=this.bombe[i].activateBomb(positionX, positionY, terrain);
+				terrain=this.bombe[i].activateBomb(positionX, positionY, terrain); // on active la première bombe non activé avec commme position la position du joueur
 				keepOn=false;
 			}
 		}
@@ -83,7 +83,7 @@ public class Player
 		int playerPositionXInTab=this.positionX/(terrain.getHalfWidthOfRow()*2);
 		int playerPositionYInTab=this.positionY/(terrain.getHalfHeigthOfLine()*2);
 		
-		if ((terrain.getTab(playerPositionXInTab, playerPositionYInTab)>=10)&&(terrain.getTab(playerPositionXInTab, playerPositionYInTab)<=90))
+		if ((terrain.getTab(playerPositionXInTab, playerPositionYInTab)>=10)&&(terrain.getTab(playerPositionXInTab, playerPositionYInTab)<=90)) // Si le joueur est sur une case bonus
 		{
 			int bonusValue = terrain.getTab(playerPositionXInTab, playerPositionYInTab);
 			
@@ -137,7 +137,7 @@ public class Player
 				if (this.numberOfBomb<2)
 					this.numberOfBomb=2;
 			}
-			terrain.setTab(playerPositionXInTab, playerPositionYInTab, 0);
+			terrain.setTab(playerPositionXInTab, playerPositionYInTab, 0); // On retire le bonus au terrain
 		}
 		
 		return terrain;
@@ -145,7 +145,7 @@ public class Player
 	
 	public void moveTo(String move, Ground terrain)
 	{	
-		if (move=="up" && noObstacle("up", terrain))
+		if (move=="up" && noObstacle("up", terrain)) // on verifie qu'il n'y a pas d'obstacle
 		{	
 			this.positionY=this.positionY+this.speed;
 			this.sens="back_profile";
@@ -168,7 +168,7 @@ public class Player
 	
 	}
 
-	public boolean noObstacle(String move, Ground terrain)
+	public boolean noObstacle(String move, Ground terrain) // On vérifie que le joueur peut bien se déplacer sur cette case
 	{
 		int spaceAllow = 0;
 		int casePositionToCheck=0;
@@ -178,12 +178,12 @@ public class Player
 		if (move == "up")
 		{
 			spaceAllow=2*terrain.getHalfHeigthOfLine()/3;
-			casePositionToCheck = (this.positionY+spaceAllow)/(terrain.getHalfHeigthOfLine()*2);
+			casePositionToCheck = (this.positionY+spaceAllow)/(terrain.getHalfHeigthOfLine()*2); // La case à regarder
 
-			if(terrain.getTab(playerPositionXInTab, casePositionToCheck)==1
-			 ||terrain.getTab(playerPositionXInTab, casePositionToCheck)==2)
+			if(terrain.getTab(playerPositionXInTab, casePositionToCheck)==1	// Si la case est une caisse
+			 ||terrain.getTab(playerPositionXInTab, casePositionToCheck)==2) // Si la case est un mur
 			{
-				return false;
+				return false;	// alors on renvoit faux et le joueur ne se déplace pas
 			}
 		}
 		else if(move == "left")

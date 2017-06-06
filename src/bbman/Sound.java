@@ -18,5 +18,4 @@ public class Sound
 		AudioClip son = Applet.newAudioClip(url); 
 		son.play();	
 	}
-	
 }
