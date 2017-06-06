@@ -97,13 +97,13 @@ public class Bomb
 		terrain.setTab(this.positionX, this.positionY, 666);
 		
 		while (test==0)
-		{	if (terrain.getTab(this.positionX+i,this.positionY)==1)
+		{	if (terrain.getTab(this.positionX+i,this.positionY)==-1)
 				test=1;
-			else if (terrain.getTab(this.positionX+i,this.positionY)==2)
+			else if (terrain.getTab(this.positionX+i,this.positionY)==0)
 			{	terrain.setTab(this.positionX+i,this.positionY,667);
 				test=1;
 			}
-			else if(terrain.getTab(this.positionX+i,this.positionY)==0 )
+			else if(terrain.getTab(this.positionX+i,this.positionY)==1)
 			{
 				terrain.setTab(this.positionX+i,this.positionY,666);
 			}
@@ -119,13 +119,13 @@ public class Bomb
 		test=0;
 		
 		while (test==0)
-		{	if (terrain.getTab(this.positionX,this.positionY-i)==1)
+		{	if (terrain.getTab(this.positionX,this.positionY-i)==-1)
 				test=1;
-			else if (terrain.getTab(this.positionX,this.positionY-i)==2)
+			else if (terrain.getTab(this.positionX,this.positionY-i)==0)
 			{	terrain.setTab(this.positionX,this.positionY-i,667);
 				test=1;
 			}
-			else if(terrain.getTab(this.positionX,this.positionY-i)==0)
+			else if(terrain.getTab(this.positionX,this.positionY-i)==1)
 			{				
 				terrain.setTab(this.positionX,this.positionY-i,666);
 			}
@@ -141,13 +141,13 @@ public class Bomb
 		test=0;
 		
 		while (test==0)
-		{	if (terrain.getTab(this.positionX-i,this.positionY)==1)
+		{	if (terrain.getTab(this.positionX-i,this.positionY)==-1)
 				test=1;
-			else if (terrain.getTab(this.positionX-i,this.positionY)==2)
+			else if (terrain.getTab(this.positionX-i,this.positionY)==0)
 			{	terrain.setTab(this.positionX-i,this.positionY,667);
 				test=1;
 			}
-			else if(terrain.getTab(this.positionX-i,this.positionY)==0)
+			else if(terrain.getTab(this.positionX-i,this.positionY)==1)
 			{
 				terrain.setTab(this.positionX-i,this.positionY,666);
 			}
@@ -164,13 +164,13 @@ public class Bomb
 		test=0;
 		
 		while (test==0)
-		{	if (terrain.getTab(this.positionX,this.positionY+i)==1)
+		{	if (terrain.getTab(this.positionX,this.positionY+i)==-1)
 				test=1;
-			else if (terrain.getTab(this.positionX,this.positionY+i)==2)
+			else if (terrain.getTab(this.positionX,this.positionY+i)==0)
 			{	terrain.setTab(this.positionX,this.positionY+i,667);
 				test=1;
 			}
-			else if(terrain.getTab(this.positionX,this.positionY+i)==0)
+			else if(terrain.getTab(this.positionX,this.positionY+i)==1)
 			{
 				terrain.setTab(this.positionX,this.positionY+i,666);
 			}
@@ -215,7 +215,7 @@ public class Bomb
 	{	
 		int i=1;
 		
-		terrain.setTab(this.positionX,this.positionY,0);
+		terrain.setTab(this.positionX,this.positionY,1);
 
 		while (i<=this.arreaExplosedd[2])
 		{	
@@ -223,8 +223,8 @@ public class Bomb
 			{
 				terrain.setTab(this.positionX+i,this.positionY,randomBonus());
 			}
-			else if (terrain.getTab(this.positionX+i,this.positionY)>=666)
-				terrain.setTab(this.positionX+i,this.positionY,0);
+			else if (terrain.getTab(this.positionX+i,this.positionY)==666)
+				terrain.setTab(this.positionX+i,this.positionY,1);
 		
 			i=i+1;
 		}
@@ -236,8 +236,8 @@ public class Bomb
 			{
 				terrain.setTab(this.positionX,this.positionY-i,randomBonus());
 			}
-			else if (terrain.getTab(this.positionX,this.positionY-i)>=666)
-					terrain.setTab(this.positionX,this.positionY-i,0);
+			else if (terrain.getTab(this.positionX,this.positionY-i)==666)
+					terrain.setTab(this.positionX,this.positionY-i,1);
 		
 			i=i+1;
 		}
@@ -249,8 +249,8 @@ public class Bomb
 			{
 				terrain.setTab(this.positionX-i,this.positionY,randomBonus());
 			}
-			else if (terrain.getTab(this.positionX-i,this.positionY)>=666)
-					terrain.setTab(this.positionX-i,this.positionY,0);
+			else if (terrain.getTab(this.positionX-i,this.positionY)==666)
+					terrain.setTab(this.positionX-i,this.positionY,1);
 		
 			i=i+1;
 		}
@@ -262,8 +262,8 @@ public class Bomb
 			{
 				terrain.setTab(this.positionX,this.positionY+i,randomBonus());
 			}
-			else if (terrain.getTab(this.positionX,this.positionY+i)>=666)
-				terrain.setTab(this.positionX,this.positionY+i,0);
+			else if (terrain.getTab(this.positionX,this.positionY+i)==666)
+				terrain.setTab(this.positionX,this.positionY+i,1);
 		
 			i=i+1;
 		}
@@ -278,7 +278,7 @@ public class Bomb
 	{	
 		int test=(int)(Math.random()*100);
 		int newTest=(int)(Math.random()*9);
-		int value = 0;
+		int value = 1;
 		
 		if (test<20)
 		{
