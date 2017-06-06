@@ -105,7 +105,7 @@ public class Ground
 				{	
 					StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Pelouse.png", 50, 50);
 				}
-				else if (this.tab[i][j]>=666)
+				else if (this.tab[i][j]<=-100)
 				{	
 					StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Explosion.png", 50, 50);
 				}
