@@ -128,7 +128,7 @@ public class Bomb
 				terrain.setTab(this.positionX+i,this.positionY,-100);
 			}
 			checkIfPlayerIsHere(terrain, joueur, this.positionX+i, this.positionY);
-			if (i==this.puissance)
+			if (i==this.puissance || this.positionX+(i+1) > terrain.getNumberOfRow()-1)
 				wallOrBoxFound=true;
 		
 			if (!wallOrBoxFound)
@@ -142,10 +142,12 @@ public class Bomb
 		wallOrBoxFound=false;
 		
 		while (!wallOrBoxFound)
-		{	if (terrain.getTab(this.positionX,this.positionY-i)==-1)
+		{	
+			if (terrain.getTab(this.positionX,this.positionY-i)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
 			else if (terrain.getTab(this.positionX,this.positionY-i)==0)
-			{	terrain.setTab(this.positionX,this.positionY-i,-101);
+			{	
+				terrain.setTab(this.positionX,this.positionY-i,-101);
 				wallOrBoxFound=true;
 			}
 			else if(terrain.getTab(this.positionX,this.positionY-i)==1)
@@ -153,7 +155,7 @@ public class Bomb
 				terrain.setTab(this.positionX,this.positionY-i,-100);
 			}
 			checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY-i);
-			if (i==this.puissance)
+			if (i==this.puissance || this.positionY-(i+1) < 0)
 				wallOrBoxFound=true;
 		
 			if (!wallOrBoxFound)
@@ -167,7 +169,7 @@ public class Bomb
 		wallOrBoxFound=false;
 		
 		while (!wallOrBoxFound)
-		{	if (terrain.getTab(this.positionX-i,this.positionY)==-1)
+		{	if (terrain.getTab(this.positionX-i,this.positionY)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
 			else if (terrain.getTab(this.positionX-i,this.positionY)==0)
 			{	terrain.setTab(this.positionX-i,this.positionY,-101);
@@ -179,7 +181,7 @@ public class Bomb
 			}
 			checkIfPlayerIsHere(terrain, joueur, this.positionX-i,this.positionY);
 			
-			if (i==this.puissance)
+			if (i==this.puissance || this.positionX-(i+1) < 0)
 				wallOrBoxFound=true;
 		
 			if (!wallOrBoxFound)
@@ -193,7 +195,7 @@ public class Bomb
 		wallOrBoxFound=false;
 		
 		while (!wallOrBoxFound)
-		{	if (terrain.getTab(this.positionX,this.positionY+i)==-1)
+		{	if (terrain.getTab(this.positionX,this.positionY+i)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
 			else if (terrain.getTab(this.positionX,this.positionY+i)==0)
 			{	terrain.setTab(this.positionX,this.positionY+i,-101);
@@ -204,7 +206,7 @@ public class Bomb
 				terrain.setTab(this.positionX,this.positionY+i,-100);
 			}
 			checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY+i);
-			if (i==this.puissance)
+			if (i==this.puissance || this.positionY+(i+1) > terrain.getNumberOfLine()-1)
 				wallOrBoxFound=true;
 		
 			if (!wallOrBoxFound)

@@ -110,7 +110,7 @@ public class Player
 			}
 			else if(bonusValue == 40)
 			{
-				for (int i = 0 ; i < this.numberOfBomb ; i++)
+				for (int i = 0 ; i < 10 ; i++)
 				{
 					this.bombe[i].setCanOvercomeWalls(true);
 				}

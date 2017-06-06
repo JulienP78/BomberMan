@@ -76,6 +76,16 @@ public class Ground
 	{
 		this.tab[x][y]=value;
 	}
+	
+	public int getNumberOfRow()
+	{
+		return this.numberOfRow;
+	}
+	
+	public int getNumberOfLine()
+	{
+		return this.numberOfLine;
+	}
 
 	public void draw(Player [] joueur)
 	{
