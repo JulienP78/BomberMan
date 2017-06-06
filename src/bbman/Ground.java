@@ -79,72 +79,71 @@ public class Ground
 
 	public void draw(Player [] joueur)
 	{
-		int i=0;
-		int j=0;
+		String[] filesToDraw = {"", ""};
 		
-		int rayon;
-		
-		if (this.halfWidthOfRow>this.halfHeigthOfLine)
-			rayon=this.halfHeigthOfLine;
-		else
-			rayon=this.halfWidthOfRow;
-		
-		int orgx=this.halfWidthOfRow;
-		int orgy=this.halfHeigthOfLine;
-
-		for (i=0;i<this.numberOfRow;i++)
-		{	for (j=0;j<this.numberOfLine;j++)
-			{	if (this.tab[i][j]==1)
-				{
-				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
-				}
+		for (int i=0;i<this.numberOfRow;i++)
+		{	
+			for (int j=0;j<this.numberOfLine;j++)
+			{	
+				filesToDraw[0] = "Herbe.png";
+				filesToDraw[1] = "";
+				
 				if (this.tab[i][j]==0)
-				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Caisse.png", 50, 50);
+				{	
+					filesToDraw[0] = "Caisse.png";
 				}
 				else if (this.tab[i][j]==-1)
 				{	
-					StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Pelouse.png", 50, 50);
+					filesToDraw[0] = "Pelouse.png";
+				}
+				else if (this.tab[i][j]==10)
+				{	
+					filesToDraw[1] = "bonus_flamme_bleue.png";
+				}
+				else if (this.tab[i][j]==20)
+				{	
+					filesToDraw[1] = "bonus_flamme_jaune.png";
+				}
+				else if (this.tab[i][j]==30)
+				{	
+					filesToDraw[1] = "bonus_flamme_rouge.png";
+				}
+				else if (this.tab[i][j]==40)
+				{	
+					filesToDraw[1] = "bonus_bombe_rouge.png";
+				}
+				else if (this.tab[i][j]==50)
+				{	
+					filesToDraw[1] = "bonus_vie.png";
+				}
+				else if (this.tab[i][j]==60)
+				{	
+					filesToDraw[1] = "bonus_speed_up.png";
+				}
+				else if (this.tab[i][j]==70)
+				{
+					filesToDraw[1] = "bonus_speed_down.png";
+				}
+				else if (this.tab[i][j]==80)
+				{	
+					filesToDraw[1] = "bonus_bombe_plus.png";
+				}
+				else if (this.tab[i][j]==90)
+				{	
+					filesToDraw[1] = "bonus_bombe_moins.png";
 				}
 				else if (this.tab[i][j]<=-100)
 				{	
-					StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Explosion.png", 50, 50);
+					filesToDraw[0] = "Explosion.png";
 				}
-				else if (this.tab[i][j]==10)
-				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
-				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "bonus_flamme_bleue.png", 35, 33);
+			
+			for (int file = 0 ; file < filesToDraw.length ; file++)
+			{
+				if(filesToDraw[file]!="")
+				{
+					StdDraw.picture((i*2*this.halfWidthOfRow)+halfWidthOfRow, (j*2*this.halfHeigthOfLine)+halfHeigthOfLine, filesToDraw[file], 50, 50);
 				}
-				else if (this.tab[i][j]==20)
-				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
-				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "bonus_flamme_jaune.png", 35, 33);
-				}
-				else if (this.tab[i][j]==30)
-				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
-				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "bonus_flamme_rouge.png", 35, 33);
-				}
-				else if (this.tab[i][j]==40)
-				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
-				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "bonus_bombe_rouge.png", 35, 33);
-				}
-				else if (this.tab[i][j]==50)
-				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
-				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "bonus_vie.png", 35, 33);
-				}
-				else if (this.tab[i][j]==60)
-				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
-				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "bonus_speed_up.png", 35, 33);
-				}
-				else if (this.tab[i][j]==70)
-				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
-				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "bonus_speed_down.png", 35, 33);
-				}
-				else if (this.tab[i][j]==80)
-				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
-				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "bonus_bombe_plus.png", 35, 33);
-				}
-				else if (this.tab[i][j]==90)
-				{	StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "Herbe.png", 50, 50);
-				StdDraw.picture((i*2*this.halfWidthOfRow)+orgx, (j*2*this.halfHeigthOfLine)+orgy, "bonus_bombe_moins.png", 35, 33);
-				}
+			}
 			}
 		}
 		StdDraw.setPenColor(255, 255, 255);
@@ -161,13 +160,13 @@ public class Ground
 		StdDraw.picture(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*4.5, "NombreBombes.png", 30, 30);
 		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*3.5, "X " + joueur[0].getNumberOfBomb());
 		
-		for (i=0;i<joueur.length;i++)
+		for (int i=0;i<joueur.length;i++)
 		{
-			for (j=0; j<joueur[i].getNumberOfBomb();j++) // On dessine les bombes
+			for (int j=0; j<joueur[i].getNumberOfBomb();j++) // On dessine les bombes
 				joueur[i].bombe[j].draw(this);
 		}
 		
-		for (i=0;i<joueur.length;i++)
+		for (int i=0;i<joueur.length;i++)
 			joueur[i].draw();	// on dessine les joueurs
 	}
 
