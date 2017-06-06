@@ -23,6 +23,7 @@ public class Bomb
 	private int timeOfExplosion;
 		
 	private int puissance;
+	private boolean canOvercomeWalls;
 
 	private int[] arreaExplosed = {0,0,0,0}; // left, top, right, bot
 	
@@ -37,6 +38,7 @@ public class Bomb
 		this.timeBeforeExplosion=5000;
 		this.timeOfExplosion=1000;
 		this.puissance=3;
+		this.canOvercomeWalls=false;
 	}
 		
 	
@@ -53,6 +55,16 @@ public class Bomb
 	public void setPuissance(int puissance)
 	{
 		this.puissance = puissance;
+	}
+	
+	public boolean canOvercomeWalls()
+	{
+		return this.canOvercomeWalls;
+	}
+	
+	public void setCanOvercomeWalls(boolean trueOrFalse)
+	{
+		this.canOvercomeWalls = trueOrFalse;
 	}
 	
 	public Ground activateBomb(int x, int y, Ground terrain)
@@ -93,7 +105,6 @@ public class Bomb
 	public Ground explose(Ground terrain, Player[] joueur)
 	{	
 		
-
 		Sound sound = new Sound("boum");
 		checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY);
 		terrain.setTab(this.positionX, this.positionY, -100);
@@ -105,7 +116,7 @@ public class Bomb
 		
 		while (!wallOrBoxFound)
 		{	
-			if (terrain.getTab(this.positionX+i,this.positionY)==-1)
+			if (terrain.getTab(this.positionX+i,this.positionY)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
 			else if (terrain.getTab(this.positionX+i,this.positionY)==0)
 			{	

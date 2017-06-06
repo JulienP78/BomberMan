@@ -110,6 +110,10 @@ public class Player
 			}
 			else if(bonusValue == 40)
 			{
+				for (int i = 0 ; i < this.numberOfBomb ; i++)
+				{
+					this.bombe[i].setCanOvercomeWalls(true);
+				}
 			}
 			else if(bonusValue == 50)
 			{
@@ -188,6 +192,7 @@ public class Player
 				return false;	// alors on renvoit faux et le joueur ne se déplace pas
 			}
 		}
+		
 		else if(move == "left")
 		{
 			spaceAllow=2*terrain.getHalfWidthOfRow()/3;
@@ -201,6 +206,7 @@ public class Player
 			}
 
 		}
+		
 		else if(move == "right")
 		{
 			spaceAllow=2*terrain.getHalfWidthOfRow()/3;
@@ -213,6 +219,7 @@ public class Player
 				return false;
 			}
 		}
+		
 		else if(move == "down")
 		{
 			spaceAllow=2*terrain.getHalfHeigthOfLine()/3;
