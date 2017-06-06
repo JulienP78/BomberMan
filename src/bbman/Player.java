@@ -172,6 +172,7 @@ public class Player
 	{
 		int spaceAllow = 0;
 		int casePositionToCheck=0;
+		int caseValueToCheck=0;
 		int playerPositionXInTab = this.positionX/(terrain.getHalfWidthOfRow()*2);
 		int playerPositionYInTab = this.positionY/(terrain.getHalfHeigthOfLine()*2);
 
@@ -179,9 +180,10 @@ public class Player
 		{
 			spaceAllow=2*terrain.getHalfHeigthOfLine()/3;
 			casePositionToCheck = (this.positionY+spaceAllow)/(terrain.getHalfHeigthOfLine()*2); // La case à regarder
-
-			if(terrain.getTab(playerPositionXInTab, casePositionToCheck)==0	// Si la case est une caisse
-			 ||terrain.getTab(playerPositionXInTab, casePositionToCheck)==-1) // ou si la case est un mur
+			caseValueToCheck = terrain.getTab(playerPositionXInTab, casePositionToCheck);
+			
+			if(caseValueToCheck==0	// Si la case est une caisse
+			 ||caseValueToCheck==-1) // ou si la case est un mur
 			{
 				return false;	// alors on renvoit faux et le joueur ne se déplace pas
 			}
@@ -190,9 +192,10 @@ public class Player
 		{
 			spaceAllow=2*terrain.getHalfWidthOfRow()/3;
 			casePositionToCheck = (this.positionX-spaceAllow)/(terrain.getHalfWidthOfRow()*2);
+			caseValueToCheck = terrain.getTab(casePositionToCheck, playerPositionYInTab);
 
-			if(terrain.getTab(casePositionToCheck, playerPositionYInTab)==0
-			 ||terrain.getTab(casePositionToCheck, playerPositionYInTab)==-1)
+			if(caseValueToCheck==0
+			 ||caseValueToCheck==-1)
 			{
 				return false;
 			}
@@ -202,9 +205,10 @@ public class Player
 		{
 			spaceAllow=2*terrain.getHalfWidthOfRow()/3;
 			casePositionToCheck = (this.positionX+spaceAllow)/(terrain.getHalfWidthOfRow()*2);
-
-			if(terrain.getTab(casePositionToCheck, playerPositionYInTab)==0
-			 ||terrain.getTab(casePositionToCheck, playerPositionYInTab)==-1)
+			caseValueToCheck = terrain.getTab(casePositionToCheck, playerPositionYInTab);
+			System.out.println(caseValueToCheck);
+			if(caseValueToCheck==0
+			 ||caseValueToCheck==-1)
 			{
 				return false;
 			}
@@ -213,9 +217,10 @@ public class Player
 		{
 			spaceAllow=2*terrain.getHalfHeigthOfLine()/3;
 			casePositionToCheck = (this.positionY-spaceAllow)/(terrain.getHalfHeigthOfLine()*2);
+			caseValueToCheck = terrain.getTab(playerPositionXInTab, casePositionToCheck);
 
-			if(terrain.getTab(playerPositionXInTab, casePositionToCheck)==0
-			 ||terrain.getTab(playerPositionXInTab, casePositionToCheck)==-1)
+			if(caseValueToCheck==0
+			 ||caseValueToCheck==-1)
 			{
 				return false;
 			}
