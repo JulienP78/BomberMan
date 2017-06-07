@@ -21,7 +21,7 @@ public class main
 		
 		StdDraw.show(0);
 
-		Ground terrain=new Ground(numberOfRow,numberOfLine,halfWidthOfRow,halfHeigthOfLine);
+		Ground ground=new Ground(numberOfRow,numberOfLine,halfWidthOfRow,halfHeigthOfLine); // instanciation du ground
 		Player [] joueur=new Player [numberOfPlayers] ;
 		
 		int idJoueur;
@@ -43,72 +43,72 @@ public class main
 				positionX=(numberOfRow*(halfWidthOfRow*2))-(3*halfWidthOfRow);
 				positionY=(numberOfLine*(halfHeigthOfLine*2))-(3*halfHeigthOfLine);
 			}
-			joueur[i]=new Player(terrain,idJoueur, positionX, positionY);
+			joueur[i]=new Player(ground,idJoueur, positionX, positionY);	// création des joueurs
 		}
 		
-		terrain.draw(joueur); // On dessine le début de partie
+		ground.draw(joueur); // on dessine le début de partie
 
-		while (noPlayerIsDead(joueur)) // Si aucun joueur n'est mort
+		while (noPlayerIsDead(joueur)) // si aucun joueur n'est mort
 		{	
-			listenToPlayersAction(joueur, terrain); // On écoute les saisis des deux joueurs
+			listenToPlayersAction(joueur, ground); // on écoute les saisis des deux joueurs
 			
 			for (int i=0; i<numberOfPlayers; i++)
 			{	
-				terrain=joueur[i].getBonus(terrain); // On regarde si le joueur est sur une case avec un bonus
+				ground=joueur[i].getBonus(ground); // on regarde si le joueur est sur une case avec un bonus
 				for (int j=0; j<joueur[i].getNumberOfBomb();j++)
 				{
-					terrain=joueur[i].bombe[j].manage(terrain, joueur);
+					ground=joueur[i].bombe[j].manage(ground, joueur); // on gère les bombes
 				}
 			}
 		
-			terrain.draw(joueur);
+			ground.draw(joueur); // on dessine le tout
 			StdDraw.show();
 			pause(5);
 		}
-		displayGameOver(joueur, terrain);
+		ground.displayGameOver(joueur, ground); // si un joueur est mort on affiche l'écran de fin
 	}
 
-	public static void listenToPlayersAction(Player [] joueur, Ground terrain)
+	public static void listenToPlayersAction(Player [] joueur, Ground ground)
 	{	
 		if (StdDraw.isKeyPressed(KeyEvent.VK_Z))
 		{	
-			joueur[0].moveTo("up",terrain);
+			joueur[0].moveTo("up",ground);
 		}
 		if (StdDraw.isKeyPressed(KeyEvent.VK_Q))
 		{	
-			joueur[0].moveTo("left",terrain);
+			joueur[0].moveTo("left",ground);
 		}
 		if (StdDraw.isKeyPressed(KeyEvent.VK_S))
 		{	
-			joueur[0].moveTo("down",terrain);
+			joueur[0].moveTo("down",ground);
 		}
 		if (StdDraw.isKeyPressed(KeyEvent.VK_D))
 		{	
-			joueur[0].moveTo("right",terrain);
+			joueur[0].moveTo("right",ground);
 		}
 		if (StdDraw.isKeyPressed(KeyEvent.VK_A))
 		{	
-			terrain=joueur[0].dropBomb(terrain);	
+			ground=joueur[0].dropBomb(ground);	
 		}
 		if (StdDraw.isKeyPressed(KeyEvent.VK_UP))
 		{	
-			joueur[1].moveTo("up",terrain);
+			joueur[1].moveTo("up",ground);
 		}
 		if (StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
 		{	
-			joueur[1].moveTo("left",terrain);
+			joueur[1].moveTo("left",ground);
 		}
 		if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
 		{	
-			joueur[1].moveTo("down",terrain);
+			joueur[1].moveTo("down",ground);
 		}
 		if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
 		{	
-			joueur[1].moveTo("right",terrain);
+			joueur[1].moveTo("right",ground);
 		}
 		if (StdDraw.isKeyPressed(KeyEvent.VK_ENTER))
 		{	
-			terrain=joueur[1].dropBomb(terrain);
+			ground=joueur[1].dropBomb(ground);
 		}
 	}
 	
@@ -128,50 +128,5 @@ public class main
 			}
 		}
 		return true;
-	}
-	
-	public static void displayGameOver(Player[] joueur, Ground terrain)
-	{
-		String joueurGagnant;
-		if(joueur[0].getNumberOfLife()<=0)
-		{
-			joueurGagnant = "Joueur2" ;
-		}
-		else
-		{
-			joueurGagnant="Joueur1";
-
-		}
-		
-		if (joueurGagnant=="Joueur1")
-		{
-			StdDraw.picture(terrain.getHalfWidthOfRow()*2*11, terrain.getHalfHeigthOfLine()*2*8, "FinJ1.png", 500, 300);
-			StdDraw.picture(terrain.getHalfWidthOfRow()*2*10, terrain.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
-			Sound sound = new Sound("Violin");
-		}
-		else if (joueurGagnant=="Joueur2")
-		{
-			StdDraw.picture(terrain.getHalfWidthOfRow()*2*11, terrain.getHalfHeigthOfLine()*2*8, "FinJ2.png", 500, 300);
-			StdDraw.picture(terrain.getHalfWidthOfRow()*2*10, terrain.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
-			Sound sound = new Sound("Hello");
-		}
-		
-		
-		StdDraw.show();
-		
-		while(true)
-		{
-			if(StdDraw.mousePressed())
-			{
-				if(StdDraw.mouseX()>terrain.getHalfWidthOfRow()*2*10-100
-				&& StdDraw.mouseX()<terrain.getHalfWidthOfRow()*2*10+100
-				&& StdDraw.mouseY()>terrain.getHalfHeigthOfLine()*2*5.8-50
-				&& StdDraw.mouseY()<terrain.getHalfHeigthOfLine()*2*5.8+50)
-					
-				{
-					main(null);
-				}
-			}
-		}
 	}
 }

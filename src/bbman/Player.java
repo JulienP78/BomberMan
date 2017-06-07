@@ -11,7 +11,7 @@ public class Player
 	private int positionX;
 	private int positionY;
 	
-	private String sens;
+	private String sens; // pour modifier l'image des joueurs en fonctions du déplacement
 	
 	private int numberOfLife;
 	
@@ -20,7 +20,7 @@ public class Player
 	
 	private int speed;
 
-	public Player (Ground terrain, int id, int positionX, int positionY)
+	public Player (Ground ground, int id, int positionX, int positionY)
 	{	
 		this.id=id;
 		this.positionX=positionX;
@@ -63,32 +63,33 @@ public class Player
 	{
 		return this.sens;
 	}
-	public Ground dropBomb(Ground terrain)
+	
+	public Ground dropBomb(Ground ground)
 	{
 		boolean keepOn = true;
 		
-		int positionX=this.positionX/(terrain.getHalfWidthOfRow()*2);
-		int positionY=this.positionY/(terrain.getHalfHeigthOfLine()*2);
+		int positionX=this.positionX/(ground.getHalfWidthOfRow()*2); // positionX dans la table 
+		int positionY=this.positionY/(ground.getHalfHeigthOfLine()*2); // positionY dans la table
 		
 		for (int i = 0 ; i < this.numberOfBomb && keepOn ; i++)
 		{
-			if (this.bombe[i].isActivated()==false) // on parcourt les bombes tant qu'elles sont déjà activiées
+			if (this.bombe[i].isActivated()==false) // on entre dans la boucle à la première bombe non activée
 			{	
-				terrain=this.bombe[i].activateBomb(positionX, positionY, terrain); // on active la première bombe non activé avec commme position la position du joueur
+				ground=this.bombe[i].activateBomb(positionX, positionY, ground); // on active la première bombe non activée avec commme position la position du joueur
 				keepOn=false;
 			}
 		}
-		return terrain;
+		return ground;
 	}
 		
-	public Ground getBonus(Ground terrain)
+	public Ground getBonus(Ground ground)
 	{
-		int playerPositionXInTab=this.positionX/(terrain.getHalfWidthOfRow()*2);
-		int playerPositionYInTab=this.positionY/(terrain.getHalfHeigthOfLine()*2);
+		int playerPositionXInTab=this.positionX/(ground.getHalfWidthOfRow()*2);
+		int playerPositionYInTab=this.positionY/(ground.getHalfHeigthOfLine()*2);
 		
-		if ((terrain.getTab(playerPositionXInTab, playerPositionYInTab)>=10)&&(terrain.getTab(playerPositionXInTab, playerPositionYInTab)<=90)) // Si le joueur est sur une case bonus
+		if ((ground.getTab(playerPositionXInTab, playerPositionYInTab)>=10)&&(ground.getTab(playerPositionXInTab, playerPositionYInTab)<=90)) // Si le joueur est sur une case bonus
 		{
-			int bonusValue = terrain.getTab(playerPositionXInTab, playerPositionYInTab);
+			int bonusValue = ground.getTab(playerPositionXInTab, playerPositionYInTab);
 			
 			if(bonusValue==10 && this.bombe[0].getPuissance()>1)
 			{
@@ -144,30 +145,30 @@ public class Player
 				if (this.numberOfBomb<2)
 					this.numberOfBomb=2;
 			}
-			terrain.setTab(playerPositionXInTab, playerPositionYInTab, 1); // On retire le bonus au terrain
+			ground.setTab(playerPositionXInTab, playerPositionYInTab, 1); // On retire le bonus au ground
 		}
 		
-		return terrain;
+		return ground;
 	}
 	
-	public void moveTo(String move, Ground terrain)
+	public void moveTo(String move, Ground ground)
 	{	
-		if (move=="up" && noObstacle("up", terrain)) // on verifie qu'il n'y a pas d'obstacle
+		if (move=="up" && noObstacle("up", ground)) // on verifie qu'il n'y a pas d'obstacle
 		{	
 			this.positionY=this.positionY+this.speed;
 			this.sens="back_profile";
 		}
-		else if (move=="left" && noObstacle("left", terrain))
+		else if (move=="left" && noObstacle("left", ground))
 		{	
 			this.positionX=this.positionX-this.speed;
 			this.sens="left_profile";
 		}
-		else if (move=="down" && noObstacle("down", terrain))
+		else if (move=="down" && noObstacle("down", ground))
 		{	
 			this.positionY=this.positionY-this.speed;
 			this.sens="front_profile";
 		}
-		else if (move=="right" && noObstacle("right", terrain))
+		else if (move=="right" && noObstacle("right", ground))
 		{	
 			this.positionX=this.positionX+this.speed;
 			this.sens="right_profile";
@@ -175,19 +176,19 @@ public class Player
 	
 	}
 
-	public boolean noObstacle(String move, Ground terrain) // On vérifie que le joueur peut bien se déplacer sur cette case
+	public boolean noObstacle(String move, Ground ground) // On vérifie que le joueur peut bien se déplacer sur cette case
 	{
 		int spaceAllow = 0;
 		int casePositionToCheck=0;
 		int caseValueToCheck=0;
-		int playerPositionXInTab = this.positionX/(terrain.getHalfWidthOfRow()*2);
-		int playerPositionYInTab = this.positionY/(terrain.getHalfHeigthOfLine()*2);
+		int playerPositionXInTab = this.positionX/(ground.getHalfWidthOfRow()*2);
+		int playerPositionYInTab = this.positionY/(ground.getHalfHeigthOfLine()*2);
 
 		if (move == "up")
 		{
-			spaceAllow=2*terrain.getHalfHeigthOfLine()/3;
-			casePositionToCheck = (this.positionY+spaceAllow)/(terrain.getHalfHeigthOfLine()*2); // La case à regarder
-			caseValueToCheck = terrain.getTab(playerPositionXInTab, casePositionToCheck);
+			spaceAllow=2*ground.getHalfHeigthOfLine()/3;
+			casePositionToCheck = (this.positionY+spaceAllow)/(ground.getHalfHeigthOfLine()*2); // La case à regarder
+			caseValueToCheck = ground.getTab(playerPositionXInTab, casePositionToCheck);
 			
 			if(caseValueToCheck==0	// Si la case est une caisse
 			 ||caseValueToCheck==-1 // ou si la case est un mur
@@ -199,9 +200,9 @@ public class Player
 		
 		else if(move == "left")
 		{
-			spaceAllow=2*terrain.getHalfWidthOfRow()/3;
-			casePositionToCheck = (this.positionX-spaceAllow)/(terrain.getHalfWidthOfRow()*2);
-			caseValueToCheck = terrain.getTab(casePositionToCheck, playerPositionYInTab);
+			spaceAllow=2*ground.getHalfWidthOfRow()/3;
+			casePositionToCheck = (this.positionX-spaceAllow)/(ground.getHalfWidthOfRow()*2);
+			caseValueToCheck = ground.getTab(casePositionToCheck, playerPositionYInTab);
 
 			if(caseValueToCheck==0
 			 ||caseValueToCheck==-1
@@ -214,9 +215,9 @@ public class Player
 		
 		else if(move == "right")
 		{
-			spaceAllow=2*terrain.getHalfWidthOfRow()/3;
-			casePositionToCheck = (this.positionX+spaceAllow)/(terrain.getHalfWidthOfRow()*2);
-			caseValueToCheck = terrain.getTab(casePositionToCheck, playerPositionYInTab);
+			spaceAllow=2*ground.getHalfWidthOfRow()/3;
+			casePositionToCheck = (this.positionX+spaceAllow)/(ground.getHalfWidthOfRow()*2);
+			caseValueToCheck = ground.getTab(casePositionToCheck, playerPositionYInTab);
 			
 			if(caseValueToCheck==0
 			 ||caseValueToCheck==-1
@@ -228,9 +229,9 @@ public class Player
 		
 		else if(move == "down")
 		{
-			spaceAllow=2*terrain.getHalfHeigthOfLine()/3;
-			casePositionToCheck = (this.positionY-spaceAllow)/(terrain.getHalfHeigthOfLine()*2);
-			caseValueToCheck = terrain.getTab(playerPositionXInTab, casePositionToCheck);
+			spaceAllow=2*ground.getHalfHeigthOfLine()/3;
+			casePositionToCheck = (this.positionY-spaceAllow)/(ground.getHalfHeigthOfLine()*2);
+			caseValueToCheck = ground.getTab(playerPositionXInTab, casePositionToCheck);
 
 			if(caseValueToCheck==0
 			 ||caseValueToCheck==-1

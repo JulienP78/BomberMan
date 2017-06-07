@@ -8,7 +8,8 @@ import java.applet.Applet;
 import java.applet.AudioClip;
 
 public class Ground 
-{	private int [][] tab;
+{	
+	private int [][] tab;
 	
 	private int numberOfRow;
 	private int numberOfLine;
@@ -16,7 +17,6 @@ public class Ground
 	private int halfWidthOfRow;
 	private int halfHeigthOfLine;
 	
-
 	public Ground(int numberOfRow, int numberOfLine, int halfWidthOfRow, int halfHeigthOfLine)
 	{	
 		this.tab=new int [numberOfRow][numberOfLine];
@@ -37,6 +37,7 @@ public class Ground
 			}
 		}
 		
+		//--------------------------------------- espace libre pour les joueurs ------------------------------------------------
 		this.tab [1][1]=1; // libre
 		this.tab [2][1]=1;
 		this.tab [3][1]=1;
@@ -92,7 +93,7 @@ public class Ground
 		{	
 			for (int j=0;j<this.numberOfLine;j++)
 			{	
-				filesToDraw[0] = "Herbe.png";
+				filesToDraw[0] = "Herbe.png"; // par défaut la case dessinée est une case libre
 				filesToDraw[1] = "";
 				
 				if (this.tab[i][j]==0)
@@ -101,7 +102,7 @@ public class Ground
 				}
 				else if (this.tab[i][j]==-1)
 				{	
-					filesToDraw[0] = "Pelouse.png";
+					filesToDraw[0] = "mur.png";
 				}
 				else if (this.tab[i][j]==10)
 				{	
@@ -176,9 +177,51 @@ public class Ground
 		StdDraw.picture(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*2.5, "NombreVies.png", 30, 30);
 		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*1.5, "X " + joueur[0].getNumberOfLife());
 		StdDraw.picture(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*4.5, "NombreBombes.png", 30, 30);
-		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*3.5, "X " + joueur[0].getNumberOfBomb());
-		
+		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*3.5, "X " + joueur[0].getNumberOfBomb());	
 	}
-
 	
+	public void displayGameOver(Player[] joueur, Ground ground)
+	{
+		String joueurGagnant;
+		if(joueur[0].getNumberOfLife()<=0)
+		{
+			joueurGagnant = "Joueur2" ;
+		}
+		else
+		{
+			joueurGagnant="Joueur1";
+
+		}
+		
+		if (joueurGagnant=="Joueur1")
+		{
+			StdDraw.picture(ground.getHalfWidthOfRow()*2*11, ground.getHalfHeigthOfLine()*2*8, "FinJ1.png", 500, 300);
+			StdDraw.picture(ground.getHalfWidthOfRow()*2*10, ground.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
+			Sound sound = new Sound("Violin");
+		}
+		else if (joueurGagnant=="Joueur2")
+		{
+			StdDraw.picture(ground.getHalfWidthOfRow()*2*11, ground.getHalfHeigthOfLine()*2*8, "FinJ2.png", 500, 300);
+			StdDraw.picture(ground.getHalfWidthOfRow()*2*10, ground.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
+			Sound sound = new Sound("Hello");
+		}
+		
+		
+		StdDraw.show();
+		
+		while(true)
+		{
+			if(StdDraw.mousePressed())
+			{
+				if(StdDraw.mouseX()>ground.getHalfWidthOfRow()*2*10-100
+				&& StdDraw.mouseX()<ground.getHalfWidthOfRow()*2*10+100
+				&& StdDraw.mouseY()>ground.getHalfHeigthOfLine()*2*5.8-50
+				&& StdDraw.mouseY()<ground.getHalfHeigthOfLine()*2*5.8+50)
+					
+				{
+					main.main(null);
+				}
+			}
+		}
+	}
 }

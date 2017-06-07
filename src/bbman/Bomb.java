@@ -67,9 +67,9 @@ public class Bomb
 		this.canOvercomeWalls = trueOrFalse;
 	}
 	
-	public Ground activateBomb(int x, int y, Ground terrain)
+	public Ground activateBomb(int x, int y, Ground ground)
 	{	
-		if (terrain.getTab(x, y)!=-99)
+		if (ground.getTab(x, y)!=-99)
 		{	
 			this.isActivated=true;
 			this.positionX=x; 
@@ -77,43 +77,43 @@ public class Bomb
 			
 			this.timer=java.lang.System.currentTimeMillis() ;
 			
-			terrain.setTab(x,y,-99);
+			ground.setTab(x,y,-99);
 			Sound sound = new Sound("Beep2");
 		}
-		return terrain;
+		return ground;
 	}
 	
-	public Ground manage(Ground terrain, Player[] joueur)
+	public Ground manage(Ground ground, Player[] joueur)
 	{	
 		if ((this.isActivated==true)&&(this.hasExplosed==false))
 		{	
 			if (java.lang.System.currentTimeMillis()-this.timer>this.timeBeforeExplosion)
 			{ 
-				terrain=this.explose(terrain, joueur);
+				ground=this.explose(ground, joueur);
 			}
 		}
 		if ((this.isActivated==true)&&(this.hasExplosed==true))
 		{	
 			if (java.lang.System.currentTimeMillis()-this.timer>this.timeOfExplosion)
 			{
-				terrain=this.endOfEplosion(terrain);
+				ground=this.endOfEplosion(ground);
 			}	
 		}
-		return terrain;
+		return ground;
 	}
 
-	public Ground explose(Ground terrain, Player[] joueur)
+	public Ground explose(Ground ground, Player[] joueur)
 	{	
 		
 		Sound sound = new Sound("boum");
-		checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY);
-		terrain.setTab(this.positionX, this.positionY, -100);
+		checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY);
+		ground.setTab(this.positionX, this.positionY, -100);
 		
 		
 		// -------------------------------------- On fait exploser au centre -----------------------------------------------
 
 		
-		terrain.setTab(this.positionX, this.positionY, -100);
+		ground.setTab(this.positionX, this.positionY, -100);
 		
 		// -------------------------------------- On fait exploser à droite -----------------------------------------------
 
@@ -122,19 +122,19 @@ public class Bomb
 		
 		while (!wallOrBoxFound)
 		{	
-			if (terrain.getTab(this.positionX+i,this.positionY)==-1 && this.canOvercomeWalls==false)
+			if (ground.getTab(this.positionX+i,this.positionY)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
-			else if (terrain.getTab(this.positionX+i,this.positionY)==0)
+			else if (ground.getTab(this.positionX+i,this.positionY)==0)
 			{	
-				terrain.setTab(this.positionX+i,this.positionY,-101);
+				ground.setTab(this.positionX+i,this.positionY,-101);
 				wallOrBoxFound=true;
 			}
-			else if(terrain.getTab(this.positionX+i,this.positionY)==1)
+			else if(ground.getTab(this.positionX+i,this.positionY)==1)
 			{
-				terrain.setTab(this.positionX+i,this.positionY,-100);
+				ground.setTab(this.positionX+i,this.positionY,-100);
 			}
-			checkIfPlayerIsHere(terrain, joueur, this.positionX+i, this.positionY);
-			if (i==this.puissance || this.positionX+(i+1) > terrain.getNumberOfRow()-1)
+			checkIfPlayerIsHere(ground, joueur, this.positionX+i, this.positionY);
+			if (i==this.puissance || this.positionX+(i+1) > ground.getNumberOfRow()-1)
 				wallOrBoxFound=true;
 		
 			if (!wallOrBoxFound)
@@ -149,18 +149,18 @@ public class Bomb
 		
 		while (!wallOrBoxFound)
 		{	
-			if (terrain.getTab(this.positionX,this.positionY-i)==-1 && this.canOvercomeWalls==false)
+			if (ground.getTab(this.positionX,this.positionY-i)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
-			else if (terrain.getTab(this.positionX,this.positionY-i)==0)
+			else if (ground.getTab(this.positionX,this.positionY-i)==0)
 			{	
-				terrain.setTab(this.positionX,this.positionY-i,-101);
+				ground.setTab(this.positionX,this.positionY-i,-101);
 				wallOrBoxFound=true;
 			}
-			else if(terrain.getTab(this.positionX,this.positionY-i)==1)
+			else if(ground.getTab(this.positionX,this.positionY-i)==1)
 			{				
-				terrain.setTab(this.positionX,this.positionY-i,-100);
+				ground.setTab(this.positionX,this.positionY-i,-100);
 			}
-			checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY-i);
+			checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY-i);
 			if (i==this.puissance || this.positionY-(i+1) < 0)
 				wallOrBoxFound=true;
 		
@@ -175,17 +175,17 @@ public class Bomb
 		wallOrBoxFound=false;
 		
 		while (!wallOrBoxFound)
-		{	if (terrain.getTab(this.positionX-i,this.positionY)==-1 && this.canOvercomeWalls==false)
+		{	if (ground.getTab(this.positionX-i,this.positionY)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
-			else if (terrain.getTab(this.positionX-i,this.positionY)==0)
-			{	terrain.setTab(this.positionX-i,this.positionY,-101);
+			else if (ground.getTab(this.positionX-i,this.positionY)==0)
+			{	ground.setTab(this.positionX-i,this.positionY,-101);
 				wallOrBoxFound=true;
 			}
-			else if(terrain.getTab(this.positionX-i,this.positionY)==1)
+			else if(ground.getTab(this.positionX-i,this.positionY)==1)
 			{
-				terrain.setTab(this.positionX-i,this.positionY,-100);
+				ground.setTab(this.positionX-i,this.positionY,-100);
 			}
-			checkIfPlayerIsHere(terrain, joueur, this.positionX-i,this.positionY);
+			checkIfPlayerIsHere(ground, joueur, this.positionX-i,this.positionY);
 			
 			if (i==this.puissance || this.positionX-(i+1) < 0)
 				wallOrBoxFound=true;
@@ -201,18 +201,18 @@ public class Bomb
 		wallOrBoxFound=false;
 		
 		while (!wallOrBoxFound)
-		{	if (terrain.getTab(this.positionX,this.positionY+i)==-1 && this.canOvercomeWalls==false)
+		{	if (ground.getTab(this.positionX,this.positionY+i)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
-			else if (terrain.getTab(this.positionX,this.positionY+i)==0)
-			{	terrain.setTab(this.positionX,this.positionY+i,-101);
+			else if (ground.getTab(this.positionX,this.positionY+i)==0)
+			{	ground.setTab(this.positionX,this.positionY+i,-101);
 				wallOrBoxFound=true;
 			}
-			else if(terrain.getTab(this.positionX,this.positionY+i)==1)
+			else if(ground.getTab(this.positionX,this.positionY+i)==1)
 			{
-				terrain.setTab(this.positionX,this.positionY+i,-100);
+				ground.setTab(this.positionX,this.positionY+i,-100);
 			}
-			checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY+i);
-			if (i==this.puissance || this.positionY+(i+1) > terrain.getNumberOfLine()-1)
+			checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY+i);
+			if (i==this.puissance || this.positionY+(i+1) > ground.getNumberOfLine()-1)
 				wallOrBoxFound=true;
 		
 			if (!wallOrBoxFound)
@@ -222,10 +222,10 @@ public class Bomb
 		this.arreaExplosed[1]=i;
 		this.timer=java.lang.System.currentTimeMillis() ;
 		this.hasExplosed=true;
-		return terrain;
+		return ground;
 	}
 
-	private boolean checkIfPlayerIsHere(Ground terrain, Player[] joueur, int postionExplosionX, int positionExplosionY) 
+	private boolean checkIfPlayerIsHere(Ground ground, Player[] joueur, int postionExplosionX, int positionExplosionY) 
 	{
 		boolean playerIsHere = false;
 		int positionPlayerX = 0;
@@ -233,8 +233,8 @@ public class Bomb
 		
 		for (int i = 0 ; i < joueur.length ; i++)
 		{
-			positionPlayerX = joueur[i].getPositionX()/(terrain.getHalfWidthOfRow()*2);
-			positionPlayerY = joueur[i].getPositionY()/(terrain.getHalfHeigthOfLine()*2);
+			positionPlayerX = joueur[i].getPositionX()/(ground.getHalfWidthOfRow()*2);
+			positionPlayerY = joueur[i].getPositionY()/(ground.getHalfHeigthOfLine()*2);
 			
 			if(positionPlayerX == postionExplosionX && positionPlayerY == positionExplosionY)
 			{
@@ -245,20 +245,20 @@ public class Bomb
 		return playerIsHere;
 	}
 	
-	public Ground endOfEplosion(Ground terrain)
+	public Ground endOfEplosion(Ground ground)
 	{	
 		int i=1;
 		
-		terrain.setTab(this.positionX,this.positionY,1);
+		ground.setTab(this.positionX,this.positionY,1);
 
 		while (i<=this.arreaExplosed[2])
 		{	
-			if(terrain.getTab(this.positionX+i,this.positionY)==-101) // Si la case en explosion est une caisse
+			if(ground.getTab(this.positionX+i,this.positionY)==-101) // Si la case en explosion est une caisse
 			{
-				terrain.setTab(this.positionX+i,this.positionY,randomBonus()); // On ajoute un bonus aléatoire
+				ground.setTab(this.positionX+i,this.positionY,randomBonus()); // On ajoute un bonus aléatoire
 			}
-			else if (terrain.getTab(this.positionX+i,this.positionY)==-100) // Si la case était une case libre
-				terrain.setTab(this.positionX+i,this.positionY,1);	// On la fait redevenir libre
+			else if (ground.getTab(this.positionX+i,this.positionY)==-100) // Si la case était une case libre
+				ground.setTab(this.positionX+i,this.positionY,1);	// On la fait redevenir libre
 			
 			i=i+1;
 		}
@@ -266,12 +266,12 @@ public class Bomb
 		
 		while (i<=this.arreaExplosed[3])
 		{	
-			if(terrain.getTab(this.positionX,this.positionY-i)==-101)
+			if(ground.getTab(this.positionX,this.positionY-i)==-101)
 			{
-				terrain.setTab(this.positionX,this.positionY-i,randomBonus());
+				ground.setTab(this.positionX,this.positionY-i,randomBonus());
 			}
-			else if (terrain.getTab(this.positionX,this.positionY-i)==-100)
-					terrain.setTab(this.positionX,this.positionY-i,1);
+			else if (ground.getTab(this.positionX,this.positionY-i)==-100)
+					ground.setTab(this.positionX,this.positionY-i,1);
 		
 			i=i+1;
 		}
@@ -279,12 +279,12 @@ public class Bomb
 		
 		while (i<=this.arreaExplosed[0])
 		{	
-			if(terrain.getTab(this.positionX-i,this.positionY)==-101)
+			if(ground.getTab(this.positionX-i,this.positionY)==-101)
 			{
-				terrain.setTab(this.positionX-i,this.positionY,randomBonus());
+				ground.setTab(this.positionX-i,this.positionY,randomBonus());
 			}
-			else if (terrain.getTab(this.positionX-i,this.positionY)==-100)
-					terrain.setTab(this.positionX-i,this.positionY,1);
+			else if (ground.getTab(this.positionX-i,this.positionY)==-100)
+					ground.setTab(this.positionX-i,this.positionY,1);
 		
 			i=i+1;
 		}
@@ -292,12 +292,12 @@ public class Bomb
 		
 		while (i<=this.arreaExplosed[1])
 		{	
-			if(terrain.getTab(this.positionX,this.positionY+i)==-101)
+			if(ground.getTab(this.positionX,this.positionY+i)==-101)
 			{
-				terrain.setTab(this.positionX,this.positionY+i,randomBonus());
+				ground.setTab(this.positionX,this.positionY+i,randomBonus());
 			}
-			else if (terrain.getTab(this.positionX,this.positionY+i)==-100)
-				terrain.setTab(this.positionX,this.positionY+i,1);
+			else if (ground.getTab(this.positionX,this.positionY+i)==-100)
+				ground.setTab(this.positionX,this.positionY+i,1);
 		
 			i=i+1;
 		}
@@ -305,7 +305,7 @@ public class Bomb
 		this.isActivated=false;
 		this.hasExplosed=false;
 		
-		return terrain;
+		return ground;
 	}
 	
 	public int randomBonus()
