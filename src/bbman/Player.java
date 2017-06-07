@@ -20,6 +20,9 @@ public class Player
 	
 	private int speed;
 
+	private boolean isBigBoss;
+	private String image;
+
 	public Player (Ground terrain, int id, int positionX, int positionY)
 	{	
 		this.id=id;
@@ -29,6 +32,7 @@ public class Player
 		this.numberOfLife=3;
 		this.numberOfBomb=3;
 		this.speed=3;
+		this.isBigBoss=false;
 		
 		for (int i=0; i<this.bombe.length; i++)
 		{	
@@ -63,6 +67,12 @@ public class Player
 	{
 		return this.sens;
 	}
+	
+	public boolean getIsBigBoss()
+	{
+		return this.isBigBoss;
+	}
+	
 	public Ground dropBomb(Ground terrain)
 	{
 		boolean keepOn = true;
@@ -86,7 +96,7 @@ public class Player
 		int playerPositionXInTab=this.positionX/(terrain.getHalfWidthOfRow()*2);
 		int playerPositionYInTab=this.positionY/(terrain.getHalfHeigthOfLine()*2);
 		
-		if ((terrain.getTab(playerPositionXInTab, playerPositionYInTab)>=10)&&(terrain.getTab(playerPositionXInTab, playerPositionYInTab)<=90)) // Si le joueur est sur une case bonus
+		if ((terrain.getTab(playerPositionXInTab, playerPositionYInTab)>=10)&&(terrain.getTab(playerPositionXInTab, playerPositionYInTab)<=100)) // Si le joueur est sur une case bonus
 		{
 			int bonusValue = terrain.getTab(playerPositionXInTab, playerPositionYInTab);
 			
@@ -143,6 +153,11 @@ public class Player
 				this.numberOfBomb=this.numberOfBomb-2;
 				if (this.numberOfBomb<2)
 					this.numberOfBomb=2;
+			}
+			else if(bonusValue == 100)
+			{
+				this.isBigBoss = true;
+				this.numberOfLife=100;
 			}
 			terrain.setTab(playerPositionXInTab, playerPositionYInTab, 1); // On retire le bonus au terrain
 		}

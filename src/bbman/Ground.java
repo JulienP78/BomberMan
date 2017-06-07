@@ -139,6 +139,10 @@ public class Ground
 				{	
 					filesToDraw[1] = "bonus_bombe_moins.png";
 				}
+				else if (this.tab[i][j]==100)
+				{	
+					filesToDraw[1] = "bonus_big_boss.png";
+				}
 				else if (this.tab[i][j] == -99)
 				{
 					filesToDraw[1] = "Bombe.png";

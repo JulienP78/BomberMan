@@ -109,6 +109,20 @@ public class Bomb
 		checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY);
 		terrain.setTab(this.positionX, this.positionY, -100);
 		
+		for (int k = 0 ; k < joueur.length ; k++)
+		{
+			if(joueur[k].getIsBigBoss()==true)
+			{
+				for (int i = 0 ; i < terrain.getNumberOfRow(); i++)
+				{
+					for (int j = 0 ; j < terrain.getNumberOfLine(); j++)
+					{
+						terrain.setTab(i, j, -100);
+					}
+				}
+			}
+		}
+		
 		
 		// -------------------------------------- On fait exploser au centre -----------------------------------------------
 
@@ -311,7 +325,7 @@ public class Bomb
 	public int randomBonus()
 	{	
 		int test=(int)(Math.random()*100);
-		int newTest=(int)(Math.random()*9);
+		int newTest=(int)(Math.random()*10);
 		int value = 1;
 		
 		if (test<20)
@@ -352,10 +366,14 @@ public class Bomb
 					
 				case 8:
 					value=90;
-					break;				
+					break;
+					
+				case 9:
+					value=100;
+					break;
 			}
 		}
-		return value;
+		return 100;
 	}
 }
 
