@@ -188,7 +188,8 @@ public class Player
 			caseValueToCheck = terrain.getTab(playerPositionXInTab, casePositionToCheck);
 			
 			if(caseValueToCheck==0	// Si la case est une caisse
-			 ||caseValueToCheck==-1) // ou si la case est un mur
+			 ||caseValueToCheck==-1
+			 ||(caseValueToCheck == -99 && playerPositionYInTab!=casePositionToCheck)) // ou si la case est un mur
 			{
 				return false;	// alors on renvoit faux et le joueur ne se déplace pas
 			}
@@ -201,7 +202,8 @@ public class Player
 			caseValueToCheck = terrain.getTab(casePositionToCheck, playerPositionYInTab);
 
 			if(caseValueToCheck==0
-			 ||caseValueToCheck==-1)
+			 ||caseValueToCheck==-1
+			 ||(caseValueToCheck == -99 && playerPositionXInTab!=casePositionToCheck))
 			{
 				return false;
 			}
@@ -215,7 +217,8 @@ public class Player
 			caseValueToCheck = terrain.getTab(casePositionToCheck, playerPositionYInTab);
 			System.out.println(caseValueToCheck);
 			if(caseValueToCheck==0
-			 ||caseValueToCheck==-1)
+			 ||caseValueToCheck==-1
+			 ||(caseValueToCheck == -99 && playerPositionXInTab!=casePositionToCheck))
 			{
 				return false;
 			}
@@ -228,7 +231,8 @@ public class Player
 			caseValueToCheck = terrain.getTab(playerPositionXInTab, casePositionToCheck);
 
 			if(caseValueToCheck==0
-			 ||caseValueToCheck==-1)
+			 ||caseValueToCheck==-1
+			 ||(caseValueToCheck == -99 && playerPositionYInTab!=casePositionToCheck))
 			{
 				return false;
 			}
