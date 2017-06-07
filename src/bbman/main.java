@@ -27,6 +27,7 @@ public class main
 		int idJoueur;
 		int positionX;
 		int positionY;
+		
 		for (int i=0;i<numberOfPlayers;i++)
 		{	
 			idJoueur = i;
@@ -42,7 +43,7 @@ public class main
 				positionX=(numberOfRow*(halfWidthOfRow*2))-(3*halfWidthOfRow);
 				positionY=(numberOfLine*(halfHeigthOfLine*2))-(3*halfHeigthOfLine);
 			}
-			joueur [i]=new Player(terrain,idJoueur, positionX, positionY);
+			joueur[i]=new Player(terrain,idJoueur, positionX, positionY);
 		}
 		
 		terrain.draw(joueur); // On dessine le début de partie
@@ -172,7 +173,5 @@ public class main
 				}
 			}
 		}
-		
-
 	}
 }
