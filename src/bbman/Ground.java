@@ -176,7 +176,10 @@ public class Ground
 		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*3.5, "X " + joueur[0].getNumberOfBomb());
 		
 		for (int i=0;i<joueur.length;i++)
-			joueur[i].draw();	// on dessine les joueurs
+		{
+			String playerImage = "player_" + (i+1) + "_" + joueur[i].getSens() + ".png";
+			StdDraw.picture(joueur[i].getPositionX(), joueur[i].getPositionY(), playerImage, 33, 50);
+		}
 	}
 
 	

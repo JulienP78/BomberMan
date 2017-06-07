@@ -59,7 +59,11 @@ public class Player
 	{
 		this.numberOfLife = newNumberOfLife;
 	}
-		
+	
+	public String getSens()
+	{
+		return this.sens;
+	}
 	public Ground dropBomb(Ground terrain)
 	{
 		boolean keepOn = true;
@@ -215,7 +219,7 @@ public class Player
 			spaceAllow=2*terrain.getHalfWidthOfRow()/3;
 			casePositionToCheck = (this.positionX+spaceAllow)/(terrain.getHalfWidthOfRow()*2);
 			caseValueToCheck = terrain.getTab(casePositionToCheck, playerPositionYInTab);
-			System.out.println(caseValueToCheck);
+			
 			if(caseValueToCheck==0
 			 ||caseValueToCheck==-1
 			 ||(caseValueToCheck == -99 && playerPositionXInTab!=casePositionToCheck))
@@ -238,11 +242,5 @@ public class Player
 			}
 		}
 		return true;
-	}
-	
-	public void draw()
-	{	
-		String playerImage = "player_" + (this.id+1) + "_" + this.sens + ".png";
-		StdDraw.picture(positionX, positionY, playerImage, 33, 50);
 	}
 }
