@@ -188,8 +188,8 @@ public class Player
 			caseValueToCheck = terrain.getTab(playerPositionXInTab, casePositionToCheck);
 			
 			if(caseValueToCheck==0	// Si la case est une caisse
-			 ||caseValueToCheck==-1
-			 ||(caseValueToCheck == -99 && playerPositionYInTab!=casePositionToCheck)) // ou si la case est un mur
+			 ||caseValueToCheck==-1 // ou si la case est un mur
+			 ||(caseValueToCheck == -99 && playerPositionYInTab!=casePositionToCheck)) // ou si la case est une bombe
 			{
 				return false;	// alors on renvoit faux et le joueur ne se déplace pas
 			}
