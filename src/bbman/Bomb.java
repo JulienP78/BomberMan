@@ -83,13 +83,13 @@ public class Bomb
 		return ground;
 	}
 	
-	public Ground manage(Ground ground, Player[] joueur)
+	public Ground manage(Ground ground, Player[] player)
 	{	
 		if ((this.isActivated==true)&&(this.hasExplosed==false))
 		{	
 			if (java.lang.System.currentTimeMillis()-this.timer>this.timeBeforeExplosion)
 			{ 
-				ground=this.explose(ground, joueur);
+				ground=this.explose(ground, player);
 			}
 		}
 		if ((this.isActivated==true)&&(this.hasExplosed==true))
@@ -102,11 +102,11 @@ public class Bomb
 		return ground;
 	}
 
-	public Ground explose(Ground ground, Player[] joueur)
+	public Ground explose(Ground ground, Player[] player)
 	{	
 		
 		Sound sound = new Sound("boum");
-		checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY);
+		checkIfPlayerIsHere(ground, player, this.positionX,this.positionY);
 		ground.setTab(this.positionX, this.positionY, -100);
 		
 		
@@ -133,7 +133,7 @@ public class Bomb
 			{
 				ground.setTab(this.positionX+i,this.positionY,-100);
 			}
-			checkIfPlayerIsHere(ground, joueur, this.positionX+i, this.positionY);
+			checkIfPlayerIsHere(ground, player, this.positionX+i, this.positionY);
 			if (i==this.puissance || this.positionX+(i+1) > ground.getNumberOfRow()-1)
 				wallOrBoxFound=true;
 		
@@ -160,7 +160,7 @@ public class Bomb
 			{				
 				ground.setTab(this.positionX,this.positionY-i,-100);
 			}
-			checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY-i);
+			checkIfPlayerIsHere(ground, player, this.positionX,this.positionY-i);
 			if (i==this.puissance || this.positionY-(i+1) < 0)
 				wallOrBoxFound=true;
 		
@@ -185,7 +185,7 @@ public class Bomb
 			{
 				ground.setTab(this.positionX-i,this.positionY,-100);
 			}
-			checkIfPlayerIsHere(ground, joueur, this.positionX-i,this.positionY);
+			checkIfPlayerIsHere(ground, player, this.positionX-i,this.positionY);
 			
 			if (i==this.puissance || this.positionX-(i+1) < 0)
 				wallOrBoxFound=true;
@@ -211,7 +211,7 @@ public class Bomb
 			{
 				ground.setTab(this.positionX,this.positionY+i,-100);
 			}
-			checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY+i);
+			checkIfPlayerIsHere(ground, player, this.positionX,this.positionY+i);
 			if (i==this.puissance || this.positionY+(i+1) > ground.getNumberOfLine()-1)
 				wallOrBoxFound=true;
 		
@@ -225,21 +225,21 @@ public class Bomb
 		return ground;
 	}
 
-	private boolean checkIfPlayerIsHere(Ground ground, Player[] joueur, int postionExplosionX, int positionExplosionY) 
+	private boolean checkIfPlayerIsHere(Ground ground, Player[] player, int postionExplosionX, int positionExplosionY) 
 	{
 		boolean playerIsHere = false;
 		int positionPlayerX = 0;
 		int positionPlayerY = 0;
 		
-		for (int i = 0 ; i < joueur.length ; i++)
+		for (int i = 0 ; i < player.length ; i++)
 		{
-			positionPlayerX = joueur[i].getPositionX()/(ground.getHalfWidthOfRow()*2);
-			positionPlayerY = joueur[i].getPositionY()/(ground.getHalfHeigthOfLine()*2);
+			positionPlayerX = player[i].getPositionX()/(ground.getHalfWidthOfRow()*2);
+			positionPlayerY = player[i].getPositionY()/(ground.getHalfHeigthOfLine()*2);
 			
 			if(positionPlayerX == postionExplosionX && positionPlayerY == positionExplosionY)
 			{
 				playerIsHere=true;
-				joueur[i].setNumberOfLife(joueur[i].getNumberOfLife()-1);
+				player[i].setNumberOfLife(player[i].getNumberOfLife()-1);
 			}
 		}
 		return playerIsHere;
