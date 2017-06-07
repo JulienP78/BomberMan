@@ -352,7 +352,7 @@ public class Bomb
 					
 				case 8:
 					value=90;
-					break;
+					break;				
 			}
 		}
 		return value;

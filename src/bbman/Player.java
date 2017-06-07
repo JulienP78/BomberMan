@@ -15,11 +15,10 @@ public class Player
 	
 	private int numberOfLife;
 	
-	private int speed;
-		
 	private int numberOfBomb;
-	Bomb [] bombe=new Bomb [10] ;
+	Bomb [] bombe=new Bomb [10];
 	
+	private int speed;
 
 	public Player (Ground terrain, int id, int positionX, int positionY)
 	{	
@@ -28,8 +27,8 @@ public class Player
 		this.positionY=positionY;
 		this.sens="front_profile";
 		this.numberOfLife=3;
-		this.speed=3;
 		this.numberOfBomb=3;
+		this.speed=3;
 		
 		for (int i=0; i<this.bombe.length; i++)
 		{	
@@ -145,7 +144,6 @@ public class Player
 				if (this.numberOfBomb<2)
 					this.numberOfBomb=2;
 			}
-			
 			terrain.setTab(playerPositionXInTab, playerPositionYInTab, 1); // On retire le bonus au terrain
 		}
 		

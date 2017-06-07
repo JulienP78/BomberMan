@@ -25,22 +25,19 @@ public class Ground
 		
 		this.halfWidthOfRow=halfWidthOfRow;
 		this.halfHeigthOfLine=halfHeigthOfLine;
-	
-		int i=0;
-		int j=0;
 		
-		for (i=0;i<numberOfRow;i++)
+		for (int i=0;i<numberOfRow;i++)
 		{	
-			for (j=0;j<numberOfLine;j++)
+			for (int j=0;j<numberOfLine;j++)
 			{	
 				if ((i==0)||(j==0)||(i==numberOfRow-1)||(j==numberOfLine-1)||((i%2==0)&&(j%2==0)))
-					this.tab [i][j]=-1;
+					this.tab [i][j]=-1; // mur
 				else
-					this.tab [i][j]=0;
+					this.tab [i][j]=0; // caisse
 			}
 		}
 		
-		this.tab [1][1]=1;
+		this.tab [1][1]=1; // libre
 		this.tab [2][1]=1;
 		this.tab [3][1]=1;
 		this.tab [3][2]=1;
@@ -151,17 +148,23 @@ public class Ground
 					filesToDraw[0] = "Explosion.png";
 				}
 			
-			for (int file = 0 ; file < filesToDraw.length ; file++)
-			{
-				if(filesToDraw[file]!="")
+				for (int file = 0 ; file < filesToDraw.length ; file++)
 				{
-					StdDraw.picture((i*2*this.halfWidthOfRow)+halfWidthOfRow, (j*2*this.halfHeigthOfLine)+halfHeigthOfLine, filesToDraw[file], 50, 50);
+					if(filesToDraw[file]!="")
+					{
+						StdDraw.picture((i*2*this.halfWidthOfRow)+halfWidthOfRow, (j*2*this.halfHeigthOfLine)+halfHeigthOfLine, filesToDraw[file], 50, 50);
+					}
 				}
-			}
 			}
 		}
 		
-		StdDraw.setPenColor(255, 255, 255);
+		for (int i=0;i<joueur.length;i++) // on dessine les joueurs
+		{
+			String playerImage = "player_" + (i+1) + "_" + joueur[i].getSens() + ".png";
+			StdDraw.picture(joueur[i].getPositionX(), joueur[i].getPositionY(), playerImage, 33, 50);
+		}
+		
+		StdDraw.setPenColor(255, 255, 255); // on dessine les stats des joueurs
 		StdDraw.setPenRadius(200);
 		StdDraw.picture(this.getHalfWidthOfRow()*2*18.9, this.getHalfHeigthOfLine()*2*16.5, "J2.png", 200, 90);
 		StdDraw.picture(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*15.5, "NombreVies.png", 30, 30);
@@ -175,11 +178,6 @@ public class Ground
 		StdDraw.picture(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*4.5, "NombreBombes.png", 30, 30);
 		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*3.5, "X " + joueur[0].getNumberOfBomb());
 		
-		for (int i=0;i<joueur.length;i++)
-		{
-			String playerImage = "player_" + (i+1) + "_" + joueur[i].getSens() + ".png";
-			StdDraw.picture(joueur[i].getPositionX(), joueur[i].getPositionY(), playerImage, 33, 50);
-		}
 	}
 
 	
