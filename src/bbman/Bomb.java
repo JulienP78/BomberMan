@@ -109,6 +109,12 @@ public class Bomb
 		checkIfPlayerIsHere(terrain, joueur, this.positionX,this.positionY);
 		terrain.setTab(this.positionX, this.positionY, -100);
 		
+		
+		// -------------------------------------- On fait exploser au centre -----------------------------------------------
+
+		
+		terrain.setTab(this.positionX, this.positionY, -100);
+		
 		// -------------------------------------- On fait exploser à droite -----------------------------------------------
 
 		boolean wallOrBoxFound = false;

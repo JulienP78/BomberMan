@@ -141,6 +141,7 @@ public class Player
 				if (this.numberOfBomb<2)
 					this.numberOfBomb=2;
 			}
+			
 			terrain.setTab(playerPositionXInTab, playerPositionYInTab, 1); // On retire le bonus au terrain
 		}
 		
