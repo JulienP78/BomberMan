@@ -291,6 +291,7 @@ public class Bomb
 			}
 		}
 	}
+	
 	public Ground endOfEplosion(Ground ground)
 	{	
 		int i=1;
