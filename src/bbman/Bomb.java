@@ -67,6 +67,16 @@ public class Bomb
 		this.canOvercomeWalls = trueOrFalse;
 	}
 	
+	public int getTimeBeforeExplosion()
+	{
+		return this.timeBeforeExplosion;
+	}
+	
+	public void setTimeBeforExplosion(int newTime)
+	{
+		this.timeBeforeExplosion = newTime;
+	}
+	
 	public Ground activateBomb(int x, int y, Ground ground)
 	{	
 		if (ground.getTab(x, y)!=-99)
@@ -318,7 +328,7 @@ public class Bomb
 	public int randomBonus()
 	{	
 		int test=(int)(Math.random()*100);
-		int newTest=(int)(Math.random()*10);
+		int newTest=(int)(Math.random()*12);
 		int value = 1;
 		
 		if (test<20)
@@ -363,6 +373,14 @@ public class Bomb
 				
 				case 9:
 					value=100;
+					break;
+					
+				case 10:
+					value=110;
+					break;
+				
+				case 11:
+					value=120;
 					break;
 			}
 		}

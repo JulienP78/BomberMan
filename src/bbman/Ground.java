@@ -144,6 +144,14 @@ public class Ground
 				{	
 					filesToDraw[1] = "bonus_shield.png";
 				}
+				else if (this.tab[i][j]==110)
+				{	
+					filesToDraw[1] = "bonus_flamme_verte.png";
+				}
+				else if (this.tab[i][j]==120)
+				{	
+					filesToDraw[1] = "bonus_passe_muraille.png";
+				}
 				else if (this.tab[i][j] == -99)
 				{
 					filesToDraw[1] = "Bombe.png";
@@ -152,6 +160,7 @@ public class Ground
 				{	
 					filesToDraw[0] = "Explosion.png";
 				}
+				
 			
 				for (int file = 0 ; file < filesToDraw.length ; file++)
 				{
@@ -173,8 +182,8 @@ public class Ground
 		StdDraw.setPenColor(255, 255, 255);
 		StdDraw.setPenRadius(200);
 		
-		String[] statsFiles = {"NombreVies.png", "NombreBombes.png", "bonus_speed_up.png", "Explosion.png"};
-		String[] statsP2 = {"X " + joueur[1].getNumberOfLife(), "X " + joueur[1].getNumberOfBomb(), "" + joueur[1].getSpeed(), "" + joueur[1].bombe[0].getPuissance()};
+		String[] statsFiles = {"NombreVies.png", "NombreBombes.png", "bonus_speed_up.png", "Explosion.png","timer.png"};
+		String[] statsP2 = {"X " + joueur[1].getNumberOfLife(), "X " + joueur[1].getNumberOfBomb(), "" + joueur[1].getSpeed(), "" + joueur[1].bombe[0].getPuissance(), "" + joueur[1].bombe[0].getTimeBeforeExplosion()/1000 + " s"};
 		
 		StdDraw.picture(this.halfWidthOfRow*2*18.9, this.halfHeigthOfLine*2*16.5, "J2.png", 200, 90);
 		
@@ -184,7 +193,7 @@ public class Ground
 			StdDraw.text(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(14.5-2*i), statsP2[i]);
 		}
 		
-		String[] statsP1 = {"X " + joueur[0].getNumberOfLife(), "X " + joueur[0].getNumberOfBomb(), "" + joueur[0].getSpeed(), "" + joueur[0].bombe[0].getPuissance()};
+		String[] statsP1 = {"X " + joueur[0].getNumberOfLife(), "X " + joueur[0].getNumberOfBomb(), "" + joueur[0].getSpeed(), "" + joueur[0].bombe[0].getPuissance(), "" + joueur[0].bombe[0].getTimeBeforeExplosion()/1000 + " s"};
 
 		StdDraw.picture(this.halfWidthOfRow*2*2.1, this.halfHeigthOfLine*2*0.5, "J1.png", 200, 90);
 		
@@ -201,11 +210,12 @@ public class Ground
 							   "rappel_bonus_bombe_rouge.png",
 							   "rappel_bonus_flamme_bleue.png",
 							   "rappel_bonus_flamme_rouge.png",
-							   "rappel_bonus_flamme_jaune.png"};
+							   "rappel_bonus_flamme_jaune.png",
+							   "rappel_bonus_flamme_verte.png"};
 		
 		for(int i = 0 ; i < bonusFiles.length ; i++)
 		{
-			StdDraw.picture(this.halfWidthOfRow*2*2.1 + (120*i), this.halfHeigthOfLine*2*16.5, bonusFiles[i], 100, 50);
+			StdDraw.picture(this.halfWidthOfRow*2+ (120*i), this.halfHeigthOfLine*2*16.5, bonusFiles[i], 100, 40);
 		}
 		
 	}

@@ -18,6 +18,7 @@ public class Player
 		
 	private int speed;
 	private boolean hasAShield;
+	private boolean canWalkOnBoxOrBomb;
 	private String avatar;
 
 	public Player (Ground ground, int id, int positionX, int positionY)
@@ -35,6 +36,7 @@ public class Player
 		
 		this.speed=3;
 		this.hasAShield = false;
+		this.canWalkOnBoxOrBomb = false;
 		this.avatar = "player_" + (id+1) + "_front_profile.png";
 	}
 	
@@ -169,6 +171,27 @@ public class Player
 			{
 				this.hasAShield=true;
 			}
+			else if(bonusValue == 110)
+			{
+				if (this.bombe[0].getTimeBeforeExplosion()>=4000)
+				{
+					for (int i = 0 ; i < 10 ; i ++)
+					{
+						this.bombe[i].setTimeBeforExplosion(bombe[i].getTimeBeforeExplosion()-1000);
+					}
+				}
+				if(this.bombe[0].getPuissance()<10)
+				{
+					for (int i = 0 ; i < 10 ; i ++)
+					{
+						this.bombe[i].setPuissance(bombe[i].getPuissance()+1);
+					}
+				}
+			}
+			else if(bonusValue == 120)
+			{
+				this.canWalkOnBoxOrBomb=true;
+			}
 			ground.setTab(playerPositionXInTab, playerPositionYInTab, 1); // On retire le bonus au ground
 		}
 		
@@ -216,9 +239,9 @@ public class Player
 			casePositionToCheck = (this.positionY+spaceAllow)/(ground.getHalfHeigthOfLine()*2); // La case à regarder
 			caseValueToCheck = ground.getTab(playerPositionXInTab, casePositionToCheck);
 			
-			if(caseValueToCheck==0	// Si la case est une caisse
+			if((caseValueToCheck==0 && this.canWalkOnBoxOrBomb==false)	// Si la case est une caisse
 			 ||caseValueToCheck==-1 // ou si la case est un mur
-			 ||(caseValueToCheck == -99 && playerPositionYInTab!=casePositionToCheck)) // ou si la case est une bombe
+			 ||(caseValueToCheck == -99 && playerPositionYInTab!=casePositionToCheck  && this.canWalkOnBoxOrBomb==false)) // ou si la case est une bombe
 			{
 				return false;	// alors on renvoit faux et le joueur ne se déplace pas
 			}
@@ -230,9 +253,9 @@ public class Player
 			casePositionToCheck = (this.positionX-spaceAllow)/(ground.getHalfWidthOfRow()*2);
 			caseValueToCheck = ground.getTab(casePositionToCheck, playerPositionYInTab);
 
-			if(caseValueToCheck==0
+			if((caseValueToCheck==0 && this.canWalkOnBoxOrBomb==false)
 			 ||caseValueToCheck==-1
-			 ||(caseValueToCheck == -99 && playerPositionXInTab!=casePositionToCheck))
+			 ||(caseValueToCheck == -99 && playerPositionXInTab!=casePositionToCheck  && this.canWalkOnBoxOrBomb==false))
 			{
 				return false;
 			}
@@ -245,9 +268,9 @@ public class Player
 			casePositionToCheck = (this.positionX+spaceAllow)/(ground.getHalfWidthOfRow()*2);
 			caseValueToCheck = ground.getTab(casePositionToCheck, playerPositionYInTab);
 			
-			if(caseValueToCheck==0
+			if((caseValueToCheck==0 && this.canWalkOnBoxOrBomb==false)
 			 ||caseValueToCheck==-1
-			 ||(caseValueToCheck == -99 && playerPositionXInTab!=casePositionToCheck))
+			 ||(caseValueToCheck == -99 && playerPositionXInTab!=casePositionToCheck  && this.canWalkOnBoxOrBomb==false))
 			{
 				return false;
 			}
@@ -259,9 +282,9 @@ public class Player
 			casePositionToCheck = (this.positionY-spaceAllow)/(ground.getHalfHeigthOfLine()*2);
 			caseValueToCheck = ground.getTab(playerPositionXInTab, casePositionToCheck);
 
-			if(caseValueToCheck==0
+			if((caseValueToCheck==0 && this.canWalkOnBoxOrBomb==false)
 			 ||caseValueToCheck==-1
-			 ||(caseValueToCheck == -99 && playerPositionYInTab!=casePositionToCheck))
+			 ||(caseValueToCheck == -99 && playerPositionYInTab!=casePositionToCheck  && this.canWalkOnBoxOrBomb==false))
 			{
 				return false;
 			}
