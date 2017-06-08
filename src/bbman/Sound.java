@@ -12,10 +12,17 @@ import sun.audio.AudioStream;
 
 public class Sound
 {
+	private AudioClip son;
+	
 	public Sound(String nomFichier)
 	{
 		URL url = Sound.class.getResource(nomFichier+".wav"); 
-		AudioClip son = Applet.newAudioClip(url); 
-		son.play();	
+		this.son = Applet.newAudioClip(url); 
+		son.play();
+	}
+	
+	public void stop()
+	{
+		this.son.stop();
 	}
 }

@@ -35,10 +35,9 @@ public class main
 		int halfWidthOfRow=25;
 		int halfHeigthOfLine=25;
 
-		StdDraw.setCanvasSize(halfWidthOfRow*numberOfRow*2,halfHeigthOfLine*numberOfLine*2);
-	
-		StdDraw.setXscale(0, halfWidthOfRow*numberOfRow*2);
-		StdDraw.setYscale(0, halfHeigthOfLine*numberOfLine*2);
+		StdDraw.setCanvasSize(halfWidthOfRow*numberOfRow*2,halfHeigthOfLine*numberOfLine*2); // taille de la fenêtre
+		StdDraw.setXscale(0, halfWidthOfRow*numberOfRow*2); // axe des abscisses
+		StdDraw.setYscale(0, halfHeigthOfLine*numberOfLine*2); // axe des ordonnées
 		
 		StdDraw.show(0);
 
@@ -55,31 +54,31 @@ public class main
 		int positionX;
 		int positionY;
 		
-		for (int i=0;i<numberOfPlayers;i++)
+		for (int i=0;i<players.length;i++)
 		{	
 			idPlayer = i;
 			positionX=0;
 			positionY=0;
 			if(idPlayer==0)
 			{
-				positionX=3*ground.getHalfWidthOfRow();
-				positionY=3*ground.getHalfHeigthOfLine();
+				positionX=3*ground.getHalfWidthOfRow(); // position en x du joueur 1
+				positionY=3*ground.getHalfHeigthOfLine(); // position en y du joueur 1
 			}
 			else if(idPlayer==1)
 			{
-				positionX=(ground.getNumberOfRow()*(ground.getHalfWidthOfRow()*2))-(3*ground.getHalfWidthOfRow());
-				positionY=(ground.getNumberOfLine()*(ground.getHalfHeigthOfLine()*2))-(3*ground.getHalfHeigthOfLine());
+				positionX=(ground.getNumberOfRow()*(ground.getHalfWidthOfRow()*2))-(3*ground.getHalfWidthOfRow()); // position en x du joueur 2
+				positionY=(ground.getNumberOfLine()*(ground.getHalfHeigthOfLine()*2))-(3*ground.getHalfHeigthOfLine()); // position en y du joueur 2 
 			}
-			players[i]=new Player(ground,idPlayer, positionX, positionY);	// création des joueurs
+			players[i]=new Player(ground,idPlayer, positionX, positionY);	// instanciation des joueurs
 		}
-		
-		ground.draw(players);	// on dessine le début de partie
 		return players;
 	}
 	
 	public static void play(Ground ground, Player[] players)
 	{
-		while (noPlayerIsDead(players))	// si aucun joueur n'est mort
+		ground.draw(players); // on dessine le début de partie
+
+		while (noPlayerIsDead(players))
 		{	
 			listenToPlayersAction(players, ground); // on écoute les saisis des deux joueurs
 			
@@ -88,10 +87,10 @@ public class main
 				ground=players[i].getBonus(ground); // on regarde si le joueur est sur une case avec un bonus
 				for (int j=0; j<players[i].getNumberOfBomb();j++)
 				{
-					ground=players[i].bombe[j].manage(ground, players); // on gère les bombes
+					ground=players[i].bombe[j].manage(ground, players); // on fait la gestion les bombes
 				}
 			}
-			ground.draw(players); // on dessine le tout
+			ground.draw(players); // on redessine le tout
 			StdDraw.show();
 			pause(5);
 		}
@@ -99,6 +98,7 @@ public class main
 	
 	public static void listenToPlayersAction(Player [] players, Ground ground)
 	{	
+		// ----------------------------------- touches du joueur 1 ---------------------------------
 		if (StdDraw.isKeyPressed(KeyEvent.VK_Z))
 		{	
 			players[0].moveTo("up",ground);
@@ -119,6 +119,9 @@ public class main
 		{	
 			ground=players[0].dropBomb(ground);	
 		}
+		
+		// ----------------------------------- touches du joueur 2 ---------------------------------
+
 		if (StdDraw.isKeyPressed(KeyEvent.VK_UP))
 		{	
 			players[1].moveTo("up",ground);
