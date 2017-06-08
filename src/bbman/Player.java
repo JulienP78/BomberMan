@@ -59,6 +59,10 @@ public class Player
 		this.numberOfLife = newNumberOfLife;
 	}
 	
+	public int getSpeed()
+	{
+		return this.speed;
+	}
 	public String getSens()
 	{
 		return this.sens;

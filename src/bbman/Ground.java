@@ -167,17 +167,27 @@ public class Ground
 		
 		StdDraw.setPenColor(255, 255, 255); // on dessine les stats des joueurs
 		StdDraw.setPenRadius(200);
-		StdDraw.picture(this.halfWidthOfRow*2*18.9, this.halfHeigthOfLine*2*16.5, "J2.png", 200, 90);
-		StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*15.5, "NombreVies.png", 30, 30);
-		StdDraw.text(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*14.5, "X " + joueur[1].getNumberOfLife());
-		StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*13.5, "NombreBombes.png", 30, 30);
-		StdDraw.text(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*12.5, "X " + joueur[1].getNumberOfBomb());
 		
+		String[] statsFiles = {"NombreVies.png", "NombreBombes.png", "bonus_speed_up.png", "Explosion.png"};
+		String[] statsP2 = {"X " + joueur[1].getNumberOfLife(), "X " + joueur[1].getNumberOfBomb(), "" + joueur[1].getSpeed(), "" + joueur[1].bombe[0].getPuissance()};
+		
+		StdDraw.picture(this.halfWidthOfRow*2*18.9, this.halfHeigthOfLine*2*16.5, "J2.png", 200, 90);
+		
+		for(int i = 0 ; i < statsFiles.length ; i++)
+		{
+			StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15.5-2*i), statsFiles[i], 30, 30);
+			StdDraw.text(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(14.5-2*i), statsP2[i]);
+		}
+		
+		String[] statsP1 = {"X " + joueur[0].getNumberOfLife(), "X " + joueur[0].getNumberOfBomb(), "" + joueur[0].getSpeed(), "" + joueur[0].bombe[0].getPuissance()};
+
 		StdDraw.picture(this.halfWidthOfRow*2*2.1, this.halfHeigthOfLine*2*0.5, "J1.png", 200, 90);
-		StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*2.5, "NombreVies.png", 30, 30);
-		StdDraw.text(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*1.5, "X " + joueur[0].getNumberOfLife());
-		StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*4.5, "NombreBombes.png", 30, 30);
-		StdDraw.text(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*3.5, "X " + joueur[0].getNumberOfBomb());	
+		
+		for(int i = 0 ; i < statsFiles.length ; i++)
+		{
+			StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2.5+2*i), statsFiles[i], 30, 30);
+			StdDraw.text(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(1.5+2*i), statsP1[i]);
+		}
 	}
 	
 	public void displayMenu()
