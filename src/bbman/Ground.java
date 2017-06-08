@@ -162,8 +162,7 @@ public class Ground
 		// ----------------------------------------------- On dessine les joueurs ------------------------------------------ 
 		for (int i=0;i<joueur.length;i++) 
 		{
-			String playerImage = "player_" + (i+1) + "_" + joueur[i].getSens() + ".png";
-			StdDraw.picture(joueur[i].getPositionX(), joueur[i].getPositionY(), playerImage, 33, 50);
+			StdDraw.picture(joueur[i].getPositionX(), joueur[i].getPositionY(), joueur[i].getAvatar(), 33, 50);
 		}
 		
 		// ------------------------------------------- On dessine les stats des joueurs ------------------------------------------ 

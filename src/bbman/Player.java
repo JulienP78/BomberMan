@@ -10,13 +10,13 @@ public class Player
 
 	private int positionX;
 	private int positionY;
-	
-	private String sens; // pour modifier l'image des joueurs en fonctions du déplacement
-	
+		
 	private int numberOfLife;
 	
 	private int numberOfBomb;
 	Bomb [] bombe=new Bomb [10];
+	
+	private String avatar;
 	
 	private int speed;
 
@@ -25,7 +25,6 @@ public class Player
 		this.id=id;
 		this.positionX=positionX;
 		this.positionY=positionY;
-		this.sens="front_profile";
 		this.numberOfLife=3;
 		this.numberOfBomb=3;
 		this.speed=3;
@@ -34,6 +33,8 @@ public class Player
 		{	
 			bombe[i]=new Bomb();
 		}
+		
+		this.avatar = "player_" + (id+1) + "_front_profile.png";
 	}
 	
 	public int getPositionX()
@@ -63,9 +64,14 @@ public class Player
 	{
 		return this.speed;
 	}
-	public String getSens()
+	
+	public String getAvatar()
 	{
-		return this.sens;
+		return this.avatar;
+	}
+	public void setAvater(String newAvatar)
+	{
+		this.avatar = newAvatar;
 	}
 	
 	public Ground dropBomb(Ground ground)
@@ -160,22 +166,22 @@ public class Player
 		if (move=="up" && noObstacle("up", ground)) // on verifie qu'il n'y a pas d'obstacle
 		{	
 			this.positionY=this.positionY+this.speed;
-			this.sens="back_profile";
+			this.avatar="player_" + (this.id+1) + "_back_profile.png";
 		}
 		else if (move=="left" && noObstacle("left", ground))
 		{	
 			this.positionX=this.positionX-this.speed;
-			this.sens="left_profile";
+			this.avatar="player_" + (this.id+1) + "_left_profile.png";
 		}
 		else if (move=="down" && noObstacle("down", ground))
 		{	
 			this.positionY=this.positionY-this.speed;
-			this.sens="front_profile";
+			this.avatar="player_" + (this.id+1) + "_front_profile.png";
 		}
 		else if (move=="right" && noObstacle("right", ground))
 		{	
 			this.positionX=this.positionX+this.speed;
-			this.sens="right_profile";
+			this.avatar="player_" + (this.id+1) + "_right_profile.png";
 		}
 	
 	}
