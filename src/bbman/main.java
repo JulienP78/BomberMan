@@ -8,51 +8,16 @@ public class main
 {	
 	public static void main(String[] args) 
 	{	
-		int numberOfRow=21;
-		int numberOfLine=17;
-		int halfWidthOfRow=25;
-		int halfHeigthOfLine=25;
-		int numberOfPlayers=2;
-
-		StdDraw.setCanvasSize(halfWidthOfRow*numberOfRow*2,halfHeigthOfLine*numberOfLine*2);
-	
-		StdDraw.setXscale(0, halfWidthOfRow*numberOfRow*2);
-		StdDraw.setYscale(0, halfHeigthOfLine*numberOfLine*2);
 		
-		StdDraw.show(0);
-
-		Ground ground=new Ground(numberOfRow,numberOfLine,halfWidthOfRow,halfHeigthOfLine); // instanciation du ground
-		Player [] players=new Player [numberOfPlayers] ;
 		
-		int idPlayer;
-		int positionX;
-		int positionY;
+		Ground ground = createGround();
+		Player[] players = createPlayers(ground);
 		
-		for (int i=0;i<numberOfPlayers;i++)
-		{	
-			idPlayer = i;
-			positionX=0;
-			positionY=0;
-			if(idPlayer==0)
-			{
-				positionX=3*halfWidthOfRow;
-				positionY=3*halfHeigthOfLine;
-			}
-			else if(idPlayer==1)
-			{
-				positionX=(numberOfRow*(halfWidthOfRow*2))-(3*halfWidthOfRow);
-				positionY=(numberOfLine*(halfHeigthOfLine*2))-(3*halfHeigthOfLine);
-			}
-			players[i]=new Player(ground,idPlayer, positionX, positionY);	// création des joueurs
-		}
-		
-		ground.draw(players); // on dessine le début de partie
-
 		while (noPlayerIsDead(players)) // si aucun joueur n'est mort
 		{	
 			listenToPlayersAction(players, ground); // on écoute les saisis des deux joueurs
 			
-			for (int i=0; i<numberOfPlayers; i++)
+			for (int i=0; i<players.length; i++)
 			{	
 				ground=players[i].getBonus(ground); // on regarde si le joueur est sur une case avec un bonus
 				for (int j=0; j<players[i].getNumberOfBomb();j++)
@@ -65,9 +30,58 @@ public class main
 			StdDraw.show();
 			pause(5);
 		}
-		ground.displayGameOver(players, ground); // si un joueur est mort on affiche l'écran de fin
+		ground.displayGameOver(players); // si un joueur est mort on affiche l'écran de fin
 	}
+	
+	public static Ground createGround()
+	{
+		int numberOfRow=21;
+		int numberOfLine=17;
+		int halfWidthOfRow=25;
+		int halfHeigthOfLine=25;
 
+		StdDraw.setCanvasSize(halfWidthOfRow*numberOfRow*2,halfHeigthOfLine*numberOfLine*2);
+	
+		StdDraw.setXscale(0, halfWidthOfRow*numberOfRow*2);
+		StdDraw.setYscale(0, halfHeigthOfLine*numberOfLine*2);
+		
+		StdDraw.show(0);
+
+		Ground ground=new Ground(numberOfRow,numberOfLine,halfWidthOfRow,halfHeigthOfLine); // instanciation du ground
+		return ground;
+	}
+	
+	public static Player[] createPlayers(Ground ground)
+	{
+		int numberOfPlayers=2;
+		Player [] players=new Player [numberOfPlayers] ;
+
+		int idPlayer;
+		int positionX;
+		int positionY;
+		
+		for (int i=0;i<numberOfPlayers;i++)
+		{	
+			idPlayer = i;
+			positionX=0;
+			positionY=0;
+			if(idPlayer==0)
+			{
+				positionX=3*ground.getHalfWidthOfRow();
+				positionY=3*ground.getHalfHeigthOfLine();
+			}
+			else if(idPlayer==1)
+			{
+				positionX=(ground.getNumberOfRow()*(ground.getHalfWidthOfRow()*2))-(3*ground.getHalfWidthOfRow());
+				positionY=(ground.getHalfWidthOfRow()*(ground.getHalfHeigthOfLine()*2))-(3*ground.getHalfHeigthOfLine());
+			}
+			players[i]=new Player(ground,idPlayer, positionX, positionY);	// création des joueurs
+		}
+		
+		ground.draw(players); // on dessine le début de partie
+		return players;
+
+	}
 	public static void listenToPlayersAction(Player [] players, Ground ground)
 	{	
 		if (StdDraw.isKeyPressed(KeyEvent.VK_Z))
