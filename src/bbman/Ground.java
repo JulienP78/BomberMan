@@ -37,7 +37,7 @@ public class Ground
 			}
 		}
 		
-		//--------------------------------------- espace libre pour les players ------------------------------------------------
+		//--------------------------------------- espace libre pour les joueurs ------------------------------------------------
 		this.tab [1][1]=1; // libre
 		this.tab [2][1]=1;
 		this.tab [3][1]=1;
@@ -85,7 +85,7 @@ public class Ground
 		return this.numberOfLine;
 	}
 
-	public void draw(Player [] player)
+	public void draw(Player [] joueur)
 	{
 		String[] filesToDraw = {"", ""};
 		
@@ -159,47 +159,47 @@ public class Ground
 			}
 		}
 		
-		for (int i=0;i<player.length;i++) // on dessine les players
+		for (int i=0;i<joueur.length;i++) // on dessine les joueurs
 		{
-			String playerImage = "player_" + (i+1) + "_" + player[i].getSens() + ".png";
-			StdDraw.picture(player[i].getPositionX(), player[i].getPositionY(), playerImage, 33, 50);
+			String playerImage = "player_" + (i+1) + "_" + joueur[i].getSens() + ".png";
+			StdDraw.picture(joueur[i].getPositionX(), joueur[i].getPositionY(), playerImage, 33, 50);
 		}
 		
-		StdDraw.setPenColor(255, 255, 255); // on dessine les stats des players
+		StdDraw.setPenColor(255, 255, 255); // on dessine les stats des joueurs
 		StdDraw.setPenRadius(200);
 		StdDraw.picture(this.getHalfWidthOfRow()*2*18.9, this.getHalfHeigthOfLine()*2*16.5, "J2.png", 200, 90);
 		StdDraw.picture(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*15.5, "NombreVies.png", 30, 30);
-		StdDraw.text(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*14.5, "X " + player[1].getNumberOfLife());
+		StdDraw.text(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*14.5, "X " + joueur[1].getNumberOfLife());
 		StdDraw.picture(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*13.5, "NombreBombes.png", 30, 30);
-		StdDraw.text(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*12.5, "X " + player[1].getNumberOfBomb());
+		StdDraw.text(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*12.5, "X " + joueur[1].getNumberOfBomb());
 		
 		StdDraw.picture(this.getHalfWidthOfRow()*2*2.1, this.getHalfHeigthOfLine()*2*0.5, "J1.png", 200, 90);
 		StdDraw.picture(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*2.5, "NombreVies.png", 30, 30);
-		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*1.5, "X " + player[0].getNumberOfLife());
+		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*1.5, "X " + joueur[0].getNumberOfLife());
 		StdDraw.picture(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*4.5, "NombreBombes.png", 30, 30);
-		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*3.5, "X " + player[0].getNumberOfBomb());	
+		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*3.5, "X " + joueur[0].getNumberOfBomb());	
 	}
 	
-	public void displayGameOver(Player[] player, Ground ground) // ecran de fin de jeu avec bouton pour recommencer
+	public void displayGameOver(Player[] joueur, Ground ground)
 	{
-		String winner;
-		if(player[0].getNumberOfLife()<=0)
+		String joueurGagnant;
+		if(joueur[0].getNumberOfLife()<=0)
 		{
-			winner = "player2" ;
+			joueurGagnant = "Joueur2" ;
 		}
 		else
 		{
-			winner="player1";
+			joueurGagnant="Joueur1";
 
 		}
 		
-		if (winner=="player1")
+		if (joueurGagnant=="Joueur1")
 		{
 			StdDraw.picture(ground.getHalfWidthOfRow()*2*11, ground.getHalfHeigthOfLine()*2*8, "FinJ1.png", 500, 300);
 			StdDraw.picture(ground.getHalfWidthOfRow()*2*10, ground.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
 			Sound sound = new Sound("Violin");
 		}
-		else if (winner=="player2")
+		else if (joueurGagnant=="Joueur2")
 		{
 			StdDraw.picture(ground.getHalfWidthOfRow()*2*11, ground.getHalfHeigthOfLine()*2*8, "FinJ2.png", 500, 300);
 			StdDraw.picture(ground.getHalfWidthOfRow()*2*10, ground.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
