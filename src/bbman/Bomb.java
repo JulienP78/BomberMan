@@ -239,7 +239,14 @@ public class Bomb
 			if(positionPlayerX == postionExplosionX && positionPlayerY == positionExplosionY)
 			{
 				playerIsHere=true;
-				joueur[i].setNumberOfLife(joueur[i].getNumberOfLife()-1);
+				if(joueur[i].hasAShield()) // si le joueur a un bouclier
+				{
+					joueur[i].setShield(false); // on retire son bouclier
+				}
+				else // sinon
+				{
+					joueur[i].setNumberOfLife(joueur[i].getNumberOfLife()-1);
+				}
 			}
 		}
 		return playerIsHere;
@@ -311,7 +318,7 @@ public class Bomb
 	public int randomBonus()
 	{	
 		int test=(int)(Math.random()*100);
-		int newTest=(int)(Math.random()*9);
+		int newTest=(int)(Math.random()*10);
 		int value = 1;
 		
 		if (test<20)
@@ -352,7 +359,11 @@ public class Bomb
 					
 				case 8:
 					value=90;
-					break;				
+					break;	
+				
+				case 9:
+					value=100;
+					break;
 			}
 		}
 		return value;

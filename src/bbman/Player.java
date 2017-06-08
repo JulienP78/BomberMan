@@ -15,10 +15,10 @@ public class Player
 	
 	private int numberOfBomb;
 	Bomb [] bombe=new Bomb [10];
-	
-	private String avatar;
-	
+		
 	private int speed;
+	private boolean hasAShield;
+	private String avatar;
 
 	public Player (Ground ground, int id, int positionX, int positionY)
 	{	
@@ -27,13 +27,14 @@ public class Player
 		this.positionY=positionY;
 		this.numberOfLife=3;
 		this.numberOfBomb=3;
-		this.speed=3;
 		
 		for (int i=0; i<this.bombe.length; i++)
 		{	
 			bombe[i]=new Bomb();
 		}
 		
+		this.speed=3;
+		this.hasAShield = false;
 		this.avatar = "player_" + (id+1) + "_front_profile.png";
 	}
 	
@@ -69,9 +70,18 @@ public class Player
 	{
 		return this.avatar;
 	}
-	public void setAvater(String newAvatar)
+	public void setAvatar(String newAvatar)
 	{
 		this.avatar = newAvatar;
+	}
+	
+	public boolean hasAShield()
+	{
+		return this.hasAShield;
+	}
+	public void setShield(boolean trueOrFalse)
+	{
+		this.hasAShield=trueOrFalse;
 	}
 	
 	public Ground dropBomb(Ground ground)
@@ -97,7 +107,7 @@ public class Player
 		int playerPositionXInTab=this.positionX/(ground.getHalfWidthOfRow()*2);
 		int playerPositionYInTab=this.positionY/(ground.getHalfHeigthOfLine()*2);
 		
-		if ((ground.getTab(playerPositionXInTab, playerPositionYInTab)>=10)&&(ground.getTab(playerPositionXInTab, playerPositionYInTab)<=90)) // Si le joueur est sur une case bonus
+		if ((ground.getTab(playerPositionXInTab, playerPositionYInTab)>=10)) // Si le joueur est sur une case bonus
 		{
 			int bonusValue = ground.getTab(playerPositionXInTab, playerPositionYInTab);
 			
@@ -155,6 +165,10 @@ public class Player
 				if (this.numberOfBomb<2)
 					this.numberOfBomb=2;
 			}
+			else if(bonusValue == 100)
+			{
+				this.hasAShield=true;
+			}
 			ground.setTab(playerPositionXInTab, playerPositionYInTab, 1); // On retire le bonus au ground
 		}
 		
@@ -163,25 +177,27 @@ public class Player
 	
 	public void moveTo(String move, Ground ground)
 	{	
+		String shield = (this.hasAShield==true) ? "_shield" : "";
+		
 		if (move=="up" && noObstacle("up", ground)) // on verifie qu'il n'y a pas d'obstacle
 		{	
 			this.positionY=this.positionY+this.speed;
-			this.avatar="player_" + (this.id+1) + "_back_profile.png";
+			this.avatar="player_" + (this.id+1) + "_back_profile" + shield + ".png";
 		}
 		else if (move=="left" && noObstacle("left", ground))
 		{	
 			this.positionX=this.positionX-this.speed;
-			this.avatar="player_" + (this.id+1) + "_left_profile.png";
+			this.avatar="player_" + (this.id+1) + "_left_profile" + shield + ".png";
 		}
 		else if (move=="down" && noObstacle("down", ground))
 		{	
 			this.positionY=this.positionY-this.speed;
-			this.avatar="player_" + (this.id+1) + "_front_profile.png";
+			this.avatar="player_" + (this.id+1) + "_front_profile" + shield + ".png";
 		}
 		else if (move=="right" && noObstacle("right", ground))
 		{	
 			this.positionX=this.positionX+this.speed;
-			this.avatar="player_" + (this.id+1) + "_right_profile.png";
+			this.avatar="player_" + (this.id+1) + "_right_profile" + shield + ".png";
 		}
 	
 	}
