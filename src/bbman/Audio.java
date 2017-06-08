@@ -10,12 +10,13 @@ import java.net.URL;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
-public class Sound
+public class Audio
 {
-	public Sound(String nomFichier)
+	public Audio(String nomFichier)
 	{
-		URL url = Sound.class.getResource(nomFichier+".wav"); 
+		URL url = Audio.class.getResource(nomFichier+".wav"); 
 		AudioClip son = Applet.newAudioClip(url); 
 		son.play();	
 	}
+	
 }
