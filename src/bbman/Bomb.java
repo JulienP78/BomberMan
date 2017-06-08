@@ -143,6 +143,10 @@ public class Bomb
 			{
 				ground.setTab(this.positionX+i,this.positionY,-100);
 			}
+			else if(ground.getTab(this.positionX+i,this.positionY)==-99)
+			{
+				makeTheBombAtXYExplosed(this.positionX+i,this.positionY, joueur, ground);
+			}
 			checkIfPlayerIsHere(ground, joueur, this.positionX+i, this.positionY);
 			if (i==this.puissance || this.positionX+(i+1) > ground.getNumberOfRow()-1)
 				wallOrBoxFound=true;
@@ -170,6 +174,10 @@ public class Bomb
 			{				
 				ground.setTab(this.positionX,this.positionY-i,-100);
 			}
+			else if(ground.getTab(this.positionX,this.positionY-i)==-99)
+			{
+				makeTheBombAtXYExplosed(this.positionX,this.positionY-i, joueur, ground);
+			}
 			checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY-i);
 			if (i==this.puissance || this.positionY-(i+1) < 0)
 				wallOrBoxFound=true;
@@ -194,6 +202,10 @@ public class Bomb
 			else if(ground.getTab(this.positionX-i,this.positionY)==1)
 			{
 				ground.setTab(this.positionX-i,this.positionY,-100);
+			}
+			else if(ground.getTab(this.positionX-i,this.positionY)==-99)
+			{
+				makeTheBombAtXYExplosed(this.positionX-i,this.positionY, joueur,ground);
 			}
 			checkIfPlayerIsHere(ground, joueur, this.positionX-i,this.positionY);
 			
@@ -221,6 +233,10 @@ public class Bomb
 			{
 				ground.setTab(this.positionX,this.positionY+i,-100);
 			}
+			else if(ground.getTab(this.positionX,this.positionY+i)==-99)
+			{
+				makeTheBombAtXYExplosed(this.positionX,this.positionY+i, joueur, ground);
+			}
 			checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY+i);
 			if (i==this.puissance || this.positionY+(i+1) > ground.getNumberOfLine()-1)
 				wallOrBoxFound=true;
@@ -235,7 +251,7 @@ public class Bomb
 		return ground;
 	}
 
-	private boolean checkIfPlayerIsHere(Ground ground, Player[] joueur, int postionExplosionX, int positionExplosionY) 
+	public boolean checkIfPlayerIsHere(Ground ground, Player[] joueur, int postionExplosionX, int positionExplosionY) 
 	{
 		boolean playerIsHere = false;
 		int positionPlayerX = 0;
@@ -262,6 +278,19 @@ public class Bomb
 		return playerIsHere;
 	}
 	
+	public void makeTheBombAtXYExplosed(int positionX, int positionY, Player[] player, Ground ground)
+	{
+		for (int i = 0 ; i < player.length ; i++)
+		{
+			for (int j = 0; j < player[i].getBombs().length ; j++)
+			{
+				if(player[i].getBombs()[j].positionX == positionX && player[i].getBombs()[j].positionY == positionY)
+				{
+					player[i].getBombs()[j].explose(ground, player);
+				}
+			}
+		}
+	}
 	public Ground endOfEplosion(Ground ground)
 	{	
 		int i=1;

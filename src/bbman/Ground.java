@@ -160,7 +160,6 @@ public class Ground
 				{	
 					filesToDraw[0] = "Explosion.png";
 				}
-				
 			
 				for (int file = 0 ; file < filesToDraw.length ; file++)
 				{

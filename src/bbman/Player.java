@@ -86,6 +86,11 @@ public class Player
 		this.hasAShield=trueOrFalse;
 	}
 	
+	public Bomb[] getBombs()
+	{
+		return this.bombe;
+	}
+	
 	public Ground dropBomb(Ground ground)
 	{
 		boolean keepOn = true;
