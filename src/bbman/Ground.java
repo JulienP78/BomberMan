@@ -180,28 +180,7 @@ public class Ground
 		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*3.5, "X " + joueur[0].getNumberOfBomb());	
 	}
 	
-	public void displayMenu()
-	{
-		StdDraw.picture(this.getHalfWidthOfRow()*2*11, this.getHalfHeigthOfLine()*2*8, "FinJ1.png", 500, 300);
-		StdDraw.picture(this.getHalfWidthOfRow()*2*10, this.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
-		
-		while(true)
-		{
-			if(StdDraw.mousePressed())
-			{
-				if(StdDraw.mouseX()>this.getHalfWidthOfRow()*2*10-100
-				&& StdDraw.mouseX()<this.getHalfWidthOfRow()*2*10+100
-				&& StdDraw.mouseY()>this.getHalfHeigthOfLine()*2*5.8-50
-				&& StdDraw.mouseY()<this.getHalfHeigthOfLine()*2*5.8+50)
-					
-				{
-					main.main(null);
-				}
-			}
-		}
-	}
-	
-	public void displayGameOver(Player[] joueur)
+	public void displayGameOver(Player[] joueur, Ground ground)
 	{
 		String joueurGagnant;
 		if(joueur[0].getNumberOfLife()<=0)
@@ -216,14 +195,14 @@ public class Ground
 		
 		if (joueurGagnant=="Joueur1")
 		{
-			StdDraw.picture(this.getHalfWidthOfRow()*2*11, this.getHalfHeigthOfLine()*2*8, "FinJ1.png", 500, 300);
-			StdDraw.picture(this.getHalfWidthOfRow()*2*10, this.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
+			StdDraw.picture(ground.getHalfWidthOfRow()*2*11, ground.getHalfHeigthOfLine()*2*8, "FinJ1.png", 500, 300);
+			StdDraw.picture(ground.getHalfWidthOfRow()*2*10, ground.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
 			Sound sound = new Sound("Violin");
 		}
 		else if (joueurGagnant=="Joueur2")
 		{
-			StdDraw.picture(this.getHalfWidthOfRow()*2*11, this.getHalfHeigthOfLine()*2*8, "FinJ2.png", 500, 300);
-			StdDraw.picture(this.getHalfWidthOfRow()*2*10, this.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
+			StdDraw.picture(ground.getHalfWidthOfRow()*2*11, ground.getHalfHeigthOfLine()*2*8, "FinJ2.png", 500, 300);
+			StdDraw.picture(ground.getHalfWidthOfRow()*2*10, ground.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
 			Sound sound = new Sound("Hello");
 		}
 		
@@ -234,10 +213,10 @@ public class Ground
 		{
 			if(StdDraw.mousePressed())
 			{
-				if(StdDraw.mouseX()>this.getHalfWidthOfRow()*2*10-100
-				&& StdDraw.mouseX()<this.getHalfWidthOfRow()*2*10+100
-				&& StdDraw.mouseY()>this.getHalfHeigthOfLine()*2*5.8-50
-				&& StdDraw.mouseY()<this.getHalfHeigthOfLine()*2*5.8+50)
+				if(StdDraw.mouseX()>ground.getHalfWidthOfRow()*2*10-100
+				&& StdDraw.mouseX()<ground.getHalfWidthOfRow()*2*10+100
+				&& StdDraw.mouseY()>ground.getHalfHeigthOfLine()*2*5.8-50
+				&& StdDraw.mouseY()<ground.getHalfHeigthOfLine()*2*5.8+50)
 					
 				{
 					main.main(null);
