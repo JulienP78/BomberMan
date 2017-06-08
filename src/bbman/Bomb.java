@@ -118,7 +118,6 @@ public class Bomb
 		checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY); // on regarde si un joueur doit perdre une vie		
 		
 		// -------------------------------------- On fait exploser au centre -----------------------------------------------
-
 		
 		ground.setTab(this.positionX, this.positionY, -100);
 		
@@ -126,7 +125,7 @@ public class Bomb
 
 		boolean wallOrBoxFound = false;
 		
-		for (int i = 1 ; i < this.puissance && !wallOrBoxFound ; i++)
+		for (int i = 0 ; i <= this.puissance && !wallOrBoxFound && (this.positionX+i<ground.getNumberOfRow()); i++)
 		{	
 			if (ground.getTab(this.positionX+i,this.positionY)==-1 && this.canOvercomeWalls==false) // si la case parcourue est un mur et que le joueur n'a pas le bonus bombe rouge alors on arrête
 				wallOrBoxFound=true;
@@ -146,7 +145,7 @@ public class Bomb
 			checkIfPlayerIsHere(ground, joueur, this.positionX+i, this.positionY); // on regarde si un joueur doit perdre une vie	
 			if (this.positionX+(i+1) > ground.getNumberOfRow()-1) // si l'on s'apprete à sortir du terrain
 				wallOrBoxFound=true;
-			if(wallOrBoxFound || i == this.puissance-1) // quand l'explosion s'arrete
+			if(wallOrBoxFound || i == this.puissance || (this.positionX+(i+1)>=ground.getNumberOfRow())) // quand l'explosion s'arrete
 				this.arreaExplosed[2]=i; // on recupere le nombre de case explosée dans l'attribut arreaExplosed propre à la bombe ( int [left, top, right, bot] )
 		}
 		
@@ -154,7 +153,7 @@ public class Bomb
 
 		wallOrBoxFound=false;
 		
-		for (int i = 1 ; i < this.puissance && !wallOrBoxFound ; i++)
+		for (int i = 0 ; i <= this.puissance && !wallOrBoxFound && (this.positionY-i>=0); i++)
 		{	
 			if (ground.getTab(this.positionX,this.positionY-i)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
@@ -172,9 +171,9 @@ public class Bomb
 				makeTheBombAtXYExplosed(this.positionX,this.positionY-i, joueur, ground);
 			}
 			checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY-i);
-			if (this.positionX+(i+1) > ground.getNumberOfRow()-1)
+			if (this.positionY-(i+1) < 0)
 				wallOrBoxFound=true;
-			if(wallOrBoxFound || i == this.puissance-1)
+			if(wallOrBoxFound || i == this.puissance || (this.positionY-(i+1)<0))
 				this.arreaExplosed[3]=i;
 		}
 		
@@ -182,8 +181,10 @@ public class Bomb
 
 		wallOrBoxFound=false;
 		
-		for (int i = 1 ; i < this.puissance && !wallOrBoxFound ; i++)
+		for (int i = 0 ; i <= this.puissance && !wallOrBoxFound && (this.positionX-i>=0); i++)
 		{	
+			
+
 			if (ground.getTab(this.positionX-i,this.positionY)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
 			else if (ground.getTab(this.positionX-i,this.positionY)==0)
@@ -200,17 +201,21 @@ public class Bomb
 			}
 			checkIfPlayerIsHere(ground, joueur, this.positionX-i,this.positionY);
 			
-			if (this.positionX+(i+1) > ground.getNumberOfRow()-1)
+			if (this.positionX-(i+1) < 0)
 				wallOrBoxFound=true;
-			if(wallOrBoxFound || i == this.puissance-1)
+			if(wallOrBoxFound || i == this.puissance || (this.positionX-(i+1)<0))
 				this.arreaExplosed[0]=i;
+			
+			System.out.println(this.puissance);
+			System.out.println(wallOrBoxFound);
+			System.out.println(this.positionX-i>=0);
 		}
 		
 		// -------------------------------------- On fait exploser en haut -----------------------------------------------
 
 		wallOrBoxFound=false;
 		
-		for (int i = 1 ; i < this.puissance && !wallOrBoxFound ; i++)
+		for (int i = 0 ; i <= this.puissance && !wallOrBoxFound && (this.positionY+i < ground.getNumberOfLine()); i++)
 		{	
 			if (ground.getTab(this.positionX,this.positionY+i)==-1 && this.canOvercomeWalls==false)
 				wallOrBoxFound=true;
@@ -227,9 +232,9 @@ public class Bomb
 				makeTheBombAtXYExplosed(this.positionX,this.positionY+i, joueur, ground);
 			}
 			checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY+i);
-			if (this.positionX+(i+1) > ground.getNumberOfRow()-1)
+			if (this.positionY+(i+1) > ground.getNumberOfLine()-1)
 				wallOrBoxFound=true;
-			if(wallOrBoxFound || i == this.puissance-1)
+			if(wallOrBoxFound || i == this.puissance || (this.positionY+(i+1) >= ground.getNumberOfLine()))
 				this.arreaExplosed[1]=i;
 		}
 		
@@ -342,59 +347,59 @@ public class Bomb
 			switch(newTest) // test qui nous permet de choisir aléatoirement un bonus
 			{
 				case 0:
-					value=10;
+					value=10; // bonus flamme bleue (reduit portée des bombes)
 					break;
 				
 				case 1:
-					value=20;
+					value=20; // bonus flamme jaune (augmente portée des bombes)
 					break;
 				
 				case 2:
-					value=30;
+					value=30; // bonus flamme rouge (augmente à 10 la portée des bombes)
 					break;
 					
 				case 3:
-					value=40;
+					value=40; // bonus bombe rouge (permet aux bombes d'exploser à travers les murs
 					break;
 					
 				case 4:
-					value=50;
+					value=50; // bonus vie (donne une vie supplémentaire au joueur)
 					break; 
 					
 				case 5:
-					value=60;
+					value=60; // bonus speed up (augmente la vitesse du joueur)
 					break;
 					
 				case 6:
-					value=70;
+					value=70; // bonus speed down (diminue la vitesse du joueur)
 					break;
 					
 				case 7:
-					value=80;
+					value=80;  // bonus bombe + (augmente de 2 le nombre de bombes du joueur)
 					break;
 					
 				case 8:
-					value=90;
+					value=90; // bonus bombe - (diminue de 2 le nombre de bombes du joueur)
 					break;	
 				
 				case 9:
-					value=100;
+					value=100; // bonus bouclier (rend le joueur invincible à la prochaine bombe)
 					break;
 					
 				case 10:
-					value=110;
+					value=110; // bonus flamme verte (diminue le temps de déclenchement et augmente la portée)
 					break;
 				
 				case 11:
-					value=120;
-					break;
+					value=120; // bonus passe muraille (permet au joueur de se déplacer sur les caisses et les bombes)
+					break; 
 			}
 		}
 		if (value!=1)
 		{
 			Sound sound = new Sound("new_bonus");
 		}
-		return value;
+		return 40;
 	}
 }
 

@@ -97,16 +97,16 @@ public class Ground
 		{	
 			for (int j=0;j<this.numberOfLine;j++)
 			{	
-				filesToDraw[0] = "Herbe.png"; // par défaut la première image dessinée est une case libre (cas le plus récurent)
+				filesToDraw[0] = "case_libre.png"; // par défaut la première image dessinée est une case libre (cas le plus récurent)
 				filesToDraw[1] = ""; // on donnera la deuxième image en fonction des cas
 				
 				if (this.tab[i][j]==0)
 				{	
-					filesToDraw[0] = "Caisse.png";
+					filesToDraw[0] = "case_caisse.png";
 				}
 				else if (this.tab[i][j]==-1)
 				{	
-					filesToDraw[0] = "mur.png";
+					filesToDraw[0] = "case_mur.png";
 				}
 				else if (this.tab[i][j]==10)
 				{	
@@ -158,7 +158,7 @@ public class Ground
 				}
 				else if (this.tab[i][j] == -99)
 				{
-					filesToDraw[1] = "Bombe.png";
+					filesToDraw[1] = "bombe.png";
 				}
 				else if (this.tab[i][j]<=-100)
 				{	
