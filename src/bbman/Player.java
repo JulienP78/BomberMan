@@ -166,7 +166,6 @@ public class Player
 			}
 			else if (bonusValue==80) // bonus bombe + (augmente de 2 le nombre de bombes du joueur)
 			{
-				Sound sound3 = new Sound("Bonus");
 				this.numberOfBomb=this.numberOfBomb+2;
 				if (this.numberOfBomb>7)
 					this.numberOfBomb=7;
