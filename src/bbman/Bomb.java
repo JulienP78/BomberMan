@@ -260,6 +260,7 @@ public class Bomb
 				else // sinon
 				{
 					joueur[i].setNumberOfLife(joueur[i].getNumberOfLife()-1); // le joueur perd une vie
+					Sound sound = new Sound("ouch");
 				}
 			}
 		}

@@ -122,7 +122,7 @@ public class Player
 		if ((ground.getTab(playerPositionXInTab, playerPositionYInTab)>=10)) // si le joueur est sur une case bonus
 		{
 			int bonusValue = ground.getTab(playerPositionXInTab, playerPositionYInTab); // on récupère la valeur de la case
-			
+			Sound sound;
 			if(bonusValue==10 && this.bombe[0].getPuissance()>1) // bonus flamme bleue (reduit portée des bombes)
 			{
 				for(int i = 0 ; i < this.bombe.length ; i++)
@@ -154,6 +154,7 @@ public class Player
 			else if(bonusValue == 50) // bonus vie (donne une vie supplémentaire au joueur)
 			{
 				this.numberOfLife++;
+				sound = new Sound("bonus_vie");
 			}
 			else if(bonusValue == 60) // bonus speed up (augmente la vitesse du joueur)
 			{

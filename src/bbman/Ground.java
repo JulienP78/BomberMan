@@ -187,11 +187,11 @@ public class Ground
 		
 		// ---------------------------------- On regroupe les différents images associés au stat des joueur  ------------------------------------------ 
 
-		String[] statsFiles = {"NombreVies.png", "NombreBombes.png", "bonus_speed_up.png", "Explosion.png","timer.png", "bonus_passe_muraille.png"};
+		String[] statsFiles = {"NombreVies.png", "NombreBombes.png", "bonus_speed_up.png", "Explosion.png","timer.png", "bonus_passe_muraille.png", "bonus_bombe_rouge.png"};
 
 		// ------------------------------------------- On récupère les différents stats du joueur 1  ------------------------------------------ 
 		
-		String[] statsP1 = {"X " + joueur[0].getNumberOfLife(), "X " + joueur[0].getNumberOfBomb(), "" + joueur[0].getSpeed(), "" + joueur[0].bombe[0].getPuissance(), "" + joueur[0].bombe[0].getTimeBeforeExplosion()/1000 + " s", ""};
+		String[] statsP1 = {"X " + joueur[0].getNumberOfLife(), "X " + joueur[0].getNumberOfBomb(), "" + joueur[0].getSpeed(), "" + joueur[0].bombe[0].getPuissance(), "" + joueur[0].bombe[0].getTimeBeforeExplosion()/1000 + " s", "", ""};
 
 		StdDraw.picture(this.halfWidthOfRow*2*2.1, this.halfHeigthOfLine*2*0.5, "J1.png", 200, 90); // correspond au texte "Joueur 1" en bas à gauche
 		
@@ -200,6 +200,11 @@ public class Ground
 			if(statsFiles[i]=="bonus_passe_muraille.png") // condition car pas valeur pour ce stat, juste afficher l'image
 			{
 				if(joueur[0].canWalkOnBoxAndBomb())
+					StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2.5+2*i), statsFiles[i], 30, 30);
+			}
+			else if (statsFiles[i]=="bonus_bombe_rouge.png")
+			{
+				if(joueur[0].getBombs()[0].canOvercomeWalls())
 					StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2.5+2*i), statsFiles[i], 30, 30);
 			}
 			else
@@ -211,7 +216,7 @@ public class Ground
 		
 		// ------------------------------------------- On récupère les différents stats du joueur 2  ------------------------------------------ 
 
-		String[] statsP2 = {"X " + joueur[1].getNumberOfLife(), "X " + joueur[1].getNumberOfBomb(), "" + joueur[1].getSpeed(), "" + joueur[1].bombe[0].getPuissance(), "" + joueur[1].bombe[0].getTimeBeforeExplosion()/1000 + " s", ""};
+		String[] statsP2 = {"X " + joueur[1].getNumberOfLife(), "X " + joueur[1].getNumberOfBomb(), "" + joueur[1].getSpeed(), "" + joueur[1].bombe[0].getPuissance(), "" + joueur[1].bombe[0].getTimeBeforeExplosion()/1000 + " s", "", ""};
 		
 		StdDraw.picture(this.halfWidthOfRow*2*18.9, this.halfHeigthOfLine*2*16.5, "J2.png", 200, 90); // correspond au texte "Joueur 2" en haut à droite
 		
@@ -222,12 +227,16 @@ public class Ground
 				if(joueur[1].canWalkOnBoxAndBomb())
 					StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15.5-2*i), statsFiles[i], 30, 30);
 			}
+			else if (statsFiles[i]=="bonus_bombe_rouge.png")
+			{
+				if(joueur[1].getBombs()[0].canOvercomeWalls())
+					StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15.5-2*i), statsFiles[i], 30, 30);
+			}
 			else
 			{
 				StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15.5-2*i), statsFiles[i], 30, 30);
 				StdDraw.text(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(14.5-2*i), statsP2[i]);
-			}
-			
+			}	
 		}
 		
 		// ------------------------------------------- On rappelle les bonus ------------------------------------------ 
@@ -244,12 +253,13 @@ public class Ground
 		{
 			StdDraw.picture(this.halfWidthOfRow*2+ (120*i), this.halfHeigthOfLine*2*16.5, bonusFiles[i], 100, 40);
 		}
-		
 		StdDraw.show();
 	}
 	
 	public void displayMenu()
 	{
+		Sound introMusic = new Sound("intro_music");
+
 		StdDraw.picture(this.halfWidthOfRow*2*10.5, this.halfHeigthOfLine*2*8.5, "menu.png", halfWidthOfRow*numberOfRow*2+halfWidthOfRow*2,halfHeigthOfLine*numberOfLine*2+halfHeigthOfLine+30);
 		StdDraw.picture(this.halfWidthOfRow*2*4, this.halfHeigthOfLine*2*7.5, "bouton_jouer.png", 400, 200);
 		StdDraw.picture(this.halfWidthOfRow*2*17.5, this.halfHeigthOfLine*2*7, "bouton_commande.png", 400, 200);
@@ -266,6 +276,7 @@ public class Ground
 				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*7.5+100)	// si le joueur appuie sur jouer on rappel la main
 				{
 					Sound sound = new Sound("clique");
+					introMusic.stop();
 					buttonActivate = true;
 					main.main(null);
 				}
@@ -277,13 +288,13 @@ public class Ground
 				{
 					Sound sound = new Sound("clique");
 					buttonActivate = true;
-					displayCommandes();
+					displayCommandes(introMusic);
 				}
 			}
 		}
 	}
 	
-	public void displayCommandes()
+	public void displayCommandes(Sound introMusic)
 	{
 		StdDraw.picture(this.halfWidthOfRow*2*10.5, this.halfHeigthOfLine*2*8.5, "commandes.png", halfWidthOfRow*numberOfRow*2+halfWidthOfRow*2,halfHeigthOfLine*numberOfLine*2+halfHeigthOfLine+30);
 		StdDraw.picture(this.halfWidthOfRow*2*16, this.halfHeigthOfLine*2*2, "bouton_jouer.png", 400, 200);
@@ -301,6 +312,7 @@ public class Ground
 				{
 					Sound sound = new Sound("clique");
 					buttonActivate = true;
+					introMusic.stop();
 					main.main(null); // si le joueur appuie sur jouer on rappel la main
 				}
 			}

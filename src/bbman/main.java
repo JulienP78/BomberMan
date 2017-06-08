@@ -11,22 +11,28 @@ public class main
 	public static void main(String[] args) 
 	{	
 		Ground ground = createGround();
-		
 		Player[] players = createPlayers(ground);
-		
 		if(isFirstGame)
 		{
 			isFirstGame=false;
 			ground.displayMenu();
 		}
-		
+
 		startGame(ground, players);
-		
+		Sound gameMusic = new Sound("game_music");
+
+		double timerForMusicLoop = java.lang.System.currentTimeMillis();
+			
 		while (noPlayerIsDead(players))
 		{
+			if(java.lang.System.currentTimeMillis()-timerForMusicLoop > 34285)
+			{
+				gameMusic = new Sound("game_music");
+				timerForMusicLoop=java.lang.System.currentTimeMillis();
+			}
 			play(ground, players);
 		}
-		
+		gameMusic.stop();
 		ground.displayGameOver(players);
 	}
 	
