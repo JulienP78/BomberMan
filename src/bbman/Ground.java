@@ -19,12 +19,12 @@ public class Ground
 	
 	public Ground(int numberOfRow, int numberOfLine, int halfWidthOfRow, int halfHeigthOfLine)
 	{	
-		this.tab=new int [numberOfRow][numberOfLine];
-		this.numberOfRow=numberOfRow;
-		this.numberOfLine=numberOfLine;
+		this.tab = new int [numberOfRow][numberOfLine];
+		this.numberOfRow = numberOfRow;
+		this.numberOfLine = numberOfLine;
 		
-		this.halfWidthOfRow=halfWidthOfRow;
-		this.halfHeigthOfLine=halfHeigthOfLine;
+		this.halfWidthOfRow = halfWidthOfRow;
+		this.halfHeigthOfLine = halfHeigthOfLine;
 		
 		//--------------------------------------- plateau avec caisses et murs ------------------------------------------------
 
@@ -245,6 +245,7 @@ public class Ground
 			StdDraw.picture(this.halfWidthOfRow*2+ (120*i), this.halfHeigthOfLine*2*16.5, bonusFiles[i], 100, 40);
 		}
 		
+		StdDraw.show();
 	}
 	
 	public void displayMenu()
@@ -264,6 +265,7 @@ public class Ground
 				&& StdDraw.mouseY()>this.halfHeigthOfLine*2*7.5-100
 				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*7.5+100)	// si le joueur appuie sur jouer on rappel la main
 				{
+					Sound sound = new Sound("clique");
 					buttonActivate = true;
 					main.main(null);
 				}
@@ -273,6 +275,7 @@ public class Ground
 				&& StdDraw.mouseY()>this.halfHeigthOfLine*2*7-100
 				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*7+100)		// si le joueur appuie sur commandes on affiche les commandes
 				{
+					Sound sound = new Sound("clique");
 					buttonActivate = true;
 					displayCommandes();
 				}
@@ -296,6 +299,7 @@ public class Ground
 				&& StdDraw.mouseY()>this.halfHeigthOfLine*2*2-100
 				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*2+100)	
 				{
+					Sound sound = new Sound("clique");
 					buttonActivate = true;
 					main.main(null); // si le joueur appuie sur jouer on rappel la main
 				}
@@ -321,6 +325,7 @@ public class Ground
 				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*5.8+25)
 				{
 					sound.stop();
+					Sound sound2 = new Sound("clique");
 					main.main(null);
 				}
 			}

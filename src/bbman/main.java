@@ -20,6 +20,8 @@ public class main
 			ground.displayMenu();
 		}
 		
+		startGame(ground, players);
+		
 		while (noPlayerIsDead(players))
 		{
 			play(ground, players);
@@ -74,26 +76,26 @@ public class main
 		return players;
 	}
 	
-	public static void play(Ground ground, Player[] players)
+	public static void startGame(Ground ground , Player[] players)
 	{
 		ground.draw(players); // on dessine le début de partie
-
-		while (noPlayerIsDead(players))
+		Sound sound = new Sound("321GO");
+		pause(3000);
+	}
+	public static void play(Ground ground, Player[] players)
+	{
+		listenToPlayersAction(players, ground); // on écoute les saisis des deux joueurs
+		
+		for (int i=0; i<players.length; i++)
 		{	
-			listenToPlayersAction(players, ground); // on écoute les saisis des deux joueurs
-			
-			for (int i=0; i<players.length; i++)
-			{	
-				ground=players[i].getBonus(ground); // on regarde si le joueur est sur une case avec un bonus
-				for (int j=0; j<players[i].getNumberOfBomb();j++)
-				{
-					ground=players[i].bombe[j].manage(ground, players); // on fait la gestion les bombes
-				}
+			ground=players[i].getBonus(ground); // on regarde si le joueur est sur une case avec un bonus
+			for (int j=0; j<players[i].getNumberOfBomb();j++)
+			{
+				ground=players[i].bombe[j].manage(ground, players); // on fait la gestion les bombes
 			}
-			ground.draw(players); // on redessine le tout
-			StdDraw.show();
-			pause(5);
 		}
+		ground.draw(players); // on redessine le tout
+		pause(5);
 	}
 	
 	public static void listenToPlayersAction(Player [] players, Ground ground)

@@ -205,10 +205,6 @@ public class Bomb
 				wallOrBoxFound=true;
 			if(wallOrBoxFound || i == this.puissance || (this.positionX-(i+1)<0))
 				this.arreaExplosed[0]=i;
-			
-			System.out.println(this.puissance);
-			System.out.println(wallOrBoxFound);
-			System.out.println(this.positionX-i>=0);
 		}
 		
 		// -------------------------------------- On fait exploser en haut -----------------------------------------------
@@ -402,5 +398,3 @@ public class Bomb
 		return 40;
 	}
 }
-
-
