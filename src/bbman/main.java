@@ -73,13 +73,13 @@ public class main
 			players[i]=new Player(ground,idPlayer, positionX, positionY);	// création des joueurs
 		}
 		
-		ground.draw(players); // on dessine le début de partie
+		ground.draw(players);	// on dessine le début de partie
 		return players;
 	}
 	
 	public static void play(Ground ground, Player[] players)
 	{
-		while (noPlayerIsDead(players)) // si aucun joueur n'est mort
+		while (noPlayerIsDead(players))	// si aucun joueur n'est mort
 		{	
 			listenToPlayersAction(players, ground); // on écoute les saisis des deux joueurs
 			

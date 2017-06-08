@@ -182,7 +182,9 @@ public class Ground
 	
 	public void displayMenu()
 	{
-		StdDraw.picture(this.getHalfWidthOfRow()*2*11, this.getHalfHeigthOfLine()*2*8, "Ouverture.png", 500, 300);
+		StdDraw.picture(this.getHalfWidthOfRow()*2*10.5, this.getHalfHeigthOfLine()*2*8.5, "menu2.png", halfWidthOfRow*numberOfRow*2+halfWidthOfRow*2,halfHeigthOfLine*numberOfLine*2+halfHeigthOfLine+30);
+		StdDraw.picture(this.getHalfWidthOfRow()*2*4, this.getHalfHeigthOfLine()*2*7.5, "menu_jouer.png", 400, 200);
+		StdDraw.picture(this.getHalfWidthOfRow()*2*17, this.getHalfHeigthOfLine()*2*7, "menu_commande.png", 400, 250);
 		StdDraw.show();
 		
 		while(true)
@@ -200,6 +202,7 @@ public class Ground
 			}
 		}
 	}
+	
 	public void displayGameOver(Player[] joueur, Ground ground)
 	{
 		String joueurGagnant;
@@ -213,22 +216,23 @@ public class Ground
 
 		}
 		
+		String fileToPlay="";
 		if (joueurGagnant=="Joueur1")
 		{
 			StdDraw.picture(ground.getHalfWidthOfRow()*2*11, ground.getHalfHeigthOfLine()*2*8, "FinJ1.png", 500, 300);
 			StdDraw.picture(ground.getHalfWidthOfRow()*2*10, ground.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
-			Sound sound = new Sound("Violin");
+			fileToPlay = "Violin";
 		}
 		else if (joueurGagnant=="Joueur2")
 		{
 			StdDraw.picture(ground.getHalfWidthOfRow()*2*11, ground.getHalfHeigthOfLine()*2*8, "FinJ2.png", 500, 300);
 			StdDraw.picture(ground.getHalfWidthOfRow()*2*10, ground.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
-			Sound sound = new Sound("Hello");
+			fileToPlay = "Hello";
 		}
 		
-		
+		Sound sound = new Sound(fileToPlay);
 		StdDraw.show();
-		
+
 		while(true)
 		{
 			if(StdDraw.mousePressed())
