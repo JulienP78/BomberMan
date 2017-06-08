@@ -159,13 +159,15 @@ public class Ground
 			}
 		}
 		
-		for (int i=0;i<joueur.length;i++) // on dessine les joueurs
+		// ----------------------------------------------- On dessine les joueurs ------------------------------------------ 
+		for (int i=0;i<joueur.length;i++) 
 		{
 			String playerImage = "player_" + (i+1) + "_" + joueur[i].getSens() + ".png";
 			StdDraw.picture(joueur[i].getPositionX(), joueur[i].getPositionY(), playerImage, 33, 50);
 		}
 		
-		StdDraw.setPenColor(255, 255, 255); // on dessine les stats des joueurs
+		// ------------------------------------------- On dessine les stats des joueurs ------------------------------------------ 
+		StdDraw.setPenColor(255, 255, 255);
 		StdDraw.setPenRadius(200);
 		
 		String[] statsFiles = {"NombreVies.png", "NombreBombes.png", "bonus_speed_up.png", "Explosion.png"};
@@ -188,6 +190,21 @@ public class Ground
 			StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2.5+2*i), statsFiles[i], 30, 30);
 			StdDraw.text(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(1.5+2*i), statsP1[i]);
 		}
+		
+		// ------------------------------------------- On rappelle les bonus ------------------------------------------ 
+		
+		String[] bonusFiles = {"rappel_bonus_bombe_moins.png",
+							   "rappel_bonus_bombe_plus.png",
+							   "rappel_bonus_bombe_rouge.png",
+							   "rappel_bonus_flamme_bleue.png",
+							   "rappel_bonus_flamme_rouge.png",
+							   "rappel_bonus_flamme_jaune.png"};
+		
+		for(int i = 0 ; i < bonusFiles.length ; i++)
+		{
+			StdDraw.picture(this.halfWidthOfRow*2*2.1 + (120*i), this.halfHeigthOfLine*2*16.5, bonusFiles[i], 100, 50);
+		}
+		
 	}
 	
 	public void displayMenu()
@@ -205,7 +222,7 @@ public class Ground
 				if(StdDraw.mouseX()>this.halfWidthOfRow*2*4-200
 				&& StdDraw.mouseX()<this.halfWidthOfRow*2*4+200
 				&& StdDraw.mouseY()>this.halfHeigthOfLine*2*7.5-100
-				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*7.5+100)	
+				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*7.5+100)	// Si le joueur appuie sur jouer on rappel la main
 				{
 					buttonActivate = true;
 					main.main(null);
@@ -214,7 +231,7 @@ public class Ground
 				if(StdDraw.mouseX()>this.halfWidthOfRow*2*17-200
 				&& StdDraw.mouseX()<this.halfWidthOfRow*2*17+200
 				&& StdDraw.mouseY()>this.halfHeigthOfLine*2*7-100
-				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*7+100)	
+				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*7+100)		// Si le joueur appuie sur commandes on affiche les commandes
 				{
 					buttonActivate = true;
 					displayCommandes();
