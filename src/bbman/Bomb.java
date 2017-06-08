@@ -414,7 +414,7 @@ public class Bomb
 					break;
 			}
 		}
-		return 120;
+		return value;
 	}
 }
 

@@ -98,17 +98,17 @@ public class Player
 	
 	public Ground dropBomb(Ground ground)
 	{
-		boolean keepOn = true;
+		boolean noBombAvailableFound = true;
 		
 		int positionX=this.positionX/(ground.getHalfWidthOfRow()*2); // positionX dans la table 
 		int positionY=this.positionY/(ground.getHalfHeigthOfLine()*2); // positionY dans la table
 		
-		for (int i = 0 ; i < this.numberOfBomb && keepOn ; i++)
+		for (int i = 0 ; i < this.numberOfBomb && noBombAvailableFound ; i++)
 		{
-			if (this.bombe[i].isActivated()==false) // on entre dans la boucle à la première bombe non activée
+			if (this.bombe[i].isActivated()==false) // on entre dans la boucle à la première bombe disponible
 			{	
-				ground=this.bombe[i].activateBomb(positionX, positionY, ground); // on active la première bombe non activée avec commme position la position du joueur
-				keepOn=false;
+				ground=this.bombe[i].activateBomb(positionX, positionY, ground); // on active la bombe avec commme position la position du joueur
+				noBombAvailableFound=false; // on modifie la variable pour sortir de la boucle
 			}
 		}
 		return ground;
@@ -119,69 +119,69 @@ public class Player
 		int playerPositionXInTab=this.positionX/(ground.getHalfWidthOfRow()*2);
 		int playerPositionYInTab=this.positionY/(ground.getHalfHeigthOfLine()*2);
 		
-		if ((ground.getTab(playerPositionXInTab, playerPositionYInTab)>=10)) // Si le joueur est sur une case bonus
+		if ((ground.getTab(playerPositionXInTab, playerPositionYInTab)>=10)) // si le joueur est sur une case bonus
 		{
-			int bonusValue = ground.getTab(playerPositionXInTab, playerPositionYInTab);
+			int bonusValue = ground.getTab(playerPositionXInTab, playerPositionYInTab); // on récupère la valeur de la case
 			
-			if(bonusValue==10 && this.bombe[0].getPuissance()>1)
+			if(bonusValue==10 && this.bombe[0].getPuissance()>1) // bonus flamme bleue (reduit portée des bombes)
 			{
 				for(int i = 0 ; i < this.bombe.length ; i++)
 				{
 					this.bombe[i].setPuissance(bombe[i].getPuissance()-1);
 				}
 			}
-			else if(bonusValue==20 && this.bombe[0].getPuissance()<10)
+			else if(bonusValue==20 && this.bombe[0].getPuissance()<10) // bonus flamme jaune (augmente portée des bombes)
 			{
 				for(int i = 0 ; i < this.bombe.length ; i++)
 				{
 					this.bombe[i].setPuissance(bombe[i].getPuissance()+1);
 				}
 			}
-			else if(bonusValue == 30)
+			else if(bonusValue == 30) // bonus flamme rouge (augmente à 10 la portée des bombes)
 			{
 				for(int i = 0 ; i < this.bombe.length ; i++)
 				{
 					this.bombe[i].setPuissance(10);
 				}
 			}
-			else if(bonusValue == 40)
+			else if(bonusValue == 40) // bonus bombe rouge (permet aux bombes d'exploser à travers les murs
 			{
 				for (int i = 0 ; i < 10 ; i++)
 				{
 					this.bombe[i].setCanOvercomeWalls(true);
 				}
 			}
-			else if(bonusValue == 50)
+			else if(bonusValue == 50) // bonus vie (donne une vie supplémentaire au joueur)
 			{
 				this.numberOfLife++;
 			}
-			else if(bonusValue == 60)
+			else if(bonusValue == 60) // bonus speed up (augmente la vitesse du joueur)
 			{
 				this.speed++;
 				
 			}
-			else if(bonusValue==70 && this.speed>1)
+			else if(bonusValue==70 && this.speed>1) // bonus speed down (diminue la vitesse du joueur)
 			{
 				this.speed--;
 			}
-			else if (bonusValue==80)
+			else if (bonusValue==80) // bonus bombe + (augmente de 2 le nombre de bombes du joueur)
 			{
 				Sound sound3 = new Sound("Bonus");
 				this.numberOfBomb=this.numberOfBomb+2;
 				if (this.numberOfBomb>7)
 					this.numberOfBomb=7;
 			}
-			else if(bonusValue == 90)
+			else if(bonusValue == 90) // bonus bombe - (diminue de 2 le nombre de bombes du joueur)
 			{
 				this.numberOfBomb=this.numberOfBomb-2;
 				if (this.numberOfBomb<2)
 					this.numberOfBomb=2;
 			}
-			else if(bonusValue == 100)
+			else if(bonusValue == 100) // bonus bouclier (rend le joueur invincible à la prochaine bombe)
 			{
 				this.hasAShield=true;
 			}
-			else if(bonusValue == 110)
+			else if(bonusValue == 110) // bonus flamme verte (diminue le temps de déclenchement et augmente la portée)
 			{
 				if (this.bombe[0].getTimeBeforeExplosion()>=4000)
 				{
@@ -198,7 +198,7 @@ public class Player
 					}
 				}
 			}
-			else if(bonusValue == 120)
+			else if(bonusValue == 120) // bonus passe muraille (permet au joueur de se déplacer sur les caisses et les bombes)
 			{
 				this.canWalkOnBoxAndBomb=true;
 			}
@@ -210,7 +210,7 @@ public class Player
 	
 	public void moveTo(String move, Ground ground)
 	{	
-		String shield = (this.hasAShield==true) ? "_shield" : ""; // on regarde si le joueur a un bouclier
+		String shield = (this.hasAShield==true) ? "_shield" : ""; // on regarde si le joueur a un bouclier (pour l'avatar)
 		
 		if (move=="up" && noObstacle("up", ground)) // on verifie qu'il n'y a pas d'obstacle
 		{	
@@ -235,23 +235,23 @@ public class Player
 	
 	}
 
-	public boolean noObstacle(String move, Ground ground) // On vérifie que le joueur peut bien se déplacer sur cette case
+	public boolean noObstacle(String move, Ground ground) // on vérifie que le joueur peut bien se déplacer sur cette case
 	{
-		int spaceAllow = 0;
-		int casePositionToCheck=0;
-		int caseValueToCheck=0;
+		int spaceAllowBeforeColision = 0;
+		int casePositionToCheck = 0;
+		int caseValueToCheck = 0;
 		int playerPositionXInTab = this.positionX/(ground.getHalfWidthOfRow()*2);
 		int playerPositionYInTab = this.positionY/(ground.getHalfHeigthOfLine()*2);
 
 		if (move == "up")
 		{
-			spaceAllow=2*ground.getHalfHeigthOfLine()/3;
-			casePositionToCheck = (this.positionY+spaceAllow)/(ground.getHalfHeigthOfLine()*2); // La case à regarder
-			caseValueToCheck = ground.getTab(playerPositionXInTab, casePositionToCheck);
+			spaceAllowBeforeColision=ground.getHalfHeigthOfLine();
+			casePositionToCheck = (this.positionY+spaceAllowBeforeColision)/(ground.getHalfHeigthOfLine()*2); // la position de la case à regarder
+			caseValueToCheck = ground.getTab(playerPositionXInTab, casePositionToCheck); // la valeur de la case
 			
-			if((caseValueToCheck==0 && this.canWalkOnBoxAndBomb==false)	// Si la case est une caisse
+			if((caseValueToCheck==0 && this.canWalkOnBoxAndBomb==false)	// Si la case est une caisse et si le joueur n'a pas le bonus passe muraille
 			 ||caseValueToCheck==-1 // ou si la case est un mur
-			 ||(caseValueToCheck == -99 && playerPositionYInTab!=casePositionToCheck  && this.canWalkOnBoxAndBomb==false)) // ou si la case est une bombe
+			 ||(caseValueToCheck == -99 && playerPositionYInTab!=casePositionToCheck  && this.canWalkOnBoxAndBomb==false)) // ou si la case est une bombe et le joueur n'a pas le bonus passe muraille
 			{
 				return false;	// alors on renvoit faux et le joueur ne se déplace pas
 			}
@@ -259,8 +259,8 @@ public class Player
 		
 		else if(move == "left")
 		{
-			spaceAllow=2*ground.getHalfWidthOfRow()/3;
-			casePositionToCheck = (this.positionX-spaceAllow)/(ground.getHalfWidthOfRow()*2);
+			spaceAllowBeforeColision=2*ground.getHalfWidthOfRow()/3;
+			casePositionToCheck = (this.positionX-spaceAllowBeforeColision)/(ground.getHalfWidthOfRow()*2);
 			caseValueToCheck = ground.getTab(casePositionToCheck, playerPositionYInTab);
 
 			if((caseValueToCheck==0 && this.canWalkOnBoxAndBomb==false)
@@ -274,8 +274,8 @@ public class Player
 		
 		else if(move == "right")
 		{
-			spaceAllow=2*ground.getHalfWidthOfRow()/3;
-			casePositionToCheck = (this.positionX+spaceAllow)/(ground.getHalfWidthOfRow()*2);
+			spaceAllowBeforeColision=2*ground.getHalfWidthOfRow()/3;
+			casePositionToCheck = (this.positionX+spaceAllowBeforeColision)/(ground.getHalfWidthOfRow()*2);
 			caseValueToCheck = ground.getTab(casePositionToCheck, playerPositionYInTab);
 			
 			if((caseValueToCheck==0 && this.canWalkOnBoxAndBomb==false)
@@ -288,8 +288,8 @@ public class Player
 		
 		else if(move == "down")
 		{
-			spaceAllow=2*ground.getHalfHeigthOfLine()/3;
-			casePositionToCheck = (this.positionY-spaceAllow)/(ground.getHalfHeigthOfLine()*2);
+			spaceAllowBeforeColision=ground.getHalfHeigthOfLine();
+			casePositionToCheck = (this.positionY-spaceAllowBeforeColision)/(ground.getHalfHeigthOfLine()*2);
 			caseValueToCheck = ground.getTab(playerPositionXInTab, casePositionToCheck);
 
 			if((caseValueToCheck==0 && this.canWalkOnBoxAndBomb==false)

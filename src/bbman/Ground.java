@@ -305,12 +305,12 @@ public class Ground
 	
 	public void displayGameOver(Player[] joueur)
 	{
-		
 		int idWinner = (joueur[0].getNumberOfLife()<=0) ? 2 : 1;
 		StdDraw.picture(this.halfWidthOfRow*2*11, this.halfHeigthOfLine*2*8, "finJ" + idWinner + ".png", 500, 300);
 		StdDraw.picture(this.halfWidthOfRow*2*10, this.halfHeigthOfLine*2*5.8, "bouton_rejouer.png", 100, 50);
 		Sound sound = new Sound("musique_fin_joueurGagnant_" + idWinner);
 		StdDraw.show();
+		
 		while(true)
 		{
 			if(StdDraw.mousePressed())
