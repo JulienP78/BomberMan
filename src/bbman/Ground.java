@@ -167,43 +167,76 @@ public class Ground
 		
 		StdDraw.setPenColor(255, 255, 255); // on dessine les stats des joueurs
 		StdDraw.setPenRadius(200);
-		StdDraw.picture(this.getHalfWidthOfRow()*2*18.9, this.getHalfHeigthOfLine()*2*16.5, "J2.png", 200, 90);
-		StdDraw.picture(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*15.5, "NombreVies.png", 30, 30);
-		StdDraw.text(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*14.5, "X " + joueur[1].getNumberOfLife());
-		StdDraw.picture(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*13.5, "NombreBombes.png", 30, 30);
-		StdDraw.text(this.getHalfWidthOfRow()*2*20.6, this.getHalfHeigthOfLine()*2*12.5, "X " + joueur[1].getNumberOfBomb());
+		StdDraw.picture(this.halfWidthOfRow*2*18.9, this.halfHeigthOfLine*2*16.5, "J2.png", 200, 90);
+		StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*15.5, "NombreVies.png", 30, 30);
+		StdDraw.text(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*14.5, "X " + joueur[1].getNumberOfLife());
+		StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*13.5, "NombreBombes.png", 30, 30);
+		StdDraw.text(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*12.5, "X " + joueur[1].getNumberOfBomb());
 		
-		StdDraw.picture(this.getHalfWidthOfRow()*2*2.1, this.getHalfHeigthOfLine()*2*0.5, "J1.png", 200, 90);
-		StdDraw.picture(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*2.5, "NombreVies.png", 30, 30);
-		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*1.5, "X " + joueur[0].getNumberOfLife());
-		StdDraw.picture(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*4.5, "NombreBombes.png", 30, 30);
-		StdDraw.text(this.getHalfWidthOfRow()*2*0.5, this.getHalfHeigthOfLine()*2*3.5, "X " + joueur[0].getNumberOfBomb());	
+		StdDraw.picture(this.halfWidthOfRow*2*2.1, this.halfHeigthOfLine*2*0.5, "J1.png", 200, 90);
+		StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*2.5, "NombreVies.png", 30, 30);
+		StdDraw.text(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*1.5, "X " + joueur[0].getNumberOfLife());
+		StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*4.5, "NombreBombes.png", 30, 30);
+		StdDraw.text(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*3.5, "X " + joueur[0].getNumberOfBomb());	
 	}
 	
 	public void displayMenu()
 	{
-		StdDraw.picture(this.getHalfWidthOfRow()*2*10.5, this.getHalfHeigthOfLine()*2*8.5, "menu2.png", halfWidthOfRow*numberOfRow*2+halfWidthOfRow*2,halfHeigthOfLine*numberOfLine*2+halfHeigthOfLine+30);
-		StdDraw.picture(this.getHalfWidthOfRow()*2*4, this.getHalfHeigthOfLine()*2*7.5, "menu_jouer.png", 400, 200);
-		StdDraw.picture(this.getHalfWidthOfRow()*2*17, this.getHalfHeigthOfLine()*2*7, "menu_commande.png", 400, 250);
+		StdDraw.picture(this.halfWidthOfRow*2*10.5, this.halfHeigthOfLine*2*8.5, "menu2.png", halfWidthOfRow*numberOfRow*2+halfWidthOfRow*2,halfHeigthOfLine*numberOfLine*2+halfHeigthOfLine+30);
+		StdDraw.picture(this.halfWidthOfRow*2*4, this.halfHeigthOfLine*2*7.5, "menu_jouer.png", 400, 200);
+		StdDraw.picture(this.halfWidthOfRow*2*17.5, this.halfHeigthOfLine*2*7, "menu_commande.png", 400, 200);
 		StdDraw.show();
 		
-		while(true)
+		boolean buttonActivate = false;
+		while(!buttonActivate)
 		{
 			if(StdDraw.mousePressed())
 			{
-				if(StdDraw.mouseX()>this.getHalfWidthOfRow()*2*10-100
-				&& StdDraw.mouseX()<this.getHalfWidthOfRow()*2*10+100
-				&& StdDraw.mouseY()>this.getHalfHeigthOfLine()*2*5.8-50
-				&& StdDraw.mouseY()<this.getHalfHeigthOfLine()*2*5.8+50)
-					
+				if(StdDraw.mouseX()>this.halfWidthOfRow*2*4-200
+				&& StdDraw.mouseX()<this.halfWidthOfRow*2*4+200
+				&& StdDraw.mouseY()>this.halfHeigthOfLine*2*7.5-100
+				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*7.5+100)	
 				{
+					buttonActivate = true;
 					main.main(null);
+				}
+				
+				if(StdDraw.mouseX()>this.halfWidthOfRow*2*17-200
+				&& StdDraw.mouseX()<this.halfWidthOfRow*2*17+200
+				&& StdDraw.mouseY()>this.halfHeigthOfLine*2*7-100
+				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*7+100)	
+				{
+					buttonActivate = true;
+					displayCommandes();
 				}
 			}
 		}
 	}
 	
-	public void displayGameOver(Player[] joueur, Ground ground)
+	public void displayCommandes()
+	{
+		StdDraw.picture(this.halfWidthOfRow*2*10.5, this.halfHeigthOfLine*2*8.5, "commandes.png", halfWidthOfRow*numberOfRow*2+halfWidthOfRow*2,halfHeigthOfLine*numberOfLine*2+halfHeigthOfLine+30);
+		StdDraw.picture(this.halfWidthOfRow*2*16, this.halfHeigthOfLine*2*2, "menu_jouer.png", 400, 200);
+		StdDraw.show();
+		boolean buttonActivate = false;
+
+		while(!buttonActivate)
+		{
+			if(StdDraw.mousePressed())
+			{
+				if(StdDraw.mouseX()>this.halfWidthOfRow*2*16-200
+				&& StdDraw.mouseX()<this.halfWidthOfRow*2*16+200
+				&& StdDraw.mouseY()>this.halfHeigthOfLine*2*2-100
+				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*2+100)	
+				{
+					buttonActivate = true;
+					main.main(null);
+				}
+			}
+		}	
+	}
+	
+	public void displayGameOver(Player[] joueur)
 	{
 		String joueurGagnant;
 		if(joueur[0].getNumberOfLife()<=0)
@@ -219,14 +252,14 @@ public class Ground
 		String fileToPlay="";
 		if (joueurGagnant=="Joueur1")
 		{
-			StdDraw.picture(ground.getHalfWidthOfRow()*2*11, ground.getHalfHeigthOfLine()*2*8, "FinJ1.png", 500, 300);
-			StdDraw.picture(ground.getHalfWidthOfRow()*2*10, ground.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
+			StdDraw.picture(this.halfWidthOfRow*2*11, this.halfHeigthOfLine*2*8, "FinJ1.png", 500, 300);
+			StdDraw.picture(this.halfWidthOfRow*2*10, this.halfHeigthOfLine*2*5.8, "Rejouer.png", 100, 50);
 			fileToPlay = "Violin";
 		}
 		else if (joueurGagnant=="Joueur2")
 		{
-			StdDraw.picture(ground.getHalfWidthOfRow()*2*11, ground.getHalfHeigthOfLine()*2*8, "FinJ2.png", 500, 300);
-			StdDraw.picture(ground.getHalfWidthOfRow()*2*10, ground.getHalfHeigthOfLine()*2*5.8, "Rejouer.png", 100, 50);
+			StdDraw.picture(this.halfWidthOfRow*2*11, this.halfHeigthOfLine*2*8, "FinJ2.png", 500, 300);
+			StdDraw.picture(this.halfWidthOfRow*2*10, this.halfHeigthOfLine*2*5.8, "Rejouer.png", 100, 50);
 			fileToPlay = "Hello";
 		}
 		
@@ -237,10 +270,10 @@ public class Ground
 		{
 			if(StdDraw.mousePressed())
 			{
-				if(StdDraw.mouseX()>ground.getHalfWidthOfRow()*2*10-100
-				&& StdDraw.mouseX()<ground.getHalfWidthOfRow()*2*10+100
-				&& StdDraw.mouseY()>ground.getHalfHeigthOfLine()*2*5.8-50
-				&& StdDraw.mouseY()<ground.getHalfHeigthOfLine()*2*5.8+50)
+				if(StdDraw.mouseX()>this.halfWidthOfRow*2*10-100
+				&& StdDraw.mouseX()<this.halfWidthOfRow*2*10+100
+				&& StdDraw.mouseY()>this.halfHeigthOfLine*2*5.8-50
+				&& StdDraw.mouseY()<this.halfHeigthOfLine*2*5.8+50)
 					
 				{
 					main.main(null);

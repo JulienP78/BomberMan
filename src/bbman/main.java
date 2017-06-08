@@ -25,7 +25,7 @@ public class main
 			play(ground, players);
 		}
 		
-		ground.displayGameOver(players, ground);
+		ground.displayGameOver(players);
 	}
 	
 	public static Ground createGround()
