@@ -91,6 +91,11 @@ public class Player
 		return this.bombe;
 	}
 	
+	public boolean canWalkOnBoxAndBomb()
+	{
+		return this.canWalkOnBoxAndBomb;
+	}
+	
 	public Ground dropBomb(Ground ground)
 	{
 		boolean keepOn = true;
@@ -205,7 +210,7 @@ public class Player
 	
 	public void moveTo(String move, Ground ground)
 	{	
-		String shield = (this.hasAShield==true) ? "_shield" : "";
+		String shield = (this.hasAShield==true) ? "_shield" : ""; // on regarde si le joueur a un bouclier
 		
 		if (move=="up" && noObstacle("up", ground)) // on verifie qu'il n'y a pas d'obstacle
 		{	
