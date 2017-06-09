@@ -86,7 +86,13 @@ public class main
 	{
 		ground.draw(players); // on dessine le début de partie
 		Sound sound = new Sound("321GO");
-		pause(3000);
+		for(int i = 3 ; i >=1 ; i--)
+		{
+			StdDraw.picture(ground.getHalfWidthOfRow()*2*10.5, ground.getHalfHeigthOfLine()*2*8.5, "start_game_" + i + ".png", 500, 500);
+			StdDraw.show();
+			pause(1000);
+		}
+		
 	}
 	
 	public static void play(Ground ground, Player[] players)
@@ -96,7 +102,7 @@ public class main
 		for (int i=0; i<players.length; i++)
 		{	
 			ground=players[i].getBonus(ground); // on regarde si le joueur est sur une case avec un bonus
-			for (int j=0; j<players[i].getNumberOfBomb();j++)
+			for (int j=0; j<players[i].getBombs().length;j++)
 			{
 				ground=players[i].bombe[j].manage(ground, players); // on fait la gestion les bombes
 			}
@@ -104,10 +110,10 @@ public class main
 		ground.draw(players); // on redessine le tout
 		
 		int test=(int)(Math.random()*500);
-		int newText=(int)(Math.random()*7);
+		int newTest=(int)(Math.random()*7);
 		if(test==1)
 		{
-			Sound sentence = new Sound("phrase"+(newText+1));
+			Sound sentence = new Sound("phrase"+(newTest+1));
 		}
 		pause(5);
 	}
@@ -154,16 +160,10 @@ public class main
 		{	
 			players[1].moveTo("right",ground);
 		}
-		if (StdDraw.isKeyPressed(KeyEvent.VK_ENTER))
+		if (StdDraw.isKeyPressed(KeyEvent.VK_SHIFT))
 		{	
 			ground=players[1].dropBomb(ground);
 		}
-	}
-	
-	public static void pause(int mili)
-	{	
-		long time=java.lang.System.currentTimeMillis();
-		while (java.lang.System.currentTimeMillis()-time<mili);
 	}
 
 	public static boolean noPlayerIsDead(Player[] players)
@@ -176,5 +176,11 @@ public class main
 			}
 		}
 		return true;
+	}
+	
+	public static void pause(int mili)
+	{	
+		long time=java.lang.System.currentTimeMillis();
+		while (java.lang.System.currentTimeMillis()-time<mili);
 	}
 }

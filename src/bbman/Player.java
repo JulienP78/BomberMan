@@ -201,6 +201,7 @@ public class Player
 			else if(bonusValue == 120) // bonus passe muraille (permet au joueur de se déplacer sur les caisses et les bombes)
 			{
 				this.canWalkOnBoxAndBomb=true;
+				sound = new Sound("halleluyah");
 			}
 			ground.setTab(playerPositionXInTab, playerPositionYInTab, 1); // On retire le bonus au ground
 		}

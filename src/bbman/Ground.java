@@ -89,7 +89,7 @@ public class Ground
 		return this.numberOfLine;
 	}
 
-	public void draw(Player [] joueur)
+	public void draw(Player [] players)
 	{
 		String[] filesToDraw = {"", ""}; // tableau regroupant 2 fichiers images qui seront affichées en superposition
 		
@@ -176,9 +176,9 @@ public class Ground
 		}
 		
 		// ----------------------------------------------- On dessine les joueurs ------------------------------------------ 
-		for (int i=0;i<joueur.length;i++) 
+		for (int i=0;i<players.length;i++) 
 		{
-			StdDraw.picture(joueur[i].getPositionX(), joueur[i].getPositionY(), joueur[i].getAvatar(), 33, 50);
+			StdDraw.picture(players[i].getPositionX(), players[i].getPositionY(), players[i].getAvatar(), 33, 50);
 		}
 		
 		// ------------------------------------------- On dessine les stats des joueurs ------------------------------------------ 
@@ -191,7 +191,7 @@ public class Ground
 
 		// ------------------------------------------- On récupère les différents stats du joueur 1  ------------------------------------------ 
 		
-		String[] statsP1 = {"X " + joueur[0].getNumberOfLife(), "X " + joueur[0].getNumberOfBomb(), "" + joueur[0].getSpeed(), "" + joueur[0].bombe[0].getPuissance(), "" + joueur[0].bombe[0].getTimeBeforeExplosion()/1000 + " s", "", ""};
+		String[] statsP1 = {"X " + players[0].getNumberOfLife(), "X " + players[0].getNumberOfBomb(), "" + players[0].getSpeed(), "" + players[0].bombe[0].getPuissance(), "" + players[0].bombe[0].getTimeBeforeExplosion()/1000 + " s", "", ""};
 
 		StdDraw.picture(this.halfWidthOfRow*2*2.1, this.halfHeigthOfLine*2*0.5, "J1.png", 200, 90); // correspond au texte "Joueur 1" en bas à gauche
 		
@@ -199,12 +199,12 @@ public class Ground
 		{
 			if(statsFiles[i]=="stats_passe_muraille.png") // condition car pas valeur pour ce stat, juste afficher l'image
 			{
-				if(joueur[0].canWalkOnBoxAndBomb())
+				if(players[0].canWalkOnBoxAndBomb())
 					StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2+2*i), statsFiles[i], 40, 40);
 			}
 			else if (statsFiles[i]=="stats_bombe_rouge.png")
 			{
-				if(joueur[0].getBombs()[0].canOvercomeWalls())
+				if(players[0].getBombs()[0].canOvercomeWalls())
 					StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2+2*i), statsFiles[i], 40, 40);
 			}
 			else
@@ -216,7 +216,7 @@ public class Ground
 		
 		// ------------------------------------------- On récupère les différents stats du joueur 2  ------------------------------------------ 
 
-		String[] statsP2 = {"X " + joueur[1].getNumberOfLife(), "X " + joueur[1].getNumberOfBomb(), "" + joueur[1].getSpeed(), "" + joueur[1].bombe[0].getPuissance(), "" + joueur[1].bombe[0].getTimeBeforeExplosion()/1000 + " s", "", ""};
+		String[] statsP2 = {"X " + players[1].getNumberOfLife(), "X " + players[1].getNumberOfBomb(), "" + players[1].getSpeed(), "" + players[1].bombe[0].getPuissance(), "" + players[1].bombe[0].getTimeBeforeExplosion()/1000 + " s", "", ""};
 		
 		StdDraw.picture(this.halfWidthOfRow*2*18.9, this.halfHeigthOfLine*2*16.5, "J2.png", 200, 90); // correspond au texte "Joueur 2" en haut à droite
 		
@@ -224,12 +224,12 @@ public class Ground
 		{
 			if(statsFiles[i]=="stats_passe_muraille.png")
 			{
-				if(joueur[1].canWalkOnBoxAndBomb())
+				if(players[1].canWalkOnBoxAndBomb())
 					StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15-2*i), statsFiles[i], 40, 40);
 			}
 			else if (statsFiles[i]=="stats_bombe_rouge.png")
 			{
-				if(joueur[1].getBombs()[0].canOvercomeWalls())
+				if(players[1].getBombs()[0].canOvercomeWalls())
 					StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15-2*i), statsFiles[i], 40, 40);
 			}
 			else

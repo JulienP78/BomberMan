@@ -93,13 +93,13 @@ public class Bomb
 		return ground;
 	}
 	
-	public Ground manage(Ground ground, Player[] joueur) // c'est ici qu'on gère les bombes en fonctions des compte à rebourt
+	public Ground manage(Ground ground, Player[] players) // c'est ici qu'on gère les bombes en fonctions des compte à rebourt
 	{	
 		if ((this.isActivated==true)&&(this.hasExplosed==false)) // si la bombe est posée sur le terrain mais n'a pas encore explosée
 		{	
 			if (java.lang.System.currentTimeMillis()-this.timer>this.timeBeforeExplosion) // on regarde si le compte à rebourt a dépassé le temps de déclenchement défini
 			{ 
-				ground=this.explose(ground, joueur); // si c'est le cas on lance l'explosion
+				ground=this.explose(ground, players); // si c'est le cas on lance l'explosion
 			}
 		}
 		if ((this.isActivated==true)&&(this.hasExplosed==true)) // si la bombe est en cour d'explosion
@@ -112,10 +112,10 @@ public class Bomb
 		return ground;
 	}
 
-	public Ground explose(Ground ground, Player[] joueur)
+	public Ground explose(Ground ground, Player[] players)
 	{	
 		Sound sound = new Sound("boum");
-		checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY); // on regarde si un joueur doit perdre une vie		
+		checkIfPlayerIsHere(ground, players, this.positionX,this.positionY); // on regarde si un joueur doit perdre une vie		
 		
 		// -------------------------------------- On fait exploser au centre -----------------------------------------------
 		
@@ -140,9 +140,9 @@ public class Bomb
 			}
 			else if(ground.getTab(this.positionX+i,this.positionY)==-99) // si la case est uen bombe alors on fait exploser la bombe correspondante à son tour
 			{
-				makeTheBombAtXYExplosed(this.positionX+i,this.positionY, joueur, ground);
+				makeTheBombAtXYExplosed(this.positionX+i,this.positionY, players, ground);
 			}
-			checkIfPlayerIsHere(ground, joueur, this.positionX+i, this.positionY); // on regarde si un joueur doit perdre une vie	
+			checkIfPlayerIsHere(ground, players, this.positionX+i, this.positionY); // on regarde si un joueur doit perdre une vie	
 			if (this.positionX+(i+1) > ground.getNumberOfRow()-1) // si l'on s'apprete à sortir du terrain
 				wallOrBoxFound=true;
 			if(wallOrBoxFound || i == this.puissance || (this.positionX+(i+1)>=ground.getNumberOfRow())) // quand l'explosion s'arrete
@@ -168,9 +168,9 @@ public class Bomb
 			}
 			else if(ground.getTab(this.positionX,this.positionY-i)==-99)
 			{
-				makeTheBombAtXYExplosed(this.positionX,this.positionY-i, joueur, ground);
+				makeTheBombAtXYExplosed(this.positionX,this.positionY-i, players, ground);
 			}
-			checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY-i);
+			checkIfPlayerIsHere(ground, players, this.positionX,this.positionY-i);
 			if (this.positionY-(i+1) < 0)
 				wallOrBoxFound=true;
 			if(wallOrBoxFound || i == this.puissance || (this.positionY-(i+1)<0))
@@ -197,9 +197,9 @@ public class Bomb
 			}
 			else if(ground.getTab(this.positionX-i,this.positionY)==-99)
 			{
-				makeTheBombAtXYExplosed(this.positionX-i,this.positionY, joueur,ground);
+				makeTheBombAtXYExplosed(this.positionX-i,this.positionY, players,ground);
 			}
-			checkIfPlayerIsHere(ground, joueur, this.positionX-i,this.positionY);
+			checkIfPlayerIsHere(ground, players, this.positionX-i,this.positionY);
 			
 			if (this.positionX-(i+1) < 0)
 				wallOrBoxFound=true;
@@ -225,9 +225,9 @@ public class Bomb
 			}
 			else if(ground.getTab(this.positionX,this.positionY+i)==-99)
 			{
-				makeTheBombAtXYExplosed(this.positionX,this.positionY+i, joueur, ground);
+				makeTheBombAtXYExplosed(this.positionX,this.positionY+i, players, ground);
 			}
-			checkIfPlayerIsHere(ground, joueur, this.positionX,this.positionY+i);
+			checkIfPlayerIsHere(ground, players, this.positionX,this.positionY+i);
 			if (this.positionY+(i+1) > ground.getNumberOfLine()-1)
 				wallOrBoxFound=true;
 			if(wallOrBoxFound || i == this.puissance || (this.positionY+(i+1) >= ground.getNumberOfLine()))
@@ -239,27 +239,27 @@ public class Bomb
 		return ground;
 	}
 
-	public boolean checkIfPlayerIsHere(Ground ground, Player[] joueur, int postionExplosionX, int positionExplosionY) 
+	public boolean checkIfPlayerIsHere(Ground ground, Player[] players, int postionExplosionX, int positionExplosionY) 
 	{
 		boolean playerIsHere = false;
 		int positionPlayerX = 0;
 		int positionPlayerY = 0;
 		
-		for (int i = 0 ; i < joueur.length ; i++)
+		for (int i = 0 ; i < players.length ; i++)
 		{
-			positionPlayerX = joueur[i].getPositionX()/(ground.getHalfWidthOfRow()*2); // on calcul la position du joueur dans le tableau
-			positionPlayerY = joueur[i].getPositionY()/(ground.getHalfHeigthOfLine()*2);
+			positionPlayerX = players[i].getPositionX()/(ground.getHalfWidthOfRow()*2); // on calcul la position du joueur dans le tableau
+			positionPlayerY = players[i].getPositionY()/(ground.getHalfHeigthOfLine()*2);
 			
 			if(positionPlayerX == postionExplosionX && positionPlayerY == positionExplosionY) // si le joueur se trouve sur la case de l'explosion
 			{
 				playerIsHere=true;
-				if(joueur[i].hasAShield()) // si le joueur a un bouclier
+				if(players[i].hasAShield()) // si le joueur a un bouclier
 				{
-					joueur[i].setShield(false); // on retire son bouclier et il ne perd pas de vie
+					players[i].setShield(false); // on retire son bouclier et il ne perd pas de vie
 				}
 				else // sinon
 				{
-					joueur[i].setNumberOfLife(joueur[i].getNumberOfLife()-1); // le joueur perd une vie
+					players[i].setNumberOfLife(players[i].getNumberOfLife()-1); // le joueur perd une vie
 					Sound sound = new Sound("ouch");
 				}
 			}
