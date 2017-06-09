@@ -88,6 +88,7 @@ public class main
 		Sound sound = new Sound("321GO");
 		pause(3000);
 	}
+	
 	public static void play(Ground ground, Player[] players)
 	{
 		listenToPlayersAction(players, ground); // on écoute les saisis des deux joueurs
@@ -101,6 +102,13 @@ public class main
 			}
 		}
 		ground.draw(players); // on redessine le tout
+		
+		int test=(int)(Math.random()*500);
+		int newText=(int)(Math.random()*7);
+		if(test==1)
+		{
+			Sound sentence = new Sound("phrase"+(newText+1));
+		}
 		pause(5);
 	}
 	

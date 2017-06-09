@@ -396,6 +396,6 @@ public class Bomb
 		{
 			Sound sound = new Sound("new_bonus");
 		}
-		return 40;
+		return value;
 	}
 }

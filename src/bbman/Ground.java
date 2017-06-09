@@ -182,12 +182,12 @@ public class Ground
 		}
 		
 		// ------------------------------------------- On dessine les stats des joueurs ------------------------------------------ 
-		StdDraw.setPenColor(255, 255, 255);
+		StdDraw.setPenColor(0, 0, 0);
 		StdDraw.setPenRadius(200);
 		
 		// ---------------------------------- On regroupe les différents images associés au stat des joueur  ------------------------------------------ 
 
-		String[] statsFiles = {"NombreVies.png", "NombreBombes.png", "bonus_speed_up.png", "Explosion.png","timer.png", "bonus_passe_muraille.png", "bonus_bombe_rouge.png"};
+		String[] statsFiles = {"stats_vie.png", "stats_bombes.png", "stats_speed.png", "stats_portee.png", "stats_temps_explosion.png", "stats_passe_muraille.png", "stats_bombe_rouge.png"};
 
 		// ------------------------------------------- On récupère les différents stats du joueur 1  ------------------------------------------ 
 		
@@ -197,19 +197,19 @@ public class Ground
 		
 		for(int i = 0 ; i < statsFiles.length ; i++)
 		{
-			if(statsFiles[i]=="bonus_passe_muraille.png") // condition car pas valeur pour ce stat, juste afficher l'image
+			if(statsFiles[i]=="stats_passe_muraille.png") // condition car pas valeur pour ce stat, juste afficher l'image
 			{
 				if(joueur[0].canWalkOnBoxAndBomb())
-					StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2.5+2*i), statsFiles[i], 30, 30);
+					StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2+2*i), statsFiles[i], 40, 40);
 			}
-			else if (statsFiles[i]=="bonus_bombe_rouge.png")
+			else if (statsFiles[i]=="stats_bombe_rouge.png")
 			{
 				if(joueur[0].getBombs()[0].canOvercomeWalls())
-					StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2.5+2*i), statsFiles[i], 30, 30);
+					StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2+2*i), statsFiles[i], 40, 40);
 			}
 			else
 			{
-				StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2.5+2*i), statsFiles[i], 30, 30); // on affiche l'image de stat
+				StdDraw.picture(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(2+2*i), statsFiles[i], 40, 100); // on affiche l'image de stat
 				StdDraw.text(this.halfWidthOfRow*2*0.5, this.halfHeigthOfLine*2*(1.5+2*i), statsP1[i]); // on affiche la valeur de la stat associée en dessous
 			}
 		}
@@ -222,19 +222,19 @@ public class Ground
 		
 		for(int i = 0 ; i < statsFiles.length ; i++)
 		{
-			if(statsFiles[i]=="bonus_passe_muraille.png")
+			if(statsFiles[i]=="stats_passe_muraille.png")
 			{
 				if(joueur[1].canWalkOnBoxAndBomb())
-					StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15.5-2*i), statsFiles[i], 30, 30);
+					StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15-2*i), statsFiles[i], 40, 40);
 			}
-			else if (statsFiles[i]=="bonus_bombe_rouge.png")
+			else if (statsFiles[i]=="stats_bombe_rouge.png")
 			{
 				if(joueur[1].getBombs()[0].canOvercomeWalls())
-					StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15.5-2*i), statsFiles[i], 30, 30);
+					StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15-2*i), statsFiles[i], 40, 40);
 			}
 			else
 			{
-				StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15.5-2*i), statsFiles[i], 30, 30);
+				StdDraw.picture(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(15-2*i), statsFiles[i], 40, 100);
 				StdDraw.text(this.halfWidthOfRow*2*20.6, this.halfHeigthOfLine*2*(14.5-2*i), statsP2[i]);
 			}	
 		}
